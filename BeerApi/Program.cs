@@ -1,8 +1,10 @@
-using Controllers.Controllers;
+using Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Repositories.DataContext;
+using Services;
+using Services.Abstract;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 //add controllers defined in Controllers Project
 builder.Services.AddMvc()
-    .AddApplicationPart(typeof(WeatherForecastController).Assembly);
+    .AddApplicationPart(typeof(BreweryQueryController).Assembly);
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//for swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -20,6 +22,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(opts =>
 opts.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"),
     opts => opts.MigrationsAssembly("BeerApi")));
+
+//inject ServiceWrapper implementation
+builder.Services.AddScoped<IServicesWrapper, ServicesWrapper>();
 
 builder.Services.AddControllers();
 
@@ -30,6 +35,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+} else
+{
+    //for production
 }
 
 app.UseHttpsRedirection();
