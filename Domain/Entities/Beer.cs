@@ -21,7 +21,6 @@ namespace Domain.Entities
         [Range(0.01, 100, ErrorMessage = "Alcohol content must be between {1} and {2}")]
         public double AlcoholContent { get; set; }
 
-        //TODO: validate price (with regex, maybe in DTO)
         [Range(0.01, double.MaxValue, ErrorMessage = "The price can not be smaller than {1}")]
         public double SellingPriceToWholesalers { get; set; }
 
