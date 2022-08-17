@@ -21,7 +21,9 @@ namespace Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BeerDto>>> GetAllBreweries()
         {
-            return Ok();
+            throw new NotImplementedException();
         }
+
+
     }
 }

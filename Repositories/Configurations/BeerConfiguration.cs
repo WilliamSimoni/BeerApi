@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 
-namespace Domain.Configurations
+namespace Repositories.Configurations
 {
     public class BeerConfiguration : IEntityTypeConfiguration<Beer>
     {
