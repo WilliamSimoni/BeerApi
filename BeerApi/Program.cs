@@ -1,10 +1,10 @@
-using Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Repositories.DataContext;
 using Services;
 using Services.Abstract;
+using Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +39,9 @@ if (app.Environment.IsDevelopment())
 {
     //for production
 }
+
+//add controller to handle errors globally
+app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
 

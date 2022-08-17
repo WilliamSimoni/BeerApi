@@ -19,7 +19,7 @@ namespace Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BeerDto>>> GetAllBreweries()
+        public async Task<ActionResult<IEnumerable<BreweryDto>>> GetAllBreweries()
         {
             throw new NotImplementedException();
         }
