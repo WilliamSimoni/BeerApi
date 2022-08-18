@@ -21,7 +21,20 @@ namespace Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BreweryDto>>> GetAllBreweries()
         {
-            throw new NotImplementedException();
+            var breweries = await _services.QueryBrewery.GetAll();
+
+            return Ok(breweries);
+        }
+
+        [HttpGet("{breweryId}")]
+        public async Task<ActionResult<BreweryDto>> GetBreweryById(int breweryId)
+        {
+            var serviceResult = await _services.QueryBrewery.GetById(breweryId);
+
+            return serviceResult.Match<ActionResult>(
+                brewery => Ok(brewery),
+                notFoundError => NotFound(notFoundError.Message)
+                );
         }
 
 

@@ -1,4 +1,6 @@
 ﻿using Contracts.Dtos;
+using Domain.Common.Errors;
+using OneOf;
 
 namespace Services.Abstract
 {
@@ -10,8 +12,10 @@ namespace Services.Abstract
         public Task<IEnumerable<BreweryDto>> GetAll();
 
         /// <summary>
-        /// Returns the brewery with the id specified as a parameter
+        /// Returns the brewery with the id specified as a parameter.
+        /// If there is not any brewery with the specified Id, it
+        /// returns a BreweryNotFound IError object.
         /// </summary>
-        public Task<BreweryDto> GetById(int id);
+        public Task<OneOf<BreweryDto, BreweryNotFound>> GetById(int id);
     }
 }
