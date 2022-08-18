@@ -64,6 +64,7 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await bc.GetAllBreweries();
 
             //Assert
+            result.Result.Should().BeOfType<OkObjectResult>();
             var breweries = result.Result as OkObjectResult;
             breweries.Value.Should().BeOfType<List<BreweryDto>>();
         }
@@ -86,7 +87,9 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await bc.GetAllBreweries();
 
             //Assert
+            result.Result.Should().BeOfType<OkObjectResult>();
             var breweries = result.Result as OkObjectResult;
+            breweries.Value.Should().BeOfType<List<BreweryDto>>();
             var breweries_values = breweries.Value as IEnumerable<BreweryDto>;
             breweries_values.Count().Should().Be(breweriesFixture.Count());
         }
@@ -147,10 +150,181 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await bc.GetBreweryById(It.IsAny<int>());
 
             //Assert
+            result.Result.Should().BeOfType<OkObjectResult>();
             var brewery = result.Result as OkObjectResult;
             brewery.Value.Should().BeOfType<BreweryDto>();
             var brewery_values = brewery.Value as BreweryDto;
             brewery_values.Should().Be(breweriesFixture.ElementAt(0));
         }
+
+        [Fact]
+        public async void GetAllBeersFromBrewery_OnSuccess_ReturnsStatusCose200()
+        {
+            //Arrange
+            var mockServices = new Mock<IServicesWrapper>();
+            var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
+
+            mockServices.Setup(s => s.QueryBreweryBeers).Returns(mockQueryBreweryBeersServices.Object);
+            mockQueryBreweryBeersServices.Setup(s => s.GetAllBeers(It.IsAny<int>())).ReturnsAsync(new List<BeerDto>());
+
+            var bc = new BreweryQueryController(_logger, mockServices.Object);
+
+            //Action
+            var result = await bc.GetAllBeersFromBrewery(It.IsAny<int>());
+
+            //Assert
+            result.Result.Should().BeOfType<OkObjectResult>();
+        }
+
+        [Fact]
+        public async void GetAllBeersFromBrewery_OnBreweryIdIsNotCorrect_ReturnsStatusCose404()
+        {
+            //Arrange
+            var mockServices = new Mock<IServicesWrapper>();
+            var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
+
+            mockServices.Setup(s => s.QueryBreweryBeers).Returns(mockQueryBreweryBeersServices.Object);
+            mockQueryBreweryBeersServices.Setup(s => s.GetAllBeers(It.IsAny<int>())).ReturnsAsync(new BreweryNotFound(It.IsAny<int>()));
+
+            var bc = new BreweryQueryController(_logger, mockServices.Object);
+
+            //Action
+            var result = await bc.GetAllBeersFromBrewery(It.IsAny<int>());
+
+            //Assert
+            result.Result.Should().BeOfType<NotFoundObjectResult>();
+        }
+
+        [Fact]
+        public async void GetAllBeersFromBrewery_OnSuccess_ReturnsListOfBeers()
+        {
+            //Arrange
+            var mockServices = new Mock<IServicesWrapper>();
+            var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
+
+            mockServices.Setup(s => s.QueryBreweryBeers).Returns(mockQueryBreweryBeersServices.Object);
+            mockQueryBreweryBeersServices.Setup(s => s.GetAllBeers(It.IsAny<int>())).ReturnsAsync(new List<BeerDto>());
+
+            var bc = new BreweryQueryController(_logger, mockServices.Object);
+
+            //Action
+            var result = await bc.GetAllBeersFromBrewery(It.IsAny<int>());
+
+            //Assert
+            result.Result.Should().BeOfType<OkObjectResult>();
+            var beers = result.Result as OkObjectResult;
+            beers.Value.Should().BeOfType<List<BeerDto>>();
+        }
+
+        [Fact]
+        public async void GetAllBeersFromBrewery_OnSuccess_ReturnsAllBeers()
+        {
+            //Arrange
+            var beersFixture = BeersDtoFromOneBreweryFixture.getTestData();
+
+            var mockServices = new Mock<IServicesWrapper>();
+            var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
+
+            mockServices.Setup(s => s.QueryBreweryBeers).Returns(mockQueryBreweryBeersServices.Object);
+            mockQueryBreweryBeersServices.Setup(s => s.GetAllBeers(It.IsAny<int>())).ReturnsAsync(beersFixture);
+
+            var bc = new BreweryQueryController(_logger, mockServices.Object);
+
+            //Action
+            var result = await bc.GetAllBeersFromBrewery(It.IsAny<int>());
+
+            //Assert
+            result.Result.Should().BeOfType<OkObjectResult>();
+            var beers = result.Result as OkObjectResult;
+            beers.Value.Should().BeOfType<List<BeerDto>>();
+            var beersList = beers.Value as List<BeerDto>;
+            beersList.Count().Should().Be(beersFixture.Count());
+        }
+
+        [Fact]
+        public async void GetBeerByIfFromBrewery_OnSuccess_ReturnsStatusCose200()
+        {
+            //Arrange
+            var mockServices = new Mock<IServicesWrapper>();
+            var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
+
+            mockServices.Setup(s => s.QueryBreweryBeers).Returns(mockQueryBreweryBeersServices.Object);
+            mockQueryBreweryBeersServices.Setup(s => s.GetBeerById(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(new BeerDto());
+
+            var bc = new BreweryQueryController(_logger, mockServices.Object);
+
+            //Action
+            var result = await bc.GetBeerByIdFromBrewery(It.IsAny<int>(), It.IsAny<int>());
+
+            //Assert
+            result.Result.Should().BeOfType<OkObjectResult>();
+        }
+
+        [Fact]
+        public async void GetBeerByIfFromBrewery_OnBreweryDoesNotExist_ReturnsStatusCose404()
+        {
+            //Arrange
+            var mockServices = new Mock<IServicesWrapper>();
+            var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
+
+            mockServices.Setup(s => s.QueryBreweryBeers).Returns(mockQueryBreweryBeersServices.Object);
+            mockQueryBreweryBeersServices.Setup(s => s.GetBeerById(It.IsAny<int>(), It.IsAny<int>())).
+                ReturnsAsync(new BreweryNotFound(It.IsAny<int>()));
+
+            var bc = new BreweryQueryController(_logger, mockServices.Object);
+
+            //Action
+            var result = await bc.GetBeerByIdFromBrewery(It.IsAny<int>(), It.IsAny<int>());
+
+            //Assert
+            result.Result.Should().BeOfType<NotFoundObjectResult>();
+        }
+
+        [Fact]
+        public async void GetBeerByIfFromBrewery_OnBeerDoesNotExist_ReturnsStatusCose404()
+        {
+            //Arrange
+            var mockServices = new Mock<IServicesWrapper>();
+            var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
+
+            mockServices.Setup(s => s.QueryBreweryBeers).Returns(mockQueryBreweryBeersServices.Object);
+            mockQueryBreweryBeersServices.Setup(s => s.GetBeerById(It.IsAny<int>(), It.IsAny<int>())).
+                ReturnsAsync(new BreweryBeerNotFound(It.IsAny<int>(), It.IsAny<int>()));
+
+            var bc = new BreweryQueryController(_logger, mockServices.Object);
+
+            //Action
+            var result = await bc.GetBeerByIdFromBrewery(It.IsAny<int>(), It.IsAny<int>());
+
+            //Assert
+            result.Result.Should().BeOfType<NotFoundObjectResult>();
+        }
+
+        [Fact]
+        public async void GetBeerByIfFromBrewery_OnSuccess_ReturnsRightBeer()
+        {
+            //Arrange
+            var beersFixture = BeersDtoFromOneBreweryFixture.getTestData();
+
+            var mockServices = new Mock<IServicesWrapper>();
+            var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
+
+            mockServices.Setup(s => s.QueryBreweryBeers).Returns(mockQueryBreweryBeersServices.Object);
+            mockQueryBreweryBeersServices.Setup(s => s.GetBeerById(It.IsAny<int>(), It.IsAny<int>())).
+                ReturnsAsync(beersFixture.ElementAt(0));
+
+            var bc = new BreweryQueryController(_logger, mockServices.Object);
+
+            //Action
+            var result = await bc.GetBeerByIdFromBrewery(It.IsAny<int>(), 0);
+
+            //Assert
+            result.Result.Should().BeOfType<OkObjectResult>();
+            var beer = result.Result as OkObjectResult;
+            beer.Value.Should().BeOfType<BeerDto>();
+            var beerValue = beer.Value as BeerDto;
+            beerValue.Should().Be(beersFixture.ElementAt(0));
+        }
+
     }
 }

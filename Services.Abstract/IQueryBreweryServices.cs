@@ -1,5 +1,6 @@
 ﻿using Contracts.Dtos;
 using Domain.Common.Errors;
+using Domain.Common.Errors.Base;
 using OneOf;
 
 namespace Services.Abstract
@@ -14,8 +15,8 @@ namespace Services.Abstract
         /// <summary>
         /// Returns the brewery with the id specified as a parameter.
         /// If there is not any brewery with the specified Id, it
-        /// returns a BreweryNotFound IError object.
+        /// returns a NotFoundError.
         /// </summary>
-        public Task<OneOf<BreweryDto, BreweryNotFound>> GetById(int id);
+        public Task<OneOf<BreweryDto, NotFoundError>> GetById(int id);
     }
 }
