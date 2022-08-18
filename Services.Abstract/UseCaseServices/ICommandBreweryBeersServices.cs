@@ -1,6 +1,6 @@
 ﻿using Contracts.Dtos;
 
-namespace Services.Abstract
+namespace Services.Abstract.UseCaseServices
 {
     public interface ICommandBreweryBeersServices
     {

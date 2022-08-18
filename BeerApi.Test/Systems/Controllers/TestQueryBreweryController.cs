@@ -2,12 +2,13 @@ using BeerApi.Test.Fixtures;
 using Contracts.Dtos;
 using Moq;
 using Services.Abstract;
-using Controllers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Common.Errors;
+using Services.Abstract.UseCaseServices;
+using BeerApi.Controllers;
 
 namespace BeerApi.Test.Systems.Controllers
 {
@@ -114,7 +115,7 @@ namespace BeerApi.Test.Systems.Controllers
         }
 
         [Fact]
-        public async void GetBreweryById_OnBreweryNotFound_ReturnsStatusCode404()
+        public async void GetBreweryById_OnBreweryNotFound_ReturnsObjectResultWithStatus404()
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
@@ -129,7 +130,9 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await bc.GetBreweryById(It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<NotFoundObjectResult>();
+            result.Result.Should().BeOfType<ObjectResult>();
+            var objectResult = result.Result as ObjectResult;
+            objectResult.StatusCode.Should().Be(404);
         }
 
         [Fact]
@@ -177,7 +180,7 @@ namespace BeerApi.Test.Systems.Controllers
         }
 
         [Fact]
-        public async void GetAllBeersFromBrewery_OnBreweryIdIsNotCorrect_ReturnsStatusCose404()
+        public async void GetAllBeersFromBrewery_OnBreweryIdIsNotCorrect_ReturnsObjectResultWithStatus404()
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
@@ -192,7 +195,9 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await bc.GetAllBeersFromBrewery(It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<NotFoundObjectResult>();
+            result.Result.Should().BeOfType<ObjectResult>();
+            var objectResult = result.Result as ObjectResult;
+            objectResult.StatusCode.Should().Be(404);
         }
 
         [Fact]
@@ -261,7 +266,7 @@ namespace BeerApi.Test.Systems.Controllers
         }
 
         [Fact]
-        public async void GetBeerByIfFromBrewery_OnBreweryDoesNotExist_ReturnsStatusCose404()
+        public async void GetBeerByIfFromBrewery_OnBreweryDoesNotExist_ReturnsObjectResultWithStatus404()
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
@@ -277,11 +282,13 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await bc.GetBeerByIdFromBrewery(It.IsAny<int>(), It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<NotFoundObjectResult>();
+            result.Result.Should().BeOfType<ObjectResult>();
+            var objectResult = result.Result as ObjectResult;
+            objectResult.StatusCode.Should().Be(404);
         }
 
         [Fact]
-        public async void GetBeerByIfFromBrewery_OnBeerDoesNotExist_ReturnsStatusCose404()
+        public async void GetBeerByIfFromBrewery_OnBeerDoesNotExist_ReturnsObjectResultWithStatus404()
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
@@ -297,7 +304,9 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await bc.GetBeerByIdFromBrewery(It.IsAny<int>(), It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<NotFoundObjectResult>();
+            result.Result.Should().BeOfType<ObjectResult>();
+            var objectResult = result.Result as ObjectResult;
+            objectResult.StatusCode.Should().Be(404);
         }
 
         [Fact]

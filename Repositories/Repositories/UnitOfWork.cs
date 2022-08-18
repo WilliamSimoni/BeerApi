@@ -21,7 +21,7 @@ namespace Repositories.Repositories
 
         public IBreweryCommandRepository ChangeBrewery => new BreweryCommandRepository(_context);
 
-        public IBreweryQueryRepository QueryBrewwery => new BreweryQueryRepository(_context);
+        public IBreweryQueryRepository QueryBrewery => new BreweryQueryRepository(_context);
 
         public async Task saveAsync()
         {

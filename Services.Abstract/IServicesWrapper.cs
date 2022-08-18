@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Services.Abstract.UseCaseServices;
 
 namespace Services.Abstract
 {
     public interface IServicesWrapper
     {
-        public ICommandBreweryBeersServices ChangeBreweryBeers { get; set; }
-        public IQueryBreweryBeersServices QueryBreweryBeers { get; set; }
-        public IQueryBreweryServices QueryBrewery { get; set; }
+        public ICommandBreweryBeersServices ChangeBreweryBeers { get; }
+        public IQueryBreweryBeersServices QueryBreweryBeers { get; }
+        public IQueryBreweryServices QueryBrewery { get; }
     }
 }

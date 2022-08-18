@@ -1,20 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Repositories.DataContext;
 using Services;
 using Services.Abstract;
-using Controllers;
 using Domain.Repositories;
 using Repositories.Repositories;
+using MapsterMapper;
+using Mapster;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 //add controllers defined in Controllers Project
-builder.Services.AddMvc()
-    .AddApplicationPart(typeof(BreweryQueryController).Assembly);
+//builder.Services.AddMvc()
+//    .AddApplicationPart(typeof(BreweryQueryController).Assembly);
 
 //for swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -28,6 +29,11 @@ opts.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"),
 //inject ServiceWrapper implementation
 builder.Services.AddScoped<IServicesWrapper, ServicesWrapper>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+var config = TypeAdapterConfig.GlobalSettings;
+config.Scan(Assembly.GetExecutingAssembly());
+builder.Services.AddSingleton(config);
+builder.Services.AddScoped<IMapper, ServiceMapper>();
 
 builder.Services.AddControllers();
 

@@ -1,4 +1,8 @@
-﻿using Services.Abstract;
+﻿using Domain.Repositories;
+using MapsterMapper;
+using Services.Abstract;
+using Services.Abstract.UseCaseServices;
+using Services.UseCaseServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +13,20 @@ namespace Services
 {
     public class ServicesWrapper : IServicesWrapper
     {
-        public ICommandBreweryBeersServices ChangeBreweryBeers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IQueryBreweryBeersServices QueryBreweryBeers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IQueryBreweryServices QueryBrewery { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public ServicesWrapper(IUnitOfWork unitOfWork, IMapper mapper)
+        {
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+        }
+
+        public ICommandBreweryBeersServices ChangeBreweryBeers => throw new NotImplementedException();
+
+        public IQueryBreweryBeersServices QueryBreweryBeers => throw new NotImplementedException();
+
+        public IQueryBreweryServices QueryBrewery => new QueryBreweryServices(_unitOfWork, _mapper);
     }
 }

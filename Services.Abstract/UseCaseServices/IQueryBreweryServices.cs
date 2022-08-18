@@ -3,7 +3,7 @@ using Domain.Common.Errors;
 using Domain.Common.Errors.Base;
 using OneOf;
 
-namespace Services.Abstract
+namespace Services.Abstract.UseCaseServices
 {
     public interface IQueryBreweryServices
     {
@@ -17,6 +17,6 @@ namespace Services.Abstract
         /// If there is not any brewery with the specified Id, it
         /// returns a NotFoundError.
         /// </summary>
-        public Task<OneOf<BreweryDto, NotFoundError>> GetById(int id);
+        public Task<OneOf<BreweryDto, IError>> GetById(int id);
     }
 }

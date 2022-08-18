@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Services.Abstract;
 
-namespace Controllers
+namespace BeerApi.Controllers
 {
     [ApiController]
     [Route("api/breweries")]
@@ -24,7 +24,11 @@ namespace Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BreweryDto>))]
         public async Task<ActionResult<IEnumerable<BreweryDto>>> GetAllBreweries()
         {
+            //_logger.LogInformation("Received request. [method={}, endpoint={}]", "GET", "api/breweries");
+
             var breweries = await _services.QueryBrewery.GetAll();
+
+            //_logger.LogInformation("Breweries retrieved");
 
             return Ok(breweries);
         }
@@ -38,19 +42,20 @@ namespace Controllers
 
             return serviceResult.Match<ActionResult>(
                 brewery => Ok(brewery),
-                notFoundError => NotFound(notFoundError.Message)
+                error => Problem(statusCode: error.Number, detail:error.Message)
                 );
         }
 
         [HttpGet("{breweryId}/beers")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BeerDto>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<BeerDto>>> GetAllBeersFromBrewery(int breweryId)
         {
             var serviceResult = await _services.QueryBreweryBeers.GetAllBeers(breweryId);
 
             return serviceResult.Match<ActionResult>(
                 beers => Ok(beers),
-                notFoundError => NotFound(notFoundError.Message)
+                error => Problem(statusCode: error.Number, detail: error.Message)
                 );
         }
 
@@ -63,7 +68,7 @@ namespace Controllers
 
             return serviceResult.Match<ActionResult>(
                     beer => Ok(beer),
-                    notFoundError => NotFound(notFoundError.Message)
+                    error => Problem(statusCode: error.Number, detail: error.Message)
                 );
         }
 

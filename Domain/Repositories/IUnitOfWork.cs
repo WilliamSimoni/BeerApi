@@ -12,7 +12,7 @@ namespace Domain.Repositories
         public IBeerCommandRepository ChangeBeer { get; }
         public IBeerQueryRepository QueryBeer { get; }
         public IBreweryCommandRepository ChangeBrewery { get; }
-        public IBreweryQueryRepository QueryBrewwery { get; }
+        public IBreweryQueryRepository QueryBrewery { get; }
 
         /// <summary>
         /// Asynchronously saves the latest changes in the database
