@@ -3,31 +3,24 @@ using Contracts.Dtos;
 using Moq;
 using Services.Abstract;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Common.Errors;
 using Services.Abstract.UseCaseServices;
 using BeerApi.Controllers;
+using Domain.Logger;
 
 namespace BeerApi.Test.Systems.Controllers
 {
     public class TestQueryBreweryController
     {
 
-        private readonly ILogger<BreweryQueryController> _logger;
-
+        private readonly ILoggerManager _logger;
         public TestQueryBreweryController()
         {
 
             //create real logger for tests
-            var serviceProvider = new ServiceCollection()
-                .AddLogging()
-                .BuildServiceProvider();
-
-            var factory = serviceProvider.GetService<ILoggerFactory>();
-
-            var _logger = factory.CreateLogger<BreweryQueryController>();
+            _logger = new Mock<ILoggerManager>().Object;
         }
 
         [Fact]

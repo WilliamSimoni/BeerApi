@@ -8,14 +8,21 @@ using Repositories.Repositories;
 using MapsterMapper;
 using Mapster;
 using System.Reflection;
+using Serilog;
+using LoggerService;
+using Domain.Logger;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-//add controllers defined in Controllers Project
-//builder.Services.AddMvc()
-//    .AddApplicationPart(typeof(BreweryQueryController).Assembly);
+Log.Logger = new LoggerConfiguration()
+  .ReadFrom.Configuration(builder.Configuration)
+  .Enrich.FromLogContext()
+  .CreateBootstrapLogger();
+
+builder.Logging.ClearProviders();
+builder.Host.UseSerilog();
 
 //for swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -34,6 +41,9 @@ var config = TypeAdapterConfig.GlobalSettings;
 config.Scan(Assembly.GetExecutingAssembly());
 builder.Services.AddSingleton(config);
 builder.Services.AddScoped<IMapper, ServiceMapper>();
+
+//add loggermanager as a service
+builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
 
 builder.Services.AddControllers();
 

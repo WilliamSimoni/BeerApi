@@ -1,8 +1,8 @@
-﻿using Contracts.Dtos;
-using Domain.Common.Errors.Base;
-using Microsoft.AspNetCore.Http;
+﻿
+using Contracts.Dtos;
+using Domain.Logger;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Services.Abstract;
 
 namespace BeerApi.Controllers
@@ -11,10 +11,10 @@ namespace BeerApi.Controllers
     [Route("api/breweries")]
     public class BreweryQueryController : ControllerBase
     {
-        private readonly ILogger<BreweryQueryController> _logger;
+        private readonly ILoggerManager _logger;
         private readonly IServicesWrapper _services;
 
-        public BreweryQueryController(ILogger<BreweryQueryController> logger, IServicesWrapper services)
+        public BreweryQueryController(ILoggerManager logger, IServicesWrapper services)
         {
             _logger = logger;
             _services = services;
@@ -24,11 +24,7 @@ namespace BeerApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BreweryDto>))]
         public async Task<ActionResult<IEnumerable<BreweryDto>>> GetAllBreweries()
         {
-            //_logger.LogInformation("Received request. [method={}, endpoint={}]", "GET", "api/breweries");
-
             var breweries = await _services.QueryBrewery.GetAll();
-
-            //_logger.LogInformation("Breweries retrieved");
 
             return Ok(breweries);
         }
