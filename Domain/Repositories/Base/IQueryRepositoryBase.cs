@@ -11,7 +11,7 @@ namespace Domain.Repositories.Base
         /// Returns all the entities contained in the repository
         /// </summary>
         /// <returns></returns>
-        IQueryable<T> GetAll();
+        Task<IEnumerable<T>> GetAll();
 
         /// <summary>
         /// Returns all the entities in the repository that satisfy the specified condition. 
@@ -24,7 +24,7 @@ namespace Domain.Repositories.Base
         /// </code>
         /// </example>
         /// </summary>
-        IQueryable<T> GetByCondition(Expression<Func<T, bool>> condition);
+        Task<IEnumerable<T>> GetByCondition(Expression<Func<T, bool>> condition);
 
     }
 }

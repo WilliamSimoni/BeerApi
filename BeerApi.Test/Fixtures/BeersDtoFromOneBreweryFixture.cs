@@ -7,7 +7,7 @@ namespace BeerApi.Test.Fixtures
     public static class BeersDtoFromOneBreweryFixture
     {
 
-        public static List<BeerDto> getTestData()
+        public static List<BeerDto> GetTestData()
         {
             return new List<BeerDto>()
             {

@@ -8,7 +8,7 @@ namespace Services.Abstract.UseCaseServices
     {
         /// <summary>
         /// Returns all the beers produced by the brewery identified by breweryId.
-        /// If the brewery does not exist, it returns a NotFound error.
+        /// If the brewery does not exist, it returns an IError with number 404.
         /// </summary>
         /// <param name="BreweryId">Id of a brewery</param>
         public Task<OneOf<IEnumerable<BeerDto>, IError>> GetAllBeers(int breweryId);

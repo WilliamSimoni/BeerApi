@@ -7,7 +7,7 @@ namespace BeerApi.Test.Fixtures
     public static class BreweriesDtoFixture
     {
 
-        public static IEnumerable<BreweryDto> getTestData()
+        public static IEnumerable<BreweryDto> GetTestData()
         {
             return new List<BreweryDto>()
             {
@@ -27,10 +27,10 @@ namespace BeerApi.Test.Fixtures
                 },
                 new BreweryDto()
                 {
-                    BreweryId = 2,
-                    Name = "Brewery2",
-                    Address = "Address2",
-                    Email = "Email2",
+                    BreweryId = 3,
+                    Name = "Brewery3",
+                    Address = "Address3",
+                    Email = "Email3",
                 }
             };
         }

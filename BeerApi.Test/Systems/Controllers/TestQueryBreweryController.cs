@@ -2,7 +2,6 @@ using BeerApi.Test.Fixtures;
 using Contracts.Dtos;
 using Moq;
 using Services.Abstract;
-using Microsoft.Extensions.Logging;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Common.Errors;
@@ -67,7 +66,7 @@ namespace BeerApi.Test.Systems.Controllers
         public async void GetAllBreweries_OnSuccess_GetAllTheBreweries()
         {
             //Arrange
-            IEnumerable<BreweryDto> breweriesFixture = BreweriesDtoFixture.getTestData();
+            IEnumerable<BreweryDto> breweriesFixture = BreweriesDtoFixture.GetTestData();
 
             var mockServices = new Mock<IServicesWrapper>();
             var mockQueryBreweryServices = new Mock<IQueryBreweryServices>();
@@ -132,7 +131,7 @@ namespace BeerApi.Test.Systems.Controllers
         public async void GetBreweryById_OnSuccess_ReturnsCorrectBrewery()
         {
             //Arrange
-            IEnumerable<BreweryDto> breweriesFixture = BreweriesDtoFixture.getTestData();
+            IEnumerable<BreweryDto> breweriesFixture = BreweriesDtoFixture.GetTestData();
 
             var mockServices = new Mock<IServicesWrapper>();
             var mockQueryBreweryServices = new Mock<IQueryBreweryServices>();
@@ -218,7 +217,7 @@ namespace BeerApi.Test.Systems.Controllers
         public async void GetAllBeersFromBrewery_OnSuccess_ReturnsAllBeers()
         {
             //Arrange
-            var beersFixture = BeersDtoFromOneBreweryFixture.getTestData();
+            var beersFixture = BeersDtoFromOneBreweryFixture.GetTestData();
 
             var mockServices = new Mock<IServicesWrapper>();
             var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
@@ -306,7 +305,7 @@ namespace BeerApi.Test.Systems.Controllers
         public async void GetBeerByIfFromBrewery_OnSuccess_ReturnsRightBeer()
         {
             //Arrange
-            var beersFixture = BeersDtoFromOneBreweryFixture.getTestData();
+            var beersFixture = BeersDtoFromOneBreweryFixture.GetTestData();
 
             var mockServices = new Mock<IServicesWrapper>();
             var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();

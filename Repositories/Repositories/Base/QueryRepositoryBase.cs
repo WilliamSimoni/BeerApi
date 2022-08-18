@@ -15,14 +15,14 @@ namespace Repositories.Repositories.Base
             _entities = context.Set<T>();
         }
 
-        public IQueryable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return _entities;
+            return await _entities.ToListAsync();
         }
 
-        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> condition)
+        public async Task<IEnumerable<T>> GetByCondition(Expression<Func<T, bool>> condition)
         {
-            return _entities.Where(condition);
+            return await _entities.Where(condition).ToListAsync();
         }
     }
 }

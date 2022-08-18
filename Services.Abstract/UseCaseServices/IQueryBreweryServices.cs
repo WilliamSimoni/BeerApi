@@ -15,7 +15,7 @@ namespace Services.Abstract.UseCaseServices
         /// <summary>
         /// Returns the brewery with the id specified as a parameter.
         /// If there is not any brewery with the specified Id, it
-        /// returns a NotFoundError.
+        /// returns IError with Number 404.
         /// </summary>
         public Task<OneOf<BreweryDto, IError>> GetById(int breweryId);
     }

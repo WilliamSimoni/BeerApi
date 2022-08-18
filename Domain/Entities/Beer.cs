@@ -9,10 +9,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    [Index(nameof(Name), nameof(BreweryId), IsUnique = true)]
+    [Index(nameof(NameCode), nameof(BreweryId), IsUnique = true)]
     public class Beer
     {
         public int BeerId { get; set; }
+
+        [Required]
+        //NameCode is equal to Name when the beer is in Production
+        //it is equal to "DELETE TIMESTAMP + Name" when the beer has been deleted
+        public string NameCode { get; set; } = String.Empty;
 
         [Required]
         [MaxLength(50, ErrorMessage = "Attribute {0} can have a maximum of {1} characters")]
