@@ -5,6 +5,8 @@ using Repositories.DataContext;
 using Services;
 using Services.Abstract;
 using Controllers;
+using Domain.Repositories;
+using Repositories.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,7 @@ opts.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"),
 
 //inject ServiceWrapper implementation
 builder.Services.AddScoped<IServicesWrapper, ServicesWrapper>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();
 

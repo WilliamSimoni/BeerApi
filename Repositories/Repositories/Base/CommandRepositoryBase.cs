@@ -4,7 +4,7 @@ using Repositories.DataContext;
 
 namespace Repositories.Repositories.Base
 {
-    public class CommandRepositoryBase<T> : ICommandRepositoryBase<T> where T : class
+    public abstract class CommandRepositoryBase<T> : ICommandRepositoryBase<T> where T : class
     {
 
         private readonly DbSet<T> _entities;

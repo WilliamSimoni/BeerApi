@@ -17,6 +17,6 @@ namespace Domain.Repositories
         /// <summary>
         /// Asynchronously saves the latest changes in the database
         /// </summary>
-        public void saveAsync();
+        public Task saveAsync();
     }
 }

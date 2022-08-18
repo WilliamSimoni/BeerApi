@@ -6,4 +6,8 @@ namespace Domain.Repositories.Specialization
     public interface IBreweryQueryRepository : IQueryRepositoryBase<Brewery>
     {
     }
+
+    public interface IBreweryCommandRepository : ICommandRepositoryBase<Brewery>
+    {
+    }
 }

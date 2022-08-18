@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Repositories.Repositories.Base
 {
-    public class QueryRepositoryBase<T> : IQueryRepositoryBase<T> where T : class
+    public abstract class QueryRepositoryBase<T> : IQueryRepositoryBase<T> where T : class
     {
 
         private readonly DbSet<T> _entities;
