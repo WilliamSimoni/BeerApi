@@ -9,7 +9,7 @@ namespace Domain.Common.Errors
 {
     public sealed record BreweryBeerNotFound(int beerId, int breweryId) : NotFoundError, IError
     {
-        public new string Message => $"Beer with id {beerId} does not exist for brewery with it {breweryId}";
+        public new string Message => $"Beer with specified id does not exist for the specified brewery. [beerId: {beerId}, breweryId: {breweryId}]";
 
         public new string Code => "Brewery.NotFound";
     }

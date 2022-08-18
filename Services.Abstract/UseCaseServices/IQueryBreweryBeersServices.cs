@@ -17,9 +17,7 @@ namespace Services.Abstract.UseCaseServices
         /// Returns the beer produced by the brewery identified by BreweryId, whose id is BeerId.
         /// If the brewery does not exist, it returns a NotFound error.
         /// If the beer does not exists, it returns a NotFound error.
-        /// <param name="BreweryId"></param>
-        /// <param name="BeerId"></param>
         public Task<OneOf<BeerDto, IError>>
-            GetBeerById(int BreweryId, int BeerId);
+            GetBeerById(int breweryId, int beerId);
     }
 }

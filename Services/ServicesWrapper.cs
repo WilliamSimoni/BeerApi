@@ -25,7 +25,7 @@ namespace Services
 
         public ICommandBreweryBeersServices ChangeBreweryBeers => throw new NotImplementedException();
 
-        public IQueryBreweryBeersServices QueryBreweryBeers => throw new NotImplementedException();
+        public IQueryBreweryBeersServices QueryBreweryBeers => new QueryBreweryBeersServices(_unitOfWork, _mapper);
 
         public IQueryBreweryServices QueryBrewery => new QueryBreweryServices(_unitOfWork, _mapper);
     }

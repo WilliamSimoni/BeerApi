@@ -32,13 +32,13 @@ namespace Services.UseCaseServices
             return _mapper.Map<BreweryDto[]>(breweriesList);
         }
 
-        public async Task<OneOf<BreweryDto, IError>> GetById(int id)
+        public async Task<OneOf<BreweryDto, IError>> GetById(int breweryId)
         {
-            var brewery = await _unitOfWork.QueryBrewery.GetByCondition(b => b.BreweryId == id).
+            var brewery = await _unitOfWork.QueryBrewery.GetByCondition(b => b.BreweryId == breweryId).
                 FirstOrDefaultAsync();
 
             if (brewery is null)
-                return new BreweryNotFound(id);
+                return new BreweryNotFound(breweryId);
 
             return _mapper.Map<BreweryDto>(brewery);
         }
