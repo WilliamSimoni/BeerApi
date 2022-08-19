@@ -11,6 +11,13 @@ namespace Domain.Common.Errors
     {
         public new string Message => $"Beer with specified id does not exist for the specified brewery. [beerId: {beerId}, breweryId: {breweryId}]";
 
-        public new string Code => "Brewery.NotFound";
+        public new string Code => "Beer.NotFound";
+    }
+
+    public sealed record BreweryBeerConflict(string name, int breweryId) : ConflictError, IError
+    {
+        public new string Message => $"The Specified name is assigned to an existing beer produced by the brewery. [name: {name}, breweryId: {breweryId}]";
+
+        public new string Code => "Beers.Conflict";
     }
 }

@@ -27,7 +27,10 @@ namespace Services
             _logger = loggerManager;
         }
 
-        public ICommandBreweryBeersServices ChangeBreweryBeers => throw new NotImplementedException();
+        public ICommandBreweryBeersServices ChangeBreweryBeers => new CommandBreweryBeersServices(
+            _logger,
+            _unitOfWork,
+            _mapper);
 
         public IQueryBreweryBeersServices QueryBreweryBeers => new QueryBreweryBeersServices(
             _logger,

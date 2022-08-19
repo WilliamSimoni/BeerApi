@@ -25,7 +25,7 @@ namespace BeerApi.Test.Fixtures
                     Name = "Beer2",
                     AlcoholContent = 1,
                     SellingPriceToClients = 3,
-                    SellingPriceToWholesalers = 0.56
+                    SellingPriceToWholesalers = 0.56m
                 },
                 new BeerDto()
                 {

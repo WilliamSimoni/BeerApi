@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Contracts.Dtos
 {
@@ -11,12 +12,10 @@ namespace Contracts.Dtos
         [Range(0.01, 100, ErrorMessage = "Alcohol content must be between {1} and {2}")]
         public double AlcoholContent { get; set; }
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "Price can not be smaller than {1}")]
-        [RegularExpression(@"^\d+(\.\d{2})?$", ErrorMessage = "Price should be an integer or a real number with two decimals. I.e.: both 2 or 2.99 are valid prices")]
-        public double SellingPriceToWholesalers { get; set; }
+        [Range(0.01, (double)decimal.MaxValue, ErrorMessage = "Price can not be smaller than {1}")]
+        public decimal SellingPriceToWholesalers { get; set; }
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "Price can not be smaller than {1}")]
-        [RegularExpression(@"^\d+(\.\d{2})?$", ErrorMessage = "Price should be an integer or a real number with two decimals. I.e.: both 2 or 2.99 are valid prices")]
-        public double SellingPriceToClients { get; set; }
+        [Range(0.01, (double)decimal.MaxValue, ErrorMessage = "Price can not be smaller than {1}")]
+        public decimal SellingPriceToClients { get; set; }
     }
 }

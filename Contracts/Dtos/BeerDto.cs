@@ -17,9 +17,9 @@ namespace Contracts.Dtos
         public double AlcoholContent { get; set; }
 
         [Display(Name = "Price for wholesalers")]
-        public double SellingPriceToWholesalers { get; set; }
+        public decimal SellingPriceToWholesalers { get; set; }
 
         [Display(Name = "Price for clients")]
-        public double SellingPriceToClients { get; set; }
+        public decimal SellingPriceToClients { get; set; }
     }
 }

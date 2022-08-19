@@ -67,6 +67,5 @@ namespace BeerApi.Controllers
                     error => Problem(statusCode: error.Number, detail: error.Message)
                 );
         }
-
     }
 }

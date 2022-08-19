@@ -14,53 +14,49 @@ namespace Repositories.Configurations
                 new Beer
                 {
                     BeerId = 1,
-                    NameCode = "Forte Hendrik Quadrupel",
                     Name = "Forte Hendrik Quadrupel",
                     AlcoholContent = 11,
-                    SellingPriceToWholesalers = 3.99,
-                    SellingPriceToClients = 10.99,
+                    SellingPriceToWholesalers = 3.99m,
+                    SellingPriceToClients = 10.99m,
                     BreweryId = 1
                 },
                 new Beer
                 {
                     BeerId = 2,
-                    NameCode = "Brugse Zot Blond",
                     Name = "Brugse Zot Blond",
                     AlcoholContent = 6,
-                    SellingPriceToWholesalers = 4.99,
-                    SellingPriceToClients = 12.99,
+                    SellingPriceToWholesalers = 4.99m,
+                    SellingPriceToClients = 12.99m,
                     BreweryId = 1
                 },               
                 new Beer
                 {
                     BeerId = 3,
-                    NameCode = "Sportzot",
                     Name = "Sportzot",
                     AlcoholContent = 0.4,
-                    SellingPriceToWholesalers = 1.59,
-                    SellingPriceToClients = 6.99,
+                    SellingPriceToWholesalers = 1.59m,
+                    SellingPriceToClients = 6.99m,
                     BreweryId = 1
                 },
                 new Beer
                 {
                     BeerId = 4,
-                    NameCode = "Bourgogne des Flandres",
                     Name = "Bourgogne des Flandres",
                     AlcoholContent = 5,
-                    SellingPriceToWholesalers = 0.29,
-                    SellingPriceToClients = 2.59,
+                    SellingPriceToWholesalers = 0.29m,
+                    SellingPriceToClients = 2.59m,
                     BreweryId = 2
                 },
                 new Beer()
                 {
                     BeerId = 5,
-                    NameCode = "20140112180244 Brugse Zot Dubbel",
                     Name = "Brugse Zot Dubbel",
                     AlcoholContent = 7.5,
-                    SellingPriceToWholesalers = 3.99,
-                    SellingPriceToClients = 9.99,
+                    SellingPriceToWholesalers = 3.99m,
+                    SellingPriceToClients = 9.99m,
                     BreweryId = 1,
-                    InProduction = false
+                    InProduction = false,
+                    OutOfProductionDate = new DateTime(2022, 05, 09, 9, 15, 0)
                 }
                 );
         }

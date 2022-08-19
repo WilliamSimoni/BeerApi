@@ -73,7 +73,6 @@ namespace BeerApi.Test.Fixtures
                 new Beer()
                 {
                     BeerId = 1,
-                    NameCode = "Beer1",
                     Name = "Beer1",
                     AlcoholContent = 5,
                     SellingPriceToClients = 10,
@@ -85,11 +84,10 @@ namespace BeerApi.Test.Fixtures
                 new Beer()
                 {
                     BeerId = 2,
-                    NameCode = "Beer2",
                     Name = "Beer2",
                     AlcoholContent = 1,
                     SellingPriceToClients = 3,
-                    SellingPriceToWholesalers = 0.56,
+                    SellingPriceToWholesalers = 0.56m,
                     InProduction = true,
                     BreweryId = 1,
                     Brewery = null
@@ -97,22 +95,21 @@ namespace BeerApi.Test.Fixtures
                 new Beer()
                 {
                     BeerId = 3,
-                    NameCode = "5438547235482Beer3",
                     Name = "Beer3",
                     AlcoholContent = 5,
                     SellingPriceToClients = 10,
                     SellingPriceToWholesalers = 4,
                     InProduction = false,
                     BreweryId = 1,
-                    Brewery = null
+                    Brewery = null,
+                    OutOfProductionDate = new DateTime(2022, 05, 09, 9, 15, 0)
                 },
                 new Beer()
                 {
                     BeerId = 4,
-                    NameCode = "Beer4",
                     Name = "Beer4",
                     AlcoholContent = 5.43,
-                    SellingPriceToClients = 9.21,
+                    SellingPriceToClients = 9.21m,
                     SellingPriceToWholesalers = 2,
                     InProduction = true,
                     BreweryId = 2,
@@ -139,7 +136,7 @@ namespace BeerApi.Test.Fixtures
                     Name = "Beer2",
                     AlcoholContent = 1,
                     SellingPriceToClients = 3,
-                    SellingPriceToWholesalers = 0.56
+                    SellingPriceToWholesalers = 0.56m
                 },
                 new BeerDto()
                 {
@@ -154,7 +151,7 @@ namespace BeerApi.Test.Fixtures
                     BeerId = 4,
                     Name = "Beer4",
                     AlcoholContent = 5.43,
-                    SellingPriceToClients = 9.21,
+                    SellingPriceToClients = 9.21m,
                     SellingPriceToWholesalers = 2,
                 }
             };

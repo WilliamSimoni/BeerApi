@@ -9,15 +9,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    [Index(nameof(NameCode), nameof(BreweryId), IsUnique = true)]
+    [Index(nameof(Name), nameof(OutOfProductionDate), nameof(BreweryId), IsUnique = true)]
     public class Beer
     {
         public int BeerId { get; set; }
-
-        [Required]
-        //NameCode is equal to Name when the beer is in Production
-        //it is equal to "DELETE TIMESTAMP + Name" when the beer has been deleted
-        public string NameCode { get; set; } = String.Empty;
 
         [Required]
         [MaxLength(50, ErrorMessage = "Attribute {0} can have a maximum of {1} characters")]
@@ -26,13 +21,18 @@ namespace Domain.Entities
         [Range(0.01, 100, ErrorMessage = "Alcohol content must be between {1} and {2}")]
         public double AlcoholContent { get; set; }
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "The price can not be smaller than {1}")]
-        public double SellingPriceToWholesalers { get; set; }
+        [Column(TypeName = "Decimal(10,2)")]
+        [Range(0.01, (double)decimal.MaxValue, ErrorMessage = "The price can not be smaller than {1}")]
+        public decimal SellingPriceToWholesalers { get; set; }
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "The price can not be smaller than {1}")]
-        public double SellingPriceToClients { get; set; }
+        [Column(TypeName = "Decimal(10,2)")]
+        [Range(0.01, (double)decimal.MaxValue, ErrorMessage = "The price can not be smaller than {1}")]
+        public decimal SellingPriceToClients { get; set; }
 
         public bool InProduction { get; set; } = true;
+
+        [Required]
+        public DateTime OutOfProductionDate { get; set; } = DateTime.MinValue;
 
         [ForeignKey(nameof(Brewery))]
         public int BreweryId { get; set; }

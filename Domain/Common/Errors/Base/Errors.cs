@@ -14,4 +14,13 @@ namespace Domain.Common.Errors.Base
 
         public int Number => 404;
     }
+
+    public abstract record ConflictError : IError
+    {
+        public string Message => "Generic Conflict";
+
+        public string Code => "Generic.Conflict";
+
+        public int Number => 409;
+    }
 }
