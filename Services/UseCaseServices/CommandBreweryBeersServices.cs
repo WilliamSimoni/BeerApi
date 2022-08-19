@@ -33,9 +33,11 @@ namespace Services.UseCaseServices
 
             if (!brewery.Any())
             {
-                _logger.LogWarn("Brewery id is not valid");
+                _logger.LogInfo("CommandBreweryService tried to add a beer, but the id {breweryid} did not correspond to any existing brewery", breweryId);
                 return new BreweryNotFound(breweryId);
             }
+
+            _logger.LogDebug("CommandBreweryService found a brewery with id {breweryId}. So, it can proceed with the addition of a beer", breweryId);
 
             //check if there exists a beer produced by the brewery with id breweryId
             //whose name is creationBeerDto.Name
@@ -48,23 +50,22 @@ namespace Services.UseCaseServices
 
             if (beers.Any())
             {
-                _logger.LogInfo("");
+                _logger.LogInfo("CommandBreweryService tried to add a beer, but the name {creationBeerDto.Name} is already assigned to an existing brewery", creationBeerDto.Name);
                 return new BreweryBeerConflict(creationBeerDto.Name, breweryId);
             }
 
-            //truncate(if needed) prices
-            creationBeerDto.SellingPriceToClients = Math.Round(creationBeerDto.SellingPriceToClients, 2);
-            creationBeerDto.SellingPriceToWholesalers = Math.Round(creationBeerDto.SellingPriceToClients, 2);
+            _logger.LogDebug("CommandBreweryService did not find breweries already associated with the name {creationBeerDto.Name}. So, it can proceed with the addition of a beer", creationBeerDto.Name);
 
-            //map creationBeerDto to beer entity
             var newBeer = _mapper.Map<Beer>(creationBeerDto);
 
             newBeer.BreweryId = breweryId;
 
-            //Add the beer
             _unitOfWork.ChangeBeer.Add(newBeer);
 
             await _unitOfWork.saveAsync();
+
+            _logger.LogWarn("CommandBreweryService added a new beer with id @{newBeer.BeerId} to the repository", newBeer.BeerId);
+
 
             return _mapper.Map<BeerDto>(newBeer);
         }

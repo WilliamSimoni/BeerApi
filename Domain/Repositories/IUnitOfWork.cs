@@ -13,6 +13,10 @@ namespace Domain.Repositories
         public IBeerQueryRepository QueryBeer { get; }
         public IBreweryCommandRepository ChangeBrewery { get; }
         public IBreweryQueryRepository QueryBrewery { get; }
+        public ISaleCommandRepository ChangeSale { get; }
+        public ISaleQueryRepository QuerySale { get; }
+        public IWholesalerCommandRepository ChangeWholesaler { get; }
+        public IWholesalerQueryRepository QueryWholesaler { get; }
 
         /// <summary>
         /// Asynchronously saves the latest changes in the database

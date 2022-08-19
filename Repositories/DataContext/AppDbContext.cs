@@ -15,7 +15,6 @@ namespace Repositories.DataContext
         public DbSet<Beer>? Beer { get; set; }
         public DbSet<Wholesaler> Wholesaler { get; set; }
         public DbSet<Sale> Sale { get; set; }
-        public DbSet<BeerSale> BeerSale { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,7 +22,6 @@ namespace Repositories.DataContext
             modelBuilder.ApplyConfiguration(new BeerConfiguration());
             modelBuilder.ApplyConfiguration(new WholesalerConfiguration());
             modelBuilder.ApplyConfiguration(new SaleConfiguration());
-            modelBuilder.ApplyConfiguration(new BeerSaleConfiguration());
         }
     }
 }

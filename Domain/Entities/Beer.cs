@@ -39,6 +39,6 @@ namespace Domain.Entities
 
         public Brewery Brewery { get; set; }
 
-        public ICollection<BeerSale> BeerSales { get; set; }
+        public ICollection<Sale> Sales { get; set; }
     }
 }

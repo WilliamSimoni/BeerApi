@@ -71,46 +71,27 @@ namespace BeerApi.Migrations
                     SaleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SaleDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NumberOfUnits = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
+                    PricePerUnit = table.Column<decimal>(type: "Decimal(10,2)", nullable: false),
+                    Discount = table.Column<int>(type: "int", nullable: false),
                     Total = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
-                    WholesalerId = table.Column<int>(type: "int", nullable: false)
+                    WholesalerId = table.Column<int>(type: "int", nullable: false),
+                    BeerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sale", x => x.SaleId);
                     table.ForeignKey(
-                        name: "FK_Sale_Wholesaler_WholesalerId",
-                        column: x => x.WholesalerId,
-                        principalTable: "Wholesaler",
-                        principalColumn: "WholesalerId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BeerSale",
-                columns: table => new
-                {
-                    BeerSaleId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NumberOfUnits = table.Column<int>(type: "int", nullable: false),
-                    PricePerUnit = table.Column<decimal>(type: "Decimal(10,2)", nullable: false),
-                    Discount = table.Column<int>(type: "int", nullable: false),
-                    SaleId = table.Column<int>(type: "int", nullable: false),
-                    BeerId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BeerSale", x => x.BeerSaleId);
-                    table.ForeignKey(
-                        name: "FK_BeerSale_Beer_BeerId",
+                        name: "FK_Sale_Beer_BeerId",
                         column: x => x.BeerId,
                         principalTable: "Beer",
                         principalColumn: "BeerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BeerSale_Sale_SaleId",
-                        column: x => x.SaleId,
-                        principalTable: "Sale",
-                        principalColumn: "SaleId",
+                        name: "FK_Sale_Wholesaler_WholesalerId",
+                        column: x => x.WholesalerId,
+                        principalTable: "Wholesaler",
+                        principalColumn: "WholesalerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -147,31 +128,19 @@ namespace BeerApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "Sale",
-                columns: new[] { "SaleId", "SaleDate", "Total", "WholesalerId" },
+                columns: new[] { "SaleId", "BeerId", "Discount", "NumberOfUnits", "PricePerUnit", "SaleDate", "Total", "WholesalerId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 10, 4, 18, 0, 0, 0, DateTimeKind.Unspecified), 12980m, 1 },
-                    { 2, new DateTime(2022, 1, 2, 12, 30, 0, 0, DateTimeKind.Unspecified), 998m, 2 },
-                    { 3, new DateTime(2022, 8, 6, 18, 0, 0, 0, DateTimeKind.Unspecified), 9235m, 1 },
-                    { 4, new DateTime(2022, 2, 3, 16, 0, 0, 0, DateTimeKind.Unspecified), 998m, 2 },
-                    { 5, new DateTime(2022, 2, 3, 16, 0, 0, 0, DateTimeKind.Unspecified), 2537.5m, 3 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "BeerSale",
-                columns: new[] { "BeerSaleId", "BeerId", "Discount", "NumberOfUnits", "PricePerUnit", "SaleId" },
-                values: new object[,]
-                {
-                    { 1, 1, 0, 1000, 3.99m, 1 },
-                    { 2, 5, 0, 1000, 8.99m, 1 },
-                    { 3, 2, 0, 200, 4.99m, 2 },
-                    { 4, 1, 0, 300, 3.99m, 3 },
-                    { 5, 2, 20, 2000, 3.99m, 3 },
-                    { 6, 4, 0, 200, 0.29m, 3 },
-                    { 7, 2, 0, 200, 4.99m, 4 },
-                    { 8, 1, 0, 100, 3.99m, 5 },
-                    { 9, 2, 0, 150, 4.99m, 5 },
-                    { 10, 3, 12, 1000, 1.39m, 5 }
+                    { 1, 1, 0, 1000m, 3.99m, new DateTime(2020, 9, 4, 18, 0, 0, 0, DateTimeKind.Unspecified), 3990m, 1 },
+                    { 2, 5, 0, 1000m, 8.99m, new DateTime(2020, 10, 4, 18, 0, 0, 0, DateTimeKind.Unspecified), 8990m, 1 },
+                    { 3, 2, 0, 200m, 4.99m, new DateTime(2020, 11, 4, 17, 0, 0, 0, DateTimeKind.Unspecified), 998m, 1 },
+                    { 4, 1, 2, 300m, 3.99m, new DateTime(2021, 2, 3, 16, 0, 0, 0, DateTimeKind.Unspecified), 978.04m, 2 },
+                    { 5, 2, 0, 2000m, 4.59m, new DateTime(2021, 8, 6, 18, 0, 0, 0, DateTimeKind.Unspecified), 9180m, 3 },
+                    { 6, 4, 0, 200m, 0.29m, new DateTime(2021, 5, 4, 14, 7, 0, 0, DateTimeKind.Unspecified), 196m, 2 },
+                    { 7, 2, 0, 200m, 4.99m, new DateTime(2022, 1, 2, 15, 0, 0, 0, DateTimeKind.Unspecified), 998m, 1 },
+                    { 8, 1, 0, 100m, 3.99m, new DateTime(2022, 2, 2, 20, 10, 0, 0, DateTimeKind.Unspecified), 399m, 2 },
+                    { 9, 2, 0, 150m, 4.99m, new DateTime(2022, 3, 4, 15, 0, 0, 0, DateTimeKind.Unspecified), 748.5m, 3 },
+                    { 10, 3, 10, 1431m, 1.59m, new DateTime(2022, 5, 5, 16, 0, 0, 0, DateTimeKind.Unspecified), 998m, 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -186,20 +155,15 @@ namespace BeerApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_BeerSale_BeerId",
-                table: "BeerSale",
-                column: "BeerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BeerSale_SaleId",
-                table: "BeerSale",
-                column: "SaleId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Brewery_Name",
                 table: "Brewery",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sale_BeerId",
+                table: "Sale",
+                column: "BeerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sale_WholesalerId",
@@ -216,19 +180,16 @@ namespace BeerApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BeerSale");
+                name: "Sale");
 
             migrationBuilder.DropTable(
                 name: "Beer");
 
             migrationBuilder.DropTable(
-                name: "Sale");
+                name: "Wholesaler");
 
             migrationBuilder.DropTable(
                 name: "Brewery");
-
-            migrationBuilder.DropTable(
-                name: "Wholesaler");
         }
     }
 }

@@ -120,130 +120,6 @@ namespace BeerApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.BeerSale", b =>
-                {
-                    b.Property<int>("BeerSaleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BeerSaleId"), 1L, 1);
-
-                    b.Property<int>("BeerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Discount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfUnits")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("PricePerUnit")
-                        .HasColumnType("Decimal(10,2)");
-
-                    b.Property<int>("SaleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BeerSaleId");
-
-                    b.HasIndex("BeerId");
-
-                    b.HasIndex("SaleId");
-
-                    b.ToTable("BeerSale", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            BeerSaleId = 1,
-                            BeerId = 1,
-                            Discount = 0,
-                            NumberOfUnits = 1000,
-                            PricePerUnit = 3.99m,
-                            SaleId = 1
-                        },
-                        new
-                        {
-                            BeerSaleId = 2,
-                            BeerId = 5,
-                            Discount = 0,
-                            NumberOfUnits = 1000,
-                            PricePerUnit = 8.99m,
-                            SaleId = 1
-                        },
-                        new
-                        {
-                            BeerSaleId = 3,
-                            BeerId = 2,
-                            Discount = 0,
-                            NumberOfUnits = 200,
-                            PricePerUnit = 4.99m,
-                            SaleId = 2
-                        },
-                        new
-                        {
-                            BeerSaleId = 4,
-                            BeerId = 1,
-                            Discount = 0,
-                            NumberOfUnits = 300,
-                            PricePerUnit = 3.99m,
-                            SaleId = 3
-                        },
-                        new
-                        {
-                            BeerSaleId = 5,
-                            BeerId = 2,
-                            Discount = 20,
-                            NumberOfUnits = 2000,
-                            PricePerUnit = 3.99m,
-                            SaleId = 3
-                        },
-                        new
-                        {
-                            BeerSaleId = 6,
-                            BeerId = 4,
-                            Discount = 0,
-                            NumberOfUnits = 200,
-                            PricePerUnit = 0.29m,
-                            SaleId = 3
-                        },
-                        new
-                        {
-                            BeerSaleId = 7,
-                            BeerId = 2,
-                            Discount = 0,
-                            NumberOfUnits = 200,
-                            PricePerUnit = 4.99m,
-                            SaleId = 4
-                        },
-                        new
-                        {
-                            BeerSaleId = 8,
-                            BeerId = 1,
-                            Discount = 0,
-                            NumberOfUnits = 100,
-                            PricePerUnit = 3.99m,
-                            SaleId = 5
-                        },
-                        new
-                        {
-                            BeerSaleId = 9,
-                            BeerId = 2,
-                            Discount = 0,
-                            NumberOfUnits = 150,
-                            PricePerUnit = 4.99m,
-                            SaleId = 5
-                        },
-                        new
-                        {
-                            BeerSaleId = 10,
-                            BeerId = 3,
-                            Discount = 12,
-                            NumberOfUnits = 1000,
-                            PricePerUnit = 1.39m,
-                            SaleId = 5
-                        });
-                });
-
             modelBuilder.Entity("Domain.Entities.Brewery", b =>
                 {
                     b.Property<int>("BreweryId")
@@ -299,6 +175,18 @@ namespace BeerApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaleId"), 1L, 1);
 
+                    b.Property<int>("BeerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("NumberOfUnits")
+                        .HasColumnType("Decimal(18,2)");
+
+                    b.Property<decimal>("PricePerUnit")
+                        .HasColumnType("Decimal(10,2)");
+
                     b.Property<DateTime>("SaleDate")
                         .HasColumnType("datetime2");
 
@@ -310,6 +198,8 @@ namespace BeerApi.Migrations
 
                     b.HasKey("SaleId");
 
+                    b.HasIndex("BeerId");
+
                     b.HasIndex("WholesalerId");
 
                     b.ToTable("Sale", (string)null);
@@ -318,37 +208,112 @@ namespace BeerApi.Migrations
                         new
                         {
                             SaleId = 1,
-                            SaleDate = new DateTime(2021, 10, 4, 18, 0, 0, 0, DateTimeKind.Unspecified),
-                            Total = 12980m,
+                            BeerId = 1,
+                            Discount = 0,
+                            NumberOfUnits = 1000m,
+                            PricePerUnit = 3.99m,
+                            SaleDate = new DateTime(2020, 9, 4, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Total = 3990m,
                             WholesalerId = 1
                         },
                         new
                         {
                             SaleId = 2,
-                            SaleDate = new DateTime(2022, 1, 2, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            Total = 998m,
-                            WholesalerId = 2
+                            BeerId = 5,
+                            Discount = 0,
+                            NumberOfUnits = 1000m,
+                            PricePerUnit = 8.99m,
+                            SaleDate = new DateTime(2020, 10, 4, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Total = 8990m,
+                            WholesalerId = 1
                         },
                         new
                         {
                             SaleId = 3,
-                            SaleDate = new DateTime(2022, 8, 6, 18, 0, 0, 0, DateTimeKind.Unspecified),
-                            Total = 9235m,
+                            BeerId = 2,
+                            Discount = 0,
+                            NumberOfUnits = 200m,
+                            PricePerUnit = 4.99m,
+                            SaleDate = new DateTime(2020, 11, 4, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Total = 998m,
                             WholesalerId = 1
                         },
                         new
                         {
                             SaleId = 4,
-                            SaleDate = new DateTime(2022, 2, 3, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            Total = 998m,
+                            BeerId = 1,
+                            Discount = 2,
+                            NumberOfUnits = 300m,
+                            PricePerUnit = 3.99m,
+                            SaleDate = new DateTime(2021, 2, 3, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Total = 978.04m,
                             WholesalerId = 2
                         },
                         new
                         {
                             SaleId = 5,
-                            SaleDate = new DateTime(2022, 2, 3, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            Total = 2537.5m,
+                            BeerId = 2,
+                            Discount = 0,
+                            NumberOfUnits = 2000m,
+                            PricePerUnit = 4.59m,
+                            SaleDate = new DateTime(2021, 8, 6, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Total = 9180m,
                             WholesalerId = 3
+                        },
+                        new
+                        {
+                            SaleId = 6,
+                            BeerId = 4,
+                            Discount = 0,
+                            NumberOfUnits = 200m,
+                            PricePerUnit = 0.29m,
+                            SaleDate = new DateTime(2021, 5, 4, 14, 7, 0, 0, DateTimeKind.Unspecified),
+                            Total = 196m,
+                            WholesalerId = 2
+                        },
+                        new
+                        {
+                            SaleId = 7,
+                            BeerId = 2,
+                            Discount = 0,
+                            NumberOfUnits = 200m,
+                            PricePerUnit = 4.99m,
+                            SaleDate = new DateTime(2022, 1, 2, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Total = 998m,
+                            WholesalerId = 1
+                        },
+                        new
+                        {
+                            SaleId = 8,
+                            BeerId = 1,
+                            Discount = 0,
+                            NumberOfUnits = 100m,
+                            PricePerUnit = 3.99m,
+                            SaleDate = new DateTime(2022, 2, 2, 20, 10, 0, 0, DateTimeKind.Unspecified),
+                            Total = 399m,
+                            WholesalerId = 2
+                        },
+                        new
+                        {
+                            SaleId = 9,
+                            BeerId = 2,
+                            Discount = 0,
+                            NumberOfUnits = 150m,
+                            PricePerUnit = 4.99m,
+                            SaleDate = new DateTime(2022, 3, 4, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Total = 748.5m,
+                            WholesalerId = 3
+                        },
+                        new
+                        {
+                            SaleId = 10,
+                            BeerId = 3,
+                            Discount = 10,
+                            NumberOfUnits = 1431m,
+                            PricePerUnit = 1.59m,
+                            SaleDate = new DateTime(2022, 5, 5, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Total = 998m,
+                            WholesalerId = 1
                         });
                 });
 
@@ -417,39 +382,28 @@ namespace BeerApi.Migrations
                     b.Navigation("Brewery");
                 });
 
-            modelBuilder.Entity("Domain.Entities.BeerSale", b =>
+            modelBuilder.Entity("Domain.Entities.Sale", b =>
                 {
                     b.HasOne("Domain.Entities.Beer", "Beer")
-                        .WithMany("BeerSales")
+                        .WithMany("Sales")
                         .HasForeignKey("BeerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Sale", "Sale")
-                        .WithMany()
-                        .HasForeignKey("SaleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Beer");
-
-                    b.Navigation("Sale");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Sale", b =>
-                {
                     b.HasOne("Domain.Entities.Wholesaler", "Wholesaler")
                         .WithMany("Sales")
                         .HasForeignKey("WholesalerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Beer");
+
                     b.Navigation("Wholesaler");
                 });
 
             modelBuilder.Entity("Domain.Entities.Beer", b =>
                 {
-                    b.Navigation("BeerSales");
+                    b.Navigation("Sales");
                 });
 
             modelBuilder.Entity("Domain.Entities.Brewery", b =>

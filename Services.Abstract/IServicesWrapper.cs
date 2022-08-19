@@ -7,5 +7,7 @@ namespace Services.Abstract
         public ICommandBreweryBeersServices ChangeBreweryBeers { get; }
         public IQueryBreweryBeersServices QueryBreweryBeers { get; }
         public IQueryBreweryServices QueryBrewery { get; }
+        public IQuerySaleServices QuerySale { get; }
+        public ICommandSaleServices CommandSale { get; }
     }
 }

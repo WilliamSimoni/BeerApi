@@ -11,6 +11,7 @@ using System.Reflection;
 using Serilog;
 using LoggerService;
 using Domain.Logger;
+using Services.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,14 +34,12 @@ builder.Services.AddDbContext<AppDbContext>(opts =>
 opts.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"),
     opts => opts.MigrationsAssembly("BeerApi")));
 
-//inject ServiceWrapper implementation
+//inject ServiceWrapper implementation and IUnitOfWork
 builder.Services.AddScoped<IServicesWrapper, ServicesWrapper>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-var config = TypeAdapterConfig.GlobalSettings;
-config.Scan(Assembly.GetExecutingAssembly());
-builder.Services.AddSingleton(config);
-builder.Services.AddScoped<IMapper, ServiceMapper>();
+//inject mappings
+DependencyInjectionMapping.addMappings(builder.Services);
 
 //add loggermanager as a service
 builder.Services.AddSingleton<ILoggerManager, LoggerManager>();

@@ -1,15 +1,9 @@
 ﻿using Domain.Logger;
 using Domain.Repositories;
 using MapsterMapper;
-using Microsoft.Extensions.Logging;
 using Services.Abstract;
 using Services.Abstract.UseCaseServices;
 using Services.UseCaseServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services
 {
@@ -41,5 +35,17 @@ namespace Services
             _logger,
             _unitOfWork, 
             _mapper);
+
+        public IQuerySaleServices QuerySale => new QuerySaleServices(
+            _logger,
+            _unitOfWork,
+            _mapper
+            );
+
+        public ICommandSaleServices CommandSale => new CommandSaleServices(
+            _logger,
+            _unitOfWork,
+            _mapper
+            );
     }
 }

@@ -23,6 +23,14 @@ namespace Repositories.Repositories
 
         public IBreweryQueryRepository QueryBrewery => new BreweryQueryRepository(_context);
 
+        public ISaleCommandRepository ChangeSale => new SaleCommandRepository(_context);
+
+        public ISaleQueryRepository QuerySale => new SaleQueryRepository(_context);
+
+        public IWholesalerCommandRepository ChangeWholesaler => new WholesalerCommandRepository(_context);
+
+        public IWholesalerQueryRepository QueryWholesaler => new WholesalerQueryRepository(_context);
+
         public async Task saveAsync()
         {
             await _context.SaveChangesAsync();
