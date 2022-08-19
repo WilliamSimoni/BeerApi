@@ -14,7 +14,7 @@ namespace Repositories.Configurations
                 new Beer
                 {
                     BeerId = 1,
-                    Name = "Forte Hendrik Quadrupel",
+                    Name = "forte hendrik quadrupel",
                     AlcoholContent = 11,
                     SellingPriceToWholesalers = 3.99m,
                     SellingPriceToClients = 10.99m,
@@ -23,7 +23,7 @@ namespace Repositories.Configurations
                 new Beer
                 {
                     BeerId = 2,
-                    Name = "Brugse Zot Blond",
+                    Name = "brugse zot blond",
                     AlcoholContent = 6,
                     SellingPriceToWholesalers = 4.99m,
                     SellingPriceToClients = 12.99m,
@@ -32,7 +32,7 @@ namespace Repositories.Configurations
                 new Beer
                 {
                     BeerId = 3,
-                    Name = "Sportzot",
+                    Name = "sportzot",
                     AlcoholContent = 0.4,
                     SellingPriceToWholesalers = 1.59m,
                     SellingPriceToClients = 6.99m,
@@ -41,7 +41,7 @@ namespace Repositories.Configurations
                 new Beer
                 {
                     BeerId = 4,
-                    Name = "Bourgogne des Flandres",
+                    Name = "bourgogne des flandres",
                     AlcoholContent = 5,
                     SellingPriceToWholesalers = 0.29m,
                     SellingPriceToClients = 2.59m,
@@ -52,8 +52,8 @@ namespace Repositories.Configurations
                     BeerId = 5,
                     Name = "Brugse Zot Dubbel",
                     AlcoholContent = 7.5,
-                    SellingPriceToWholesalers = 3.99m,
-                    SellingPriceToClients = 9.99m,
+                    SellingPriceToWholesalers = 8.99m,
+                    SellingPriceToClients = 19.99m,
                     BreweryId = 1,
                     InProduction = false,
                     OutOfProductionDate = new DateTime(2022, 05, 09, 9, 15, 0)

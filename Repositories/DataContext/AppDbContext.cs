@@ -21,6 +21,9 @@ namespace Repositories.DataContext
         {
             modelBuilder.ApplyConfiguration(new BreweryConfiguration());
             modelBuilder.ApplyConfiguration(new BeerConfiguration());
+            modelBuilder.ApplyConfiguration(new WholesalerConfiguration());
+            modelBuilder.ApplyConfiguration(new SaleConfiguration());
+            modelBuilder.ApplyConfiguration(new BeerSaleConfiguration());
         }
     }
 }

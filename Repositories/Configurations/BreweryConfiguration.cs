@@ -15,15 +15,15 @@ namespace Repositories.Configurations
                 new Brewery
                 {
                     BreweryId = 1,
-                    Name = "Huisbrouwerij De Halve Maan",
-                    Address = "Walplein 26 8000 Brugge",
+                    Name = "huisbrouwerij de halve maan",
+                    Address = "walplein 26 8000 brugge",
                     Email = "info@halvemaan.be"
                 },
                 new Brewery
                 {
                     BreweryId = 2,
-                    Name = "Bourgogne des Flandres",
-                    Address = "Kartuizerinnenstraat 6 8000 Brugge",
+                    Name = "bourgogne des flandres",
+                    Address = "kartuizerinnenstraat 6 8000 brugge",
                     Email = "visits@bourgognedesflandres"
                 }
                 );
