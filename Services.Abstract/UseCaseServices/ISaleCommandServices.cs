@@ -4,7 +4,7 @@ using OneOf;
 
 namespace Services.Abstract.UseCaseServices
 {
-    public interface ICommandSaleServices
+    public interface ISaleCommandServices
     {
         /// <summary>
         /// Add a new sale to the database.

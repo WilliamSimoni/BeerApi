@@ -4,7 +4,7 @@ using OneOf;
 
 namespace Services.Abstract.UseCaseServices
 {
-    public interface IQuerySaleServices
+    public interface ISaleQueryServices
     {
         /// <summary>
         /// Returns all the sales

@@ -11,7 +11,7 @@ using static Domain.Common.Errors.ErrorsWholesaler;
 
 namespace Services.UseCaseServices
 {
-    internal class CommandSaleServices : ICommandSaleServices
+    public class SaleCommandServices : ISaleCommandServices
     {
         private readonly ILoggerManager _logger;
 
@@ -19,7 +19,7 @@ namespace Services.UseCaseServices
 
         private readonly IMapper _mapper;
 
-        public CommandSaleServices(ILoggerManager logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public SaleCommandServices(ILoggerManager logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -47,7 +47,7 @@ namespace Services.UseCaseServices
             if (!beer.Any())
             {
                 _logger.LogInfo("CommandSaleService tried to add a sale, but the beer with {1} does not exist", creationSaleDto.BeerId);
-                return new BadBeerId(creationSaleDto.WholesalerId);
+                return new BadBeerId(creationSaleDto.BeerId);
             }
 
             _logger.LogDebug("CommandSaleService found beer with id {1}", creationSaleDto.BeerId);

@@ -5,7 +5,7 @@ using OneOf;
 
 namespace Services.Abstract.UseCaseServices
 {
-    public interface IQueryBreweryServices
+    public interface IBreweryQueryServices
     {
         /// <summary>
         /// Returns all the breweries saved in the database

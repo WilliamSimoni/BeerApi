@@ -36,7 +36,7 @@ namespace BeerApi.Test.Systems.Services
         {
             //Arrange
             var serviceMock = new Mock<IServicesWrapper>();
-            var changeBreweryMock = new Mock<ICommandBreweryBeersServices>();
+            var changeBreweryMock = new Mock<IBreweryBeersCommandServices>();
 
             serviceMock.Setup(s => s.ChangeBreweryBeers).Returns(changeBreweryMock.Object);
 
@@ -57,7 +57,7 @@ namespace BeerApi.Test.Systems.Services
         {
             //Arrange
             var serviceMock = new Mock<IServicesWrapper>();
-            var changeBreweryMock = new Mock<ICommandBreweryBeersServices>();
+            var changeBreweryMock = new Mock<IBreweryBeersCommandServices>();
 
             serviceMock.Setup(s => s.ChangeBreweryBeers).Returns(changeBreweryMock.Object);
 
@@ -80,7 +80,7 @@ namespace BeerApi.Test.Systems.Services
         {
             //Arrange
             var serviceMock = new Mock<IServicesWrapper>();
-            var changeBreweryMock = new Mock<ICommandBreweryBeersServices>();
+            var changeBreweryMock = new Mock<IBreweryBeersCommandServices>();
 
             serviceMock.Setup(s => s.ChangeBreweryBeers).Returns(changeBreweryMock.Object);
 
@@ -103,7 +103,7 @@ namespace BeerApi.Test.Systems.Services
         {
             //Arrange
             var serviceMock = new Mock<IServicesWrapper>();
-            var changeBreweryMock = new Mock<ICommandBreweryBeersServices>();
+            var changeBreweryMock = new Mock<IBreweryBeersCommandServices>();
 
             serviceMock.Setup(s => s.ChangeBreweryBeers).Returns(changeBreweryMock.Object);
 
@@ -126,7 +126,7 @@ namespace BeerApi.Test.Systems.Services
         {
             //Arrange
             var serviceMock = new Mock<IServicesWrapper>();
-            var changeBreweryMock = new Mock<ICommandBreweryBeersServices>();
+            var changeBreweryMock = new Mock<IBreweryBeersCommandServices>();
 
             serviceMock.Setup(s => s.ChangeBreweryBeers).Returns(changeBreweryMock.Object);
 
@@ -147,7 +147,7 @@ namespace BeerApi.Test.Systems.Services
         {
             //Arrange
             var serviceMock = new Mock<IServicesWrapper>();
-            var changeBreweryMock = new Mock<ICommandBreweryBeersServices>();
+            var changeBreweryMock = new Mock<IBreweryBeersCommandServices>();
 
             serviceMock.Setup(s => s.ChangeBreweryBeers).Returns(changeBreweryMock.Object);
 
@@ -170,7 +170,7 @@ namespace BeerApi.Test.Systems.Services
         {
             //Arrange
             var serviceMock = new Mock<IServicesWrapper>();
-            var changeBreweryMock = new Mock<ICommandBreweryBeersServices>();
+            var changeBreweryMock = new Mock<IBreweryBeersCommandServices>();
 
             serviceMock.Setup(s => s.ChangeBreweryBeers).Returns(changeBreweryMock.Object);
 

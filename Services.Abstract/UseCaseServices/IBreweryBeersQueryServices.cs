@@ -4,7 +4,7 @@ using OneOf;
 
 namespace Services.Abstract.UseCaseServices
 {
-    public interface IQueryBreweryBeersServices
+    public interface IBreweryBeersQueryServices
     {
         /// <summary>
         /// Returns all the beers produced by the brewery identified by breweryId.

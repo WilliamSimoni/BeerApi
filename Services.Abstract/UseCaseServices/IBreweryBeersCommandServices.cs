@@ -4,7 +4,7 @@ using OneOf;
 
 namespace Services.Abstract.UseCaseServices
 {
-    public interface ICommandBreweryBeersServices
+    public interface IBreweryBeersCommandServices
     {
         /// <summary>
         /// Add a beer defined with a ForCreationBeerDto object to the brewery identified by the BreweryId.

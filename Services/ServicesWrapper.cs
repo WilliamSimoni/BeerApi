@@ -10,6 +10,14 @@ namespace Services
     public class ServicesWrapper : IServicesWrapper
     {
 
+        private IBreweryBeersCommandServices? _breweryBeersCommandServices;
+        private IBreweryBeersQueryServices? _breweryBeersQueryServices;
+        private IBreweryQueryServices? _breweryQueryServices;
+        private ISaleCommandServices? _saleCommandServices;
+        private ISaleQueryServices? _saleQueryServices;
+        private IWholesalerCommandServices? _wholesalerCommandServices;
+        private IWholesalerQueryServices? _wholesalerQueryServices;
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILoggerManager _logger;
@@ -21,31 +29,91 @@ namespace Services
             _logger = loggerManager;
         }
 
-        public ICommandBreweryBeersServices ChangeBreweryBeers => new CommandBreweryBeersServices(
-            _logger,
-            _unitOfWork,
-            _mapper);
+        public IBreweryBeersCommandServices ChangeBreweryBeers
+        {
+            get
+            {
+                _breweryBeersCommandServices ??= new BreweryBeersCommandServices(
+                    _logger,
+                    _unitOfWork,
+                    _mapper);
+                return _breweryBeersCommandServices;
+            }
+        }
 
-        public IQueryBreweryBeersServices QueryBreweryBeers => new QueryBreweryBeersServices(
-            _logger,
-            _unitOfWork, 
-            _mapper);
+        public IBreweryBeersQueryServices QueryBreweryBeers
+        {
+            get
+            {
+                _breweryBeersQueryServices ??= new BreweryBeersQueryServices(
+                    _logger,
+                    _unitOfWork,
+                    _mapper);
+                return _breweryBeersQueryServices;
+            }
+        }
 
-        public IQueryBreweryServices QueryBrewery => new QueryBreweryServices(
-            _logger,
-            _unitOfWork, 
-            _mapper);
 
-        public IQuerySaleServices QuerySale => new QuerySaleServices(
-            _logger,
-            _unitOfWork,
-            _mapper
-            );
+        public IBreweryQueryServices QueryBrewery
+        {
+            get
+            {
+                _breweryQueryServices ??= new BreweryQueryServices(
+                    _logger,
+                    _unitOfWork,
+                    _mapper);
+                return _breweryQueryServices;
+            }
+        }
 
-        public ICommandSaleServices ChangeSale => new CommandSaleServices(
-            _logger,
-            _unitOfWork,
-            _mapper
-            );
+        public ISaleQueryServices QuerySale
+        {
+            get
+            {
+                _saleQueryServices ??= new SaleQueryServices(
+                    _logger,
+                    _unitOfWork,
+                    _mapper
+                    );
+                return _saleQueryServices;
+            }
+        }
+
+        public ISaleCommandServices ChangeSale
+        {
+            get
+            {
+                _saleCommandServices ??= new SaleCommandServices(
+                    _logger,
+                    _unitOfWork,
+                    _mapper
+                    );
+                return _saleCommandServices;
+            }
+        }
+
+        public IWholesalerQueryServices QueryWholesaler
+        {
+            get
+            {
+                _wholesalerQueryServices = new WholesalerQueryServices(
+                    _logger,
+                    _unitOfWork,
+                    _mapper);
+                return _wholesalerQueryServices;
+            }
+        }
+
+        public IWholesalerCommandServices ChangeWholesaler
+        {
+            get
+            {
+                _wholesalerCommandServices = new WholesalerCommandServices(
+                    _logger,
+                    _unitOfWork,
+                    _mapper);
+                return _wholesalerCommandServices;
+            }
+        }
     }
 }

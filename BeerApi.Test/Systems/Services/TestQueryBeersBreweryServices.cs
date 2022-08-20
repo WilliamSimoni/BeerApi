@@ -17,7 +17,7 @@ namespace BeerApi.Test.Systems.Services
 
     public class TestQueryBreweryBeersServices
     {
-        private QueryBreweryBeersServices service;
+        private BreweryBeersQueryServices service;
 
         public TestQueryBreweryBeersServices()
         {
@@ -28,7 +28,7 @@ namespace BeerApi.Test.Systems.Services
 
             var unitOfWorkMock = UnitOfWorkMock.Get();
 
-            service = new QueryBreweryBeersServices(loggerMock.Object, unitOfWorkMock.Object, mapper);
+            service = new BreweryBeersQueryServices(loggerMock.Object, unitOfWorkMock.Object, mapper);
         }
 
         [Fact]

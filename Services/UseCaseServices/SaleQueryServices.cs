@@ -10,7 +10,7 @@ using Services.Abstract.UseCaseServices;
 
 namespace Services.UseCaseServices
 {
-    internal class QuerySaleServices : IQuerySaleServices
+    public class SaleQueryServices : ISaleQueryServices
     {
         private readonly ILoggerManager _logger;
 
@@ -18,7 +18,7 @@ namespace Services.UseCaseServices
 
         private readonly IMapper _mapper;
 
-        public QuerySaleServices(ILoggerManager logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public SaleQueryServices(ILoggerManager logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;

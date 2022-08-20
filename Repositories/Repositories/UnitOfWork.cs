@@ -18,6 +18,8 @@ namespace Repositories.Repositories
         private ISaleQueryRepository? _saleQueryRepository;
         private IWholesalerCommandRepository? _wholesalerCommandRepository;
         private IWholesalerQueryRepository? _wholesalerQueryRepository;
+        private IInventoryBeerCommandRepository _inventoryBeerCommandRepository;
+        private IInventoryBeerQueryRepository _inventoryBeerQueryRepository;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -93,6 +95,24 @@ namespace Repositories.Repositories
             {
                 _wholesalerQueryRepository ??= new WholesalerQueryRepository(_context);
                 return _wholesalerQueryRepository;
+            }
+        }
+
+        public IInventoryBeerCommandRepository ChangeInventoryBeer
+        {
+            get
+            {
+                _inventoryBeerCommandRepository ??= new InventoryBeerCommandRepository(_context);
+                return _inventoryBeerCommandRepository;
+            }
+        }
+
+        public IInventoryBeerQueryRepository QueryInventoryBeer
+        {
+            get
+            {
+                _inventoryBeerQueryRepository ??= new InventoryBeerQueryRepository(_context);
+                return _inventoryBeerQueryRepository;
             }
         }
 

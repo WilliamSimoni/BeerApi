@@ -10,7 +10,7 @@ using Services.Abstract.UseCaseServices;
 
 namespace Services.UseCaseServices
 {
-    public class QueryBreweryBeersServices : IQueryBreweryBeersServices
+    public class BreweryBeersQueryServices : IBreweryBeersQueryServices
     {
 
         private readonly ILoggerManager _logger;
@@ -19,7 +19,7 @@ namespace Services.UseCaseServices
 
         private readonly IMapper _mapper;
 
-        public QueryBreweryBeersServices(ILoggerManager logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public BreweryBeersQueryServices(ILoggerManager logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;

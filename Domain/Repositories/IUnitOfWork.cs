@@ -17,6 +17,8 @@ namespace Domain.Repositories
         public ISaleQueryRepository QuerySale { get; }
         public IWholesalerCommandRepository ChangeWholesaler { get; }
         public IWholesalerQueryRepository QueryWholesaler { get; }
+        public IInventoryBeerCommandRepository ChangeInventoryBeer { get; }
+        public IInventoryBeerQueryRepository QueryInventoryBeer { get; }
 
         /// <summary>
         /// Asynchronously saves the latest changes in the database

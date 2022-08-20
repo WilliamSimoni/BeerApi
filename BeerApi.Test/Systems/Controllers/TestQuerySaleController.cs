@@ -29,7 +29,7 @@ namespace BeerApi.Test.Systems.Controllers
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<IQuerySaleServices>();
+            var mockQuerySaleService = new Mock<ISaleQueryServices>();
 
             mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
             mockQuerySaleService.Setup(s => s.GetAll()).ReturnsAsync(new List<GetSaleDto>());
@@ -48,7 +48,7 @@ namespace BeerApi.Test.Systems.Controllers
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<IQuerySaleServices>();
+            var mockQuerySaleService = new Mock<ISaleQueryServices>();
 
             mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
             mockQuerySaleService.Setup(s => s.GetAll()).ReturnsAsync(new List<GetSaleDto>());
@@ -69,7 +69,7 @@ namespace BeerApi.Test.Systems.Controllers
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<IQuerySaleServices>();
+            var mockQuerySaleService = new Mock<ISaleQueryServices>();
 
             mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
             mockQuerySaleService.Setup(s => s.GetAll()).ReturnsAsync(SaleFixtures.GetGetSaleDtos());
@@ -92,7 +92,7 @@ namespace BeerApi.Test.Systems.Controllers
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<IQuerySaleServices>();
+            var mockQuerySaleService = new Mock<ISaleQueryServices>();
 
             mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
             mockQuerySaleService.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(new GetSaleDto());
@@ -111,7 +111,7 @@ namespace BeerApi.Test.Systems.Controllers
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<IQuerySaleServices>();
+            var mockQuerySaleService = new Mock<ISaleQueryServices>();
 
             mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
             mockQuerySaleService.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(new GetSaleDto());
@@ -132,7 +132,7 @@ namespace BeerApi.Test.Systems.Controllers
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<IQuerySaleServices>();
+            var mockQuerySaleService = new Mock<ISaleQueryServices>();
 
             mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
             mockQuerySaleService.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(new SaleNotFound(It.IsAny<int>()));
@@ -153,7 +153,7 @@ namespace BeerApi.Test.Systems.Controllers
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<IQuerySaleServices>();
+            var mockQuerySaleService = new Mock<ISaleQueryServices>();
 
             mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
             mockQuerySaleService.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(new GetBeerFromSaleDto());
@@ -172,7 +172,7 @@ namespace BeerApi.Test.Systems.Controllers
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<IQuerySaleServices>();
+            var mockQuerySaleService = new Mock<ISaleQueryServices>();
 
             mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
             mockQuerySaleService.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(new SaleNotFound(It.IsAny<int>()));
@@ -193,7 +193,7 @@ namespace BeerApi.Test.Systems.Controllers
         {
             //Arrange
             var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<IQuerySaleServices>();
+            var mockQuerySaleService = new Mock<ISaleQueryServices>();
 
             mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
             mockQuerySaleService.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(new GetBeerFromSaleDto());

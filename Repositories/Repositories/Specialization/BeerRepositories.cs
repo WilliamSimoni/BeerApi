@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Repositories.Base;
 using Domain.Repositories.Specialization;
 using Repositories.DataContext;
 using Repositories.Repositories.Base;
