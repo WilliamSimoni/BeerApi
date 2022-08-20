@@ -26,7 +26,7 @@ namespace Services.Abstract.UseCaseServices
         /// <param name="saleId"></param>
         /// <param name="beerId"></param>
         /// <returns></returns>
-        public Task<OneOf<GetSaleDto, IError>> GetBeerInvolvedInSale(int saleId);
+        public Task<OneOf<GetBeerFromSaleDto, IError>> GetBeerInvolvedInSale(int saleId);
 
     }
 }

@@ -33,11 +33,11 @@ namespace Services.UseCaseServices
 
             if (!brewery.Any())
             {
-                _logger.LogInfo("CommandBreweryService tried to add a beer, but the id {breweryid} did not correspond to any existing brewery", breweryId);
+                _logger.LogInfo("CommandBreweryService tried to add a beer, but the id {1} did not correspond to any existing brewery", breweryId);
                 return new BreweryNotFound(breweryId);
             }
 
-            _logger.LogDebug("CommandBreweryService found a brewery with id {breweryId}. So, it can proceed with the addition of a beer", breweryId);
+            _logger.LogDebug("CommandBreweryService found a brewery with id {1}. So, it can proceed with the addition of a beer", breweryId);
 
             //check if there exists a beer produced by the brewery with id breweryId
             //whose name is creationBeerDto.Name
@@ -50,11 +50,11 @@ namespace Services.UseCaseServices
 
             if (beers.Any())
             {
-                _logger.LogInfo("CommandBreweryService tried to add a beer, but the name {creationBeerDto.Name} is already assigned to an existing brewery", creationBeerDto.Name);
+                _logger.LogInfo("CommandBreweryService tried to add a beer, but the name {1} is already assigned to an existing brewery", creationBeerDto.Name);
                 return new BreweryBeerConflict(creationBeerDto.Name, breweryId);
             }
 
-            _logger.LogDebug("CommandBreweryService did not find breweries already associated with the name {creationBeerDto.Name}. So, it can proceed with the addition of a beer", creationBeerDto.Name);
+            _logger.LogDebug("CommandBreweryService did not find breweries already associated with the name {1}. So, it can proceed with the addition of a beer", creationBeerDto.Name);
 
             var newBeer = _mapper.Map<Beer>(creationBeerDto);
 
@@ -64,7 +64,7 @@ namespace Services.UseCaseServices
 
             await _unitOfWork.saveAsync();
 
-            _logger.LogWarn("CommandBreweryService added a new beer with id @{newBeer.BeerId} to the repository", newBeer.BeerId);
+            _logger.LogWarn("CommandBreweryService added a new beer with id {1} to the repository", newBeer.BeerId);
 
 
             return _mapper.Map<BeerDto>(newBeer);
