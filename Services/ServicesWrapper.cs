@@ -42,7 +42,7 @@ namespace Services
             _mapper
             );
 
-        public ICommandSaleServices CommandSale => new CommandSaleServices(
+        public ICommandSaleServices ChangeSale => new CommandSaleServices(
             _logger,
             _unitOfWork,
             _mapper

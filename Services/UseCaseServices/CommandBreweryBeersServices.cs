@@ -64,7 +64,7 @@ namespace Services.UseCaseServices
 
             await _unitOfWork.saveAsync();
 
-            _logger.LogWarn("CommandBreweryService added a new beer with id {1} to the repository", newBeer.BeerId);
+            _logger.LogDebug("CommandBreweryService added a new beer with id {1} to the repository", newBeer.BeerId);
 
 
             return _mapper.Map<BeerDto>(newBeer);

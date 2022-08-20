@@ -8,6 +8,6 @@ namespace Services.Abstract
         public IQueryBreweryBeersServices QueryBreweryBeers { get; }
         public IQueryBreweryServices QueryBrewery { get; }
         public IQuerySaleServices QuerySale { get; }
-        public ICommandSaleServices CommandSale { get; }
+        public ICommandSaleServices ChangeSale { get; }
     }
 }

@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Common.Errors.Base
 {
+    public abstract record BadRequestError : IError
+    {
+        public string Message => "Generic Bad Request";
+
+        public string Code => "Generic.BadRequest";
+
+        public int Number => 400;
+    }
+
     public abstract record NotFoundError: IError
     {
         public string Message => "Generic Not Found";

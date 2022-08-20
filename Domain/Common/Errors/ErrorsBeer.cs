@@ -20,4 +20,11 @@ namespace Domain.Common.Errors
 
         public new string Code => "Beers.Conflict";
     }
+
+    public sealed record BadBeerId(int beerId) : BadRequestError, IError
+    {
+        public new string Message => $"Beer with specified id does not exist. [beerId: {beerId}]";
+
+        public new string Code => "Beer.BadRequest";
+    }
 }

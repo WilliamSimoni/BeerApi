@@ -42,7 +42,7 @@ namespace Services.UseCaseServices
 
             if (!sale.Any())
             {
-                _logger.LogInfo("QuerySaleService, trying to get the beer involved in a sale, did not find the sale with id {1}", saleId);
+                _logger.LogInfo("QuerySaleService, trying to retrieve the beer involved in a sale, did not find the sale with id {1}", saleId);
                 return new SaleNotFound(saleId);
             }
 

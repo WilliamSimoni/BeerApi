@@ -9,7 +9,7 @@ namespace Domain.Common.Errors
 {
     public sealed record SaleNotFound(int saleId) : NotFoundError, IError
     {
-        public new string Message => $"Sale with specified id does not exist. [beerId: {saleId}]";
+        public new string Message => $"Sale with specified id does not exist. [saleId: {saleId}]";
 
         public new string Code => "Sale.NotFound";
     }
