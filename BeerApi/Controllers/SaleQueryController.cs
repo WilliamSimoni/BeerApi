@@ -21,7 +21,7 @@ namespace BeerApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GetSaleDto>))]
-        public async Task<ActionResult<IEnumerable<GetSaleDto>>> getAllSales()
+        public async Task<ActionResult<IEnumerable<GetSaleDto>>> GetAllSales()
         {
             var sales = await _services.QuerySale.GetAll();
 
@@ -31,7 +31,7 @@ namespace BeerApi.Controllers
         [HttpGet("{saleId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetSaleDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<GetSaleDto>> getSaleById(int saleId)
+        public async Task<ActionResult<GetSaleDto>> GetSaleById(int saleId)
         {
             var serviceResult = await _services.QuerySale.GetById(saleId);
 
@@ -44,7 +44,7 @@ namespace BeerApi.Controllers
         [HttpGet("{saleId}/beer")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetBeerFromSaleDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<GetBeerFromSaleDto>> getBeerInvolvedInSale(int saleId)
+        public async Task<ActionResult<GetBeerFromSaleDto>> GetBeerInvolvedInSale(int saleId)
         {
             var serviceResult = await _services.QuerySale.GetBeerInvolvedInSale(saleId);
 
