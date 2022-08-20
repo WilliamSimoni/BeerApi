@@ -2,30 +2,31 @@
 using BeerApi.Test.Systems.Services;
 using Domain.Entities;
 using Domain.Repositories;
+using Domain.Repositories.Base;
 using Domain.Repositories.Specialization;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Serialization;
 using Moq;
 using Services.Abstract.UseCaseServices;
 using System.Linq.Expressions;
 
 namespace BeerApi.Test.Helpers.Mocks
 {
-
-
-
-
-    internal static class UnitOfWorkMockForBreweryServices
+    internal static class UnitOfWorkMock
     {
-        public static Mock<IUnitOfWork> GetMock()
+        public static Mock<IUnitOfWork> Get()
         {
-            var fakeBreweryData = TestQueryBreweryServiceFixtures.GetTestBreweries();
-            var fakeBeerData = TestQueryBreweryServiceFixtures.GetTestBeers();
+            var fakeBreweryData = BreweryFixtures.GetBreweries();
+            var fakeBeerData = BeerFixtures.GetBeers();
 
             var unitOfWorkMock = new Mock<IUnitOfWork>();
             var queryBreweryMock = new Mock<IBreweryQueryRepository>();
             var queryBeerMock = new Mock<IBeerQueryRepository>();
+            var commandBeerMock = new Mock<IBeerCommandRepository>();
 
             unitOfWorkMock.Setup(u => u.QueryBrewery).Returns(queryBreweryMock.Object);
             unitOfWorkMock.Setup(u => u.QueryBeer).Returns(queryBeerMock.Object);
+            unitOfWorkMock.Setup(u => u.ChangeBeer).Returns(commandBeerMock.Object);
 
             //Define queryBreweryMock behavior
             queryBreweryMock.Setup(q => q.GetAll()).ReturnsAsync(fakeBreweryData);

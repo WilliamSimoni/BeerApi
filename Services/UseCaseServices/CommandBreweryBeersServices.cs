@@ -10,7 +10,7 @@ using Services.Abstract.UseCaseServices;
 
 namespace Services.UseCaseServices
 {
-    internal class CommandBreweryBeersServices : ICommandBreweryBeersServices
+    public class CommandBreweryBeersServices : ICommandBreweryBeersServices
     {
 
         private readonly ILoggerManager _logger;

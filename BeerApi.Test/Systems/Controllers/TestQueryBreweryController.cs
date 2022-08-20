@@ -8,6 +8,7 @@ using Domain.Common.Errors;
 using Services.Abstract.UseCaseServices;
 using BeerApi.Controllers;
 using Domain.Logger;
+using Mapster;
 
 namespace BeerApi.Test.Systems.Controllers
 {
@@ -66,7 +67,7 @@ namespace BeerApi.Test.Systems.Controllers
         public async void GetAllBreweries_OnSuccess_GetAllTheBreweries()
         {
             //Arrange
-            IEnumerable<BreweryDto> breweriesFixture = BreweriesDtoFixture.GetTestData();
+            IEnumerable<BreweryDto> breweriesFixture = BreweryFixtures.GetBreweryDtos();
 
             var mockServices = new Mock<IServicesWrapper>();
             var mockQueryBreweryServices = new Mock<IQueryBreweryServices>();
@@ -131,7 +132,7 @@ namespace BeerApi.Test.Systems.Controllers
         public async void GetBreweryById_OnSuccess_ReturnsCorrectBrewery()
         {
             //Arrange
-            IEnumerable<BreweryDto> breweriesFixture = BreweriesDtoFixture.GetTestData();
+            IEnumerable<BreweryDto> breweriesFixture = BreweryFixtures.GetBreweryDtos();
 
             var mockServices = new Mock<IServicesWrapper>();
             var mockQueryBreweryServices = new Mock<IQueryBreweryServices>();
@@ -217,7 +218,10 @@ namespace BeerApi.Test.Systems.Controllers
         public async void GetAllBeersFromBrewery_OnSuccess_ReturnsAllBeers()
         {
             //Arrange
-            var beersFixture = BeersDtoFromOneBreweryFixture.GetTestData();
+            var breweryId = 1;
+            var beersFixture = BeerFixtures.GetBeers()
+                .Where(b => b.BreweryId == breweryId)
+                .Adapt<BeerDto[]>();
 
             var mockServices = new Mock<IServicesWrapper>();
             var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
@@ -233,8 +237,8 @@ namespace BeerApi.Test.Systems.Controllers
             //Assert
             result.Result.Should().BeOfType<OkObjectResult>();
             var beers = result.Result as OkObjectResult;
-            beers.Value.Should().BeOfType<List<BeerDto>>();
-            var beersList = beers.Value as List<BeerDto>;
+            beers.Value.Should().BeOfType<BeerDto[]>();
+            var beersList = beers.Value as BeerDto[];
             beersList.Count().Should().Be(beersFixture.Count());
         }
 
@@ -301,31 +305,34 @@ namespace BeerApi.Test.Systems.Controllers
             objectResult.StatusCode.Should().Be(404);
         }
 
-        [Fact]
-        public async void GetBeerByIfFromBrewery_OnSuccess_ReturnsRightBeer()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        public async void GetBeerFromBrewery_OnSuccess_ReturnsRightBeer(int beerId)
         {
             //Arrange
-            var beersFixture = BeersDtoFromOneBreweryFixture.GetTestData();
+            var expectedBeer = BeerFixtures.GetBeers()
+                .Where(b => b.BeerId == beerId)
+                .Adapt<BeerDto[]>().First();
 
             var mockServices = new Mock<IServicesWrapper>();
             var mockQueryBreweryBeersServices = new Mock<IQueryBreweryBeersServices>();
 
             mockServices.Setup(s => s.QueryBreweryBeers).Returns(mockQueryBreweryBeersServices.Object);
             mockQueryBreweryBeersServices.Setup(s => s.GetBeerById(It.IsAny<int>(), It.IsAny<int>())).
-                ReturnsAsync(beersFixture.ElementAt(0));
+                ReturnsAsync(expectedBeer);
 
             var bc = new BreweryQueryController(_logger, mockServices.Object);
 
             //Action
-            var result = await bc.GetBeerByIdFromBrewery(It.IsAny<int>(), 0);
+            var result = await bc.GetBeerByIdFromBrewery(It.IsAny<int>(), beerId);
 
             //Assert
             result.Result.Should().BeOfType<OkObjectResult>();
             var beer = result.Result as OkObjectResult;
             beer.Value.Should().BeOfType<BeerDto>();
             var beerValue = beer.Value as BeerDto;
-            beerValue.Should().Be(beersFixture.ElementAt(0));
+            beerValue.Should().Be(expectedBeer);
         }
-
     }
 }

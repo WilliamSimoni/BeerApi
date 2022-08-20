@@ -25,7 +25,7 @@ namespace BeerApi.Test.Systems.Services
 
             var mapper = new Mapper();
 
-            var unitOfWorkMock = UnitOfWorkMockForBreweryServices.GetMock();
+            var unitOfWorkMock = UnitOfWorkMock.Get();
 
             service = new QueryBreweryServices(loggerMock.Object, unitOfWorkMock.Object, mapper);
         }
@@ -37,7 +37,7 @@ namespace BeerApi.Test.Systems.Services
             var breweries = await service.GetAll();
 
             //Assert
-            breweries.Should().HaveCount(BreweriesDtoFixture.GetTestData().Count());
+            breweries.Should().HaveCount(BreweryFixtures.GetBreweryDtos().Count());
         }
 
         [Fact]
@@ -47,18 +47,19 @@ namespace BeerApi.Test.Systems.Services
             var breweries = await service.GetAll();
 
             //Assert
-            breweries.Should().Equal(TestQueryBreweryServiceFixtures.GetTestBreweryDtos());
+            breweries.Should().Equal(BreweryFixtures.GetBreweryDtos());
         }
 
         [Fact]
         public async Task GetById_OnSuccess_ReturnsCorrectBrewery()
         {
             //Action
-            var brewery = await service.GetById(1);
+            int breweryId = 1;
+            var brewery = await service.GetById(breweryId);
 
             //Assert
             brewery.IsT0.Should().BeTrue();
-            brewery.AsT0.Should().Be(TestQueryBreweryServiceFixtures.GetTestBreweryDtos().ElementAt(0));
+            brewery.AsT0.Should().Be(BreweryFixtures.GetBreweryDtos().ElementAt(breweryId-1));
         }
 
         [Fact]

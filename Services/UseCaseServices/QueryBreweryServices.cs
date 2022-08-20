@@ -39,7 +39,7 @@ namespace Services.UseCaseServices
             if (!brewery.Any())
                 return new BreweryNotFound(breweryId);
 
-            return _mapper.Map<BreweryDto>(brewery.ElementAt(0));
+            return _mapper.Map<BreweryDto>(brewery.First());
         }
     }
 }

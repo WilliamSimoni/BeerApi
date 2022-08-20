@@ -26,7 +26,7 @@ namespace BeerApi.Test.Systems.Services
 
             var mapper = new Mapper();
 
-            var unitOfWorkMock = UnitOfWorkMockForBreweryServices.GetMock();
+            var unitOfWorkMock = UnitOfWorkMock.Get();
 
             service = new QueryBreweryBeersServices(loggerMock.Object, unitOfWorkMock.Object, mapper);
         }
@@ -67,7 +67,7 @@ namespace BeerApi.Test.Systems.Services
             //Assert
             result.IsT0.Should().BeTrue();
             //Beer with id 4 is the only beer associated to the brewery with id 2
-            result.AsT0.Should().Equal(TestQueryBreweryServiceFixtures.GetTestBeerDtos().Where(b => b.BeerId == 4));
+            result.AsT0.Should().Equal(BeerFixtures.GetBeersDto().Where(b => b.BeerId == 4));
         }
     }
 }
