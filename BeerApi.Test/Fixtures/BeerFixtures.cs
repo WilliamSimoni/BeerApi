@@ -12,7 +12,7 @@ namespace BeerApi.Test.Fixtures
                 new Beer()
                 {
                     BeerId = 1,
-                    Name = "Beer1",
+                    Name = "beer1",
                     AlcoholContent = 5,
                     SellingPriceToClients = 10,
                     SellingPriceToWholesalers = 4,
@@ -23,7 +23,7 @@ namespace BeerApi.Test.Fixtures
                 new Beer()
                 {
                     BeerId = 2,
-                    Name = "Beer2",
+                    Name = "beer2",
                     AlcoholContent = 1,
                     SellingPriceToClients = 3,
                     SellingPriceToWholesalers = 0.56m,
@@ -34,7 +34,7 @@ namespace BeerApi.Test.Fixtures
                 new Beer()
                 {
                     BeerId = 3,
-                    Name = "Beer3",
+                    Name = "beer3",
                     AlcoholContent = 5,
                     SellingPriceToClients = 10,
                     SellingPriceToWholesalers = 4,
@@ -46,7 +46,7 @@ namespace BeerApi.Test.Fixtures
                 new Beer()
                 {
                     BeerId = 4,
-                    Name = "Beer4",
+                    Name = "beer4",
                     AlcoholContent = 5.43,
                     SellingPriceToClients = 9.21m,
                     SellingPriceToWholesalers = 2,
@@ -64,7 +64,7 @@ namespace BeerApi.Test.Fixtures
                 new BeerDto()
                 {
                     BeerId = 1,
-                    Name = "Beer1",
+                    Name = "beer1",
                     AlcoholContent = 5,
                     SellingPriceToClients = 10,
                     SellingPriceToWholesalers = 4
@@ -72,7 +72,7 @@ namespace BeerApi.Test.Fixtures
                 new BeerDto()
                 {
                     BeerId = 2,
-                    Name = "Beer2",
+                    Name = "beer2",
                     AlcoholContent = 1,
                     SellingPriceToClients = 3,
                     SellingPriceToWholesalers = 0.56m
@@ -80,7 +80,7 @@ namespace BeerApi.Test.Fixtures
                 new BeerDto()
                 {
                     BeerId = 3,
-                    Name = "Beer3",
+                    Name = "beer3",
                     AlcoholContent = 5,
                     SellingPriceToClients = 10,
                     SellingPriceToWholesalers = 4,
@@ -88,7 +88,7 @@ namespace BeerApi.Test.Fixtures
                 new BeerDto()
                 {
                     BeerId = 4,
-                    Name = "Beer4",
+                    Name = "beer4",
                     AlcoholContent = 5.43,
                     SellingPriceToClients = 9.21m,
                     SellingPriceToWholesalers = 2,
@@ -103,7 +103,7 @@ namespace BeerApi.Test.Fixtures
                 new GetBeerFromSaleDto()
                 {
                     BeerId = 1,
-                    Name = "Beer1",
+                    Name = "beer1",
                     AlcoholContent = 5,
                     SellingPriceToClients = 10,
                     SellingPriceToWholesalers = 4
@@ -111,7 +111,7 @@ namespace BeerApi.Test.Fixtures
                 new GetBeerFromSaleDto()
                 {
                     BeerId = 2,
-                    Name = "Beer2",
+                    Name = "beer2",
                     AlcoholContent = 1,
                     SellingPriceToClients = 3,
                     SellingPriceToWholesalers = 0.56m
@@ -119,7 +119,7 @@ namespace BeerApi.Test.Fixtures
                 new GetBeerFromSaleDto()
                 {
                     BeerId = 3,
-                    Name = "Beer3",
+                    Name = "beer3",
                     AlcoholContent = 5,
                     SellingPriceToClients = 10,
                     SellingPriceToWholesalers = 4,
@@ -127,7 +127,7 @@ namespace BeerApi.Test.Fixtures
                 new GetBeerFromSaleDto()
                 {
                     BeerId = 4,
-                    Name = "Beer4",
+                    Name = "beer4",
                     AlcoholContent = 5.43,
                     SellingPriceToClients = 9.21m,
                     SellingPriceToWholesalers = 2,

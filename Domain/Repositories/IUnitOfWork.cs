@@ -21,8 +21,9 @@ namespace Domain.Repositories
         public IInventoryBeerQueryRepository QueryInventoryBeer { get; }
 
         /// <summary>
-        /// Asynchronously saves the latest changes in the database
+        /// Asynchronously saves the latest changes in the database.
+        /// Returns 0 in case of success, 1 in case of errors
         /// </summary>
-        public Task saveAsync();
+        public Task<int> SaveAsync();
     }
 }

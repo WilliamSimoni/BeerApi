@@ -4,7 +4,7 @@ using Mapster;
 
 namespace Services.Mappings
 {
-    internal class SaleDtoMappingConfig : IRegister
+    public class SaleDtoMappingConfig : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {

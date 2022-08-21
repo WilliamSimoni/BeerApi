@@ -28,36 +28,45 @@ namespace Services.UseCaseServices
 
         public async Task<OneOf<CreatedSaleDto, IError>> addSale(ForCreationSaleDto creationSaleDto)
         {
+            var newSale = _mapper.Map<Sale>(creationSaleDto);
+
+            _logger.LogDebug("SaleCommandService mapped ForCreationSaleDto to BeerDto");
+
             //check if the wholesaler exists
             var wholesaler = await _unitOfWork.QueryWholesaler
-                .GetByCondition(w => w.WholesalerId == creationSaleDto.WholesalerId);
+                .GetByCondition(w => w.WholesalerId == newSale.WholesalerId);
 
             if (!wholesaler.Any())
             {
-                _logger.LogInfo("CommandSaleService tried to add a sale, but the wholesaler with {1} does not exist", creationSaleDto.WholesalerId);
-                return new BadWholesalerId(creationSaleDto.WholesalerId);
+                _logger.LogInfo("SaleCommandService tried to add a sale, but the wholesaler with {1} does not exist", newSale.WholesalerId);
+                return new BadWholesalerId(newSale.WholesalerId);
             }
 
-            _logger.LogDebug("CommandSaleService found wholesaler with id {1}", creationSaleDto.WholesalerId);
+            _logger.LogDebug("SaleCommandService found wholesaler with id {1}", newSale.WholesalerId);
 
             //check if the beer exists
             var beer = await _unitOfWork.QueryBeer
-                .GetByCondition(b => b.BeerId == creationSaleDto.BeerId && b.InProduction == true);
+                .GetByCondition(b => b.BeerId == newSale.BeerId && b.InProduction == true);
 
             if (!beer.Any())
             {
-                _logger.LogInfo("CommandSaleService tried to add a sale, but the beer with {1} does not exist", creationSaleDto.BeerId);
-                return new BadBeerId(creationSaleDto.BeerId);
+                _logger.LogInfo("SaleCommandService tried to add a sale, but the beer with {1} does not exist", newSale.BeerId);
+                return new BadBeerId(newSale.BeerId);
             }
 
-            _logger.LogDebug("CommandSaleService found beer with id {1}", creationSaleDto.BeerId);
+            _logger.LogDebug("SaleCommandService found beer with id {1}", newSale.BeerId);
 
             //add the sale
-            var newSale = _mapper.Map<Sale>(creationSaleDto);
             _unitOfWork.ChangeSale.Add(newSale);
-            await _unitOfWork.saveAsync();
+            int result = await _unitOfWork.SaveAsync();
 
-            _logger.LogDebug("CommandSaleService added a new sale with id {1} to the repository", newSale.SaleId);
+            if (result == 1)
+            {
+                _logger.LogError("SaleCommandService was not able to add a new sale to the repository", newSale.SaleId);
+                return new SaleInsertionInternalError();
+            }
+
+            _logger.LogDebug("SaleCommandService added a new sale with id {1} to the repository");
 
             return _mapper.Map<CreatedSaleDto>(newSale);
         }

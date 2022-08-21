@@ -32,4 +32,12 @@ namespace Domain.Common.Errors.Base
 
         public int Number => 409;
     }
+    public abstract record InternalError : IError
+    {
+        public string Message => "An error occured in the server";
+
+        public string Code => "Generic.InternalError";
+
+        public int Number => 500;
+    }
 }

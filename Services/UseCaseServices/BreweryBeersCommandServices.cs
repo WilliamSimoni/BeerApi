@@ -33,11 +33,15 @@ namespace Services.UseCaseServices
 
             if (!brewery.Any())
             {
-                _logger.LogInfo("CommandBreweryService tried to add a beer, but the id {1} did not correspond to any existing brewery", breweryId);
+                _logger.LogInfo("BreweryBeersCommandService tried to add a beer, but the id {1} did not correspond to any existing brewery", breweryId);
                 return new BreweryNotFound(breweryId);
             }
 
-            _logger.LogDebug("CommandBreweryService found a brewery with id {1}. So, it can proceed with the addition of a beer", breweryId);
+            _logger.LogDebug("BreweryBeersCommandService found a brewery with id {1}. So, it can proceed with the addition of a beer", breweryId);
+
+            var newBeer = _mapper.Map<Beer>(creationBeerDto);
+
+            _logger.LogDebug("BreweryBeersCommandService mapped ForCreationBeerDto to BeerDto");
 
             //check if there exists a beer produced by the brewery with id breweryId
             //whose name is creationBeerDto.Name
@@ -45,26 +49,29 @@ namespace Services.UseCaseServices
                 .GetByCondition(b =>
                 b.BreweryId == breweryId &&
                 b.InProduction == true &&
-                b.Name == creationBeerDto.Name
+                b.Name == newBeer.Name
                 );
 
             if (beers.Any())
             {
-                _logger.LogInfo("CommandBreweryService tried to add a beer, but the name {1} is already assigned to an existing brewery", creationBeerDto.Name);
-                return new BreweryBeerConflict(creationBeerDto.Name, breweryId);
+                _logger.LogInfo("BreweryBeersCommandService tried to add a beer, but the name {1} is already assigned to an existing brewery", newBeer.Name);
+                return new BreweryBeerConflict(newBeer.Name, breweryId);
             }
 
-            _logger.LogDebug("CommandBreweryService did not find breweries already associated with the name {1}. So, it can proceed with the addition of a beer", creationBeerDto.Name);
-
-            var newBeer = _mapper.Map<Beer>(creationBeerDto);
+            _logger.LogDebug("BreweryBeersCommandService did not find breweries already associated with the name {1}. So, it can proceed with the addition of a beer", newBeer.Name);
 
             newBeer.BreweryId = breweryId;
 
             _unitOfWork.ChangeBeer.Add(newBeer);
+            int result = await _unitOfWork.SaveAsync();
 
-            await _unitOfWork.saveAsync();
+            if (result == 1)
+            {
+                _logger.LogError("BreweryBeersCommandService was not able to add a new beer to the repository");
+                return new BeerInsertionInternalError();
+            }
 
-            _logger.LogDebug("CommandBreweryService added a new beer with id {1} to the repository", newBeer.BeerId);
+            _logger.LogDebug("BreweryCommandService added a new beer with id {1} to the repository", newBeer.BeerId);
 
 
             return _mapper.Map<BeerDto>(newBeer);
@@ -103,7 +110,7 @@ namespace Services.UseCaseServices
 
             _unitOfWork.ChangeBeer.Update(beer);
 
-            await _unitOfWork.saveAsync();
+            await _unitOfWork.SaveAsync();
 
             return null;
         }

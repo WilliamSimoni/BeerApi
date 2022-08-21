@@ -12,7 +12,7 @@ using Repositories.DataContext;
 namespace BeerApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220819135601_InitMigration")]
+    [Migration("20220821085421_InitMigration")]
     partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,6 +166,56 @@ namespace BeerApi.Migrations
                             Address = "kartuizerinnenstraat 6 8000 brugge",
                             Email = "visits@bourgognedesflandres",
                             Name = "bourgogne des flandres"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.InventoryBeer", b =>
+                {
+                    b.Property<int>("InventoryBeerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InventoryBeerId"), 1L, 1);
+
+                    b.Property<int>("BeerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WholesalerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InventoryBeerId");
+
+                    b.HasIndex("WholesalerId");
+
+                    b.HasIndex("BeerId", "WholesalerId")
+                        .IsUnique();
+
+                    b.ToTable("InventoryBeer", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            InventoryBeerId = 1,
+                            BeerId = 1,
+                            Quantity = 250,
+                            WholesalerId = 1
+                        },
+                        new
+                        {
+                            InventoryBeerId = 2,
+                            BeerId = 2,
+                            Quantity = 30,
+                            WholesalerId = 2
+                        },
+                        new
+                        {
+                            InventoryBeerId = 3,
+                            BeerId = 1,
+                            Quantity = 70,
+                            WholesalerId = 2
                         });
                 });
 
@@ -384,6 +434,25 @@ namespace BeerApi.Migrations
                     b.Navigation("Brewery");
                 });
 
+            modelBuilder.Entity("Domain.Entities.InventoryBeer", b =>
+                {
+                    b.HasOne("Domain.Entities.Beer", "Beer")
+                        .WithMany("InventoryBeers")
+                        .HasForeignKey("BeerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Wholesaler", "Wholesaler")
+                        .WithMany("InventoryBeers")
+                        .HasForeignKey("WholesalerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Beer");
+
+                    b.Navigation("Wholesaler");
+                });
+
             modelBuilder.Entity("Domain.Entities.Sale", b =>
                 {
                     b.HasOne("Domain.Entities.Beer", "Beer")
@@ -405,6 +474,8 @@ namespace BeerApi.Migrations
 
             modelBuilder.Entity("Domain.Entities.Beer", b =>
                 {
+                    b.Navigation("InventoryBeers");
+
                     b.Navigation("Sales");
                 });
 
@@ -415,6 +486,8 @@ namespace BeerApi.Migrations
 
             modelBuilder.Entity("Domain.Entities.Wholesaler", b =>
                 {
+                    b.Navigation("InventoryBeers");
+
                     b.Navigation("Sales");
                 });
 #pragma warning restore 612, 618

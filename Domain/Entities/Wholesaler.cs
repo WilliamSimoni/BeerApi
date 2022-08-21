@@ -22,5 +22,7 @@ namespace Domain.Entities
         public string Email { get; set; } = String.Empty;
 
         public ICollection<Sale> Sales { get; set; }
+
+        public ICollection<InventoryBeer> InventoryBeers { get; set; }
     }
 }

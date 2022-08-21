@@ -65,6 +65,33 @@ namespace BeerApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InventoryBeer",
+                columns: table => new
+                {
+                    InventoryBeerId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    BeerId = table.Column<int>(type: "int", nullable: false),
+                    WholesalerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InventoryBeer", x => x.InventoryBeerId);
+                    table.ForeignKey(
+                        name: "FK_InventoryBeer_Beer_BeerId",
+                        column: x => x.BeerId,
+                        principalTable: "Beer",
+                        principalColumn: "BeerId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InventoryBeer_Wholesaler_WholesalerId",
+                        column: x => x.WholesalerId,
+                        principalTable: "Wholesaler",
+                        principalColumn: "WholesalerId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sale",
                 columns: table => new
                 {
@@ -127,6 +154,16 @@ namespace BeerApi.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "InventoryBeer",
+                columns: new[] { "InventoryBeerId", "BeerId", "Quantity", "WholesalerId" },
+                values: new object[,]
+                {
+                    { 1, 1, 250, 1 },
+                    { 2, 2, 30, 2 },
+                    { 3, 1, 70, 2 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Sale",
                 columns: new[] { "SaleId", "BeerId", "Discount", "NumberOfUnits", "PricePerUnit", "SaleDate", "Total", "WholesalerId" },
                 values: new object[,]
@@ -161,6 +198,17 @@ namespace BeerApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_InventoryBeer_BeerId_WholesalerId",
+                table: "InventoryBeer",
+                columns: new[] { "BeerId", "WholesalerId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InventoryBeer_WholesalerId",
+                table: "InventoryBeer",
+                column: "WholesalerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sale_BeerId",
                 table: "Sale",
                 column: "BeerId");
@@ -179,6 +227,9 @@ namespace BeerApi.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "InventoryBeer");
+
             migrationBuilder.DropTable(
                 name: "Sale");
 

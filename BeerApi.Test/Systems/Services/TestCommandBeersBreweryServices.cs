@@ -1,4 +1,5 @@
 ﻿using BeerApi.Test.Fixtures;
+using BeerApi.Test.Helpers;
 using BeerApi.Test.Helpers.Mocks;
 using Contracts.Dtos;
 using Domain.Logger;
@@ -21,7 +22,7 @@ namespace BeerApi.Test.Systems.Services
             //Arrange for all tests
             var loggerMock = new Mock<ILoggerManager>();
 
-            var mapper = new Mapper();
+            var mapper = MapperInstance.Get();
 
             var unitOfWorkMock = UnitOfWorkMock.Get();
 
@@ -31,20 +32,21 @@ namespace BeerApi.Test.Systems.Services
         [Fact]
         public async Task AddBeerToBrewery_OnSuccess_ReturnsCreatedBeer()
         {
-            var newBeer = new ForCreationBeerDto()
+            var newBeerDto = new ForCreationBeerDto()
             {
-                Name = "Test",
+                Name = "test",
                 AlcoholContent = 1,
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = 1
             };
 
             //Action
-            var result = await service.AddBeerToBrewery(1, newBeer);
+            var result = await service.AddBeerToBrewery(1, newBeerDto);
 
             //Assert
             result.IsT0.Should().BeTrue();
-            result.AsT0.Should().Be(newBeer.Adapt<BeerDto>());
+
+            result.AsT0.Should().Be(newBeerDto.Adapt<BeerDto>());
         }
 
         [Fact]
@@ -63,7 +65,7 @@ namespace BeerApi.Test.Systems.Services
         {
             var newBeer = new ForCreationBeerDto()
             {
-                Name = "Beer1",
+                Name = "beer1",
                 AlcoholContent = 1,
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = 1

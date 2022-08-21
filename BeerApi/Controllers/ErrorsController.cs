@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BeerApi.Controllers
 {
-    [ApiController]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class ErrorsController : ControllerBase
     {
-        [HttpGet("/error")]
+        [Route("/error")]
         public IActionResult Error()
         {
+            //return Ok();
             return Problem(statusCode:StatusCodes.Status500InternalServerError, title: "An internal error has occurred");
         }
     }

@@ -1,5 +1,7 @@
-﻿using Domain.Repositories;
+﻿using Domain.Logger;
+using Domain.Repositories;
 using Domain.Repositories.Specialization;
+using Microsoft.EntityFrameworkCore;
 using Repositories.DataContext;
 using Repositories.Repositories.Specialization;
 
@@ -8,6 +10,7 @@ namespace Repositories.Repositories
     public class UnitOfWork : IUnitOfWork
     {
 
+        private readonly ILoggerManager _logger;
         private readonly AppDbContext _context;
 
         private IBeerCommandRepository? _beerCommandRepository;
@@ -21,9 +24,10 @@ namespace Repositories.Repositories
         private IInventoryBeerCommandRepository _inventoryBeerCommandRepository;
         private IInventoryBeerQueryRepository _inventoryBeerQueryRepository;
 
-        public UnitOfWork(AppDbContext context)
+        public UnitOfWork(ILoggerManager logger, AppDbContext context)
         {
             _context = context;
+            _logger = logger;
         }
 
         public IBeerCommandRepository ChangeBeer
@@ -116,9 +120,17 @@ namespace Repositories.Repositories
             }
         }
 
-        public async Task saveAsync()
+        public async Task<int> SaveAsync()
         {
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            } catch (DbUpdateException e)
+            {
+                _logger.LogError(e.Message);
+                return 1;
+            }
+            return 0;
         }
     }
 }

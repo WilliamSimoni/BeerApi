@@ -1,4 +1,5 @@
 ﻿using BeerApi.Test.Fixtures;
+using BeerApi.Test.Helpers;
 using BeerApi.Test.Helpers.Mocks;
 using Domain.Entities;
 using Domain.Logger;
@@ -24,7 +25,7 @@ namespace BeerApi.Test.Systems.Services
             //Arrange for all tests
             var loggerMock = new Mock<ILoggerManager>();
 
-            var mapper = new Mapper();
+            var mapper = MapperInstance.Get();
 
             var unitOfWorkMock = UnitOfWorkMock.Get();
 

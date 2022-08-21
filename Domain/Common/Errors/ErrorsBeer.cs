@@ -27,4 +27,11 @@ namespace Domain.Common.Errors
 
         public new string Code => "Beer.BadRequest";
     }
+
+    public sealed record BeerInsertionInternalError() : InternalError, IError
+    {
+        public new string Message => "Due to an internal error, it was impossible to add a new beer to the database";
+
+        public new string Code => "Beer.InternalError";
+    }
 }
