@@ -26,10 +26,6 @@ namespace BeerApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> updateBeerQuantity(int wholesalerId, int beerId, [FromBody] ForUpdateInventoryBeerDto updateBeerDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             var serviceResult = await _services.ChangeWholesaler.UpdateQuantity(wholesalerId, beerId, updateBeerDto);
 

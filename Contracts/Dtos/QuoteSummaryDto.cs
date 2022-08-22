@@ -16,7 +16,7 @@ namespace Contracts.Dtos
 
         public decimal AppliedDiscount { get; set; }
 
-        public List<QuoteSummaryItemDto> Beers { get; set; }
+        public ICollection<QuoteSummaryItemDto> Beers { get; set; }
     }
 
     public record QuoteSummaryItemDto

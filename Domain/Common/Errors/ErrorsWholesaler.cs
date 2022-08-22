@@ -2,17 +2,13 @@
 
 namespace Domain.Common.Errors
 {
-        public sealed record WholesalerNotFound(int wholesalerId) : NotFoundError, IError
-        {
-            public new string Message => $"Wholesaler with specified id does not exist. [wholesalerId: {wholesalerId}]";
 
-            public new string Code => "Wholesaler.NotFound";
-        }
+    //NOT FOUND errors
 
-        public sealed record BadWholesalerId(int wholesalerId) : BadRequestError, IError
-        {
-            public new string Message => $"Wholesaler with specified id does not exist. [wholesalerId: {wholesalerId}]";
+    public sealed record WholesalerNotFound(int wholesalerId) : NotFoundError, IError
+    {
+        public new string Message => $"Wholesaler with specified id does not exist. [wholesalerId: {wholesalerId}]";
 
-            public new string Code => "Wholesaler.BadRequest";
-        }
+        public new string Code => "Wholesaler.NotFound";
+    }
 }

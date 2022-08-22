@@ -26,11 +26,6 @@ namespace BeerApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> AddBeerToBrewery(int breweryId, [FromBody] ForCreationBeerDto creationBeerDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var result = await _services.ChangeBreweryBeers.AddBeerToBrewery(breweryId, creationBeerDto);
 
             return result.Match(

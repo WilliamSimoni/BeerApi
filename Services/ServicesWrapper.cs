@@ -17,6 +17,7 @@ namespace Services
         private ISaleQueryServices? _saleQueryServices;
         private IWholesalerCommandServices? _wholesalerCommandServices;
         private IWholesalerQueryServices? _wholesalerQueryServices;
+        private IQuoteServices? _quoteServices;
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -116,6 +117,16 @@ namespace Services
             }
         }
 
-        public IQuoteServices AskQuote => throw new NotImplementedException();
+        public IQuoteServices AskQuote
+        {
+            get
+            {
+                _quoteServices = new QuoteServices(
+                    _logger,
+                    _unitOfWork,
+                    _mapper);
+                return _quoteServices;
+            }
+        }
     }
 }

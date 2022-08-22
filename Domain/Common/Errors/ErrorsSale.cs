@@ -8,12 +8,16 @@ using System.Threading.Tasks;
 
 namespace Domain.Common.Errors
 {
+
+    //NOT FOUND errors
     public sealed record SaleNotFound(int saleId) : NotFoundError, IError
     {
         public new string Message => $"Sale with specified id does not exist. [saleId: {saleId}]";
 
         public new string Code => "Sale.NotFound";
     }
+
+    //INTERNAL SERVER errors
 
     public sealed record SaleInsertionInternalError() : InternalError, IError
     {

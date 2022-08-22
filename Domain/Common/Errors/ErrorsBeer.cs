@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Common.Errors
 {
+
+    //NOT FOUND errors
     public sealed record BreweryBeerNotFound(int beerId, int breweryId) : NotFoundError, IError
     {
         public new string Message => $"Beer with specified id does not exist for the specified brewery. [beerId: {beerId}, breweryId: {breweryId}]";
@@ -21,13 +23,23 @@ namespace Domain.Common.Errors
         public new string Code => "Beer.NotFound";
     }
 
-    public sealed record WholesalerBeerNotFound(int beerId, int wholesalerId) : NotFoundError, IError
+    public sealed record BeerNotSoldByWholesaler(int wholesalerId, int beerId) : NotFoundError, IError
     {
-        public new string Message => $"Beer with specified id does not exist for the specified wholesaler. [beerId: {beerId}, wholesalerId: {wholesalerId}]";
+        public new string Message => $"Beer with specified id is not sold by the specified brewery. [beerId: {beerId}, wholesalerId: {wholesalerId}]";
 
         public new string Code => "WholesalerBeer.NotFound";
     }
 
+    //BAD REQUEST errors
+
+    public sealed record QuantityOverUnitsInStock(int beerId, int beerQuantity, int requestedQuantity) : BadRequestError, IError
+    {
+        public new string Message => $"The number of ordered beers is greater than the available beers in wholesaler's stock. [beerId: {beerId}, StockQuantity: {beerQuantity}, requestedQuantity: {requestedQuantity}]";
+
+        public new string Code => "QuantityOverStock.BadRequest";
+    }
+
+    //CONFLICT errors
 
     public sealed record BreweryBeerConflict(string name, int breweryId) : ConflictError, IError
     {
@@ -36,25 +48,13 @@ namespace Domain.Common.Errors
         public new string Code => "Beers.Conflict";
     }
 
-    public sealed record BadBeerId(int beerId) : BadRequestError, IError
-    {
-        public new string Message => $"Beer with specified id does not exist. [beerId: {beerId}]";
-
-        public new string Code => "Beer.BadRequest";
-    }
+    //INTERNAL SERVER ERRORS
 
     public sealed record BeerInsertionInternalError() : InternalError, IError
     {
         public new string Message => "Due to an internal error, it was impossible to add a new beer to the database";
 
         public new string Code => "Beer.InternalError";
-    }
-
-    public sealed record BeerNotSoldByWholesaler(int wholesalerId, int beerId) : NotFoundError, IError
-    {
-        public new string Message => $"Beer with specified id is not sold by the specified brewery. [beerId: {beerId}, wholesalerId: {wholesalerId}]";
-
-        public new string Code => "WholesalerBeer.BadRequest";
     }
 
     public sealed record BeerQuantityUpdateInternalError() : InternalError, IError

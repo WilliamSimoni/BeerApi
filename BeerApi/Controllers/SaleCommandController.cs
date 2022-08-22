@@ -26,26 +26,19 @@ namespace BeerApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> insertSale([FromBody] ForCreationSaleDto saleDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var serviceResult = await _services.ChangeSale.addSale(saleDto);
 
             return serviceResult.Match(
                 newSale => Created(nameof(SaleQueryController.GetSaleById), newSale),
                 error => {
 
-                    //change number from 404 to 400 if either beer or wholesaler is not found
-                    int statusCode = error switch
+                    if (error is BeerNotFound || error is WholesalerNotFound)
                     {
-                        BeerNotFound => 400,
-                        WholesalerNotFound => 400,
-                        _ => error.Number
-                    };
+                        ModelState.AddModelError(error.Code, error.Message);
+                        return ValidationProblem(ModelState);
+                    }
 
-                    return Problem(statusCode: statusCode, detail: error.Message);
+                    return Problem(statusCode: error.Number, detail: error.Message);
                 }
                 );
 
