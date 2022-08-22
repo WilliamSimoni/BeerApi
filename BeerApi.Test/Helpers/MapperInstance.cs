@@ -17,9 +17,15 @@ namespace BeerApi.Test.Helpers
 
             var config = TypeAdapterConfig.GlobalSettings;
 
+            //config custom mappings
+
             new BeerDtoMappingConfig().Register(config);
 
             new SaleDtoMappingConfig().Register(config);
+
+            new InventoryBeerDtoMappingConfig().Register(config);
+
+            new QuoteMappings().Register(config);
 
             var mapper = new Mapper();
 
