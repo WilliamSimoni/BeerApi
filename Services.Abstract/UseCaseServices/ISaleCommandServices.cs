@@ -8,8 +8,8 @@ namespace Services.Abstract.UseCaseServices
     {
         /// <summary>
         /// Add a new sale to the database.
-        /// If the specified beer does not exist, it returns an IError with number 400.
-        /// If the specified wholesaler does not exist, it returns an IError with number 400.
+        /// If the specified beer does not exist, it returns a BeerNotFound error (Number: 404)
+        /// If the specified wholesaler does not exist, it returns a WholesalerNotFound error (Number: 404)
         /// </summary>
         public Task<OneOf<CreatedSaleDto, IError>> addSale(ForCreationSaleDto creationSaleDto);
     }

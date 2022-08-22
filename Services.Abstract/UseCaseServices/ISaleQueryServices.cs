@@ -13,7 +13,7 @@ namespace Services.Abstract.UseCaseServices
 
         /// <summary>
         /// Returns the sale with id saleId. 
-        /// If there is not any sale associated with that id, it returns an IError with number 404.
+        /// If there is not any sale associated with that id, it returns a SaleNotFound error (Number 404)
         /// </summary>
         /// <param name="saleId"></param>
         /// <returns></returns>
@@ -21,7 +21,7 @@ namespace Services.Abstract.UseCaseServices
 
         /// <summary>
         /// Returns the beer associated with the sale with id saleId.
-        /// If there is not any sale associated with that id, it returns an IError with number 404.
+        /// If there is not any sale associated with that id, it returns a SaleNotFound error (Number: 404)
         /// </summary>
         /// <param name="saleId"></param>
         /// <param name="beerId"></param>

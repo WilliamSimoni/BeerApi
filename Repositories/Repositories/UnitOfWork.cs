@@ -128,6 +128,7 @@ namespace Repositories.Repositories
             } catch (DbUpdateException e)
             {
                 _logger.LogError(e.Message);
+                _logger.LogError("{1}", e.InnerException);
                 return 1;
             }
             return 0;

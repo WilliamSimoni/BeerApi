@@ -7,7 +7,6 @@ using Domain.Repositories;
 using MapsterMapper;
 using OneOf;
 using Services.Abstract.UseCaseServices;
-using static Domain.Common.Errors.ErrorsWholesaler;
 
 namespace Services.UseCaseServices
 {
@@ -39,7 +38,7 @@ namespace Services.UseCaseServices
             if (!wholesaler.Any())
             {
                 _logger.LogInfo("SaleCommandService tried to add a sale, but the wholesaler with {1} does not exist", newSale.WholesalerId);
-                return new BadWholesalerId(newSale.WholesalerId);
+                return new WholesalerNotFound(newSale.WholesalerId);
             }
 
             _logger.LogDebug("SaleCommandService found wholesaler with id {1}", newSale.WholesalerId);
@@ -51,7 +50,7 @@ namespace Services.UseCaseServices
             if (!beer.Any())
             {
                 _logger.LogInfo("SaleCommandService tried to add a sale, but the beer with {1} does not exist", newSale.BeerId);
-                return new BadBeerId(newSale.BeerId);
+                return new BeerNotFound(newSale.BeerId);
             }
 
             _logger.LogDebug("SaleCommandService found beer with id {1}", newSale.BeerId);

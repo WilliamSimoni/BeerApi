@@ -11,5 +11,6 @@ namespace Services.Abstract
         public ISaleCommandServices ChangeSale { get; }
         public IWholesalerQueryServices QueryWholesaler { get; }
         public IWholesalerCommandServices ChangeWholesaler { get; }
+        public IQuoteServices AskQuote { get; }
     }
 }

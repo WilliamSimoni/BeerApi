@@ -115,5 +115,7 @@ namespace Services
                 return _wholesalerCommandServices;
             }
         }
+
+        public IQuoteServices AskQuote => throw new NotImplementedException();
     }
 }

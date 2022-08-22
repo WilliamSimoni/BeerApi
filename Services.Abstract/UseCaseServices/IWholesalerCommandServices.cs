@@ -1,4 +1,6 @@
-﻿using Domain.Common.Errors.Base;
+﻿using Contracts.Dtos;
+using Domain.Common.Errors.Base;
+using OneOf;
 
 namespace Services.Abstract.UseCaseServices
 {
@@ -6,12 +8,13 @@ namespace Services.Abstract.UseCaseServices
     {
         /// <summary>
         /// Update beer quantity in wholesaler inventory.
-        /// If there is not any wholesaler associated to WholesalerId, it returns an IError with number 404.
-        /// If the quantity is negative it returns an IError with number 400.
+        /// If there is not any wholesaler associated to WholesalerId, it returns a WholesalerNotFound error (Number 404).
+        /// If there is not any beer sold by the wholesaler with the specified beerId, it returns a BeerNotSoldByWholesaler error (Number 404).
+        /// 
         /// </summary>
         /// <param name="WholesalerId"></param>
         /// <param name="Quantity"></param>
         /// <returns></returns>
-        //public Task<OneOf<UpdatedInventoryBeerDto, IError>> UpdateQuantity(int WholesalerId, int Quantity);
+        public Task<OneOf<UpdatedInventoryBeerDto, IError>> UpdateQuantity(int wholesalerId, int beerId, ForUpdateInventoryBeerDto inventoryBeerDto);
     }
 }

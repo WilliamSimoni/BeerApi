@@ -11,8 +11,23 @@ namespace Domain.Common.Errors
     {
         public new string Message => $"Beer with specified id does not exist for the specified brewery. [beerId: {beerId}, breweryId: {breweryId}]";
 
+        public new string Code => "BreweryBeer.NotFound";
+    }
+
+    public sealed record BeerNotFound(int beerId) : NotFoundError, IError
+    {
+        public new string Message => $"Beer with specified id does not exist (or has been canceled). [beerId: {beerId}]";
+
         public new string Code => "Beer.NotFound";
     }
+
+    public sealed record WholesalerBeerNotFound(int beerId, int wholesalerId) : NotFoundError, IError
+    {
+        public new string Message => $"Beer with specified id does not exist for the specified wholesaler. [beerId: {beerId}, wholesalerId: {wholesalerId}]";
+
+        public new string Code => "WholesalerBeer.NotFound";
+    }
+
 
     public sealed record BreweryBeerConflict(string name, int breweryId) : ConflictError, IError
     {
@@ -34,4 +49,19 @@ namespace Domain.Common.Errors
 
         public new string Code => "Beer.InternalError";
     }
+
+    public sealed record BeerNotSoldByWholesaler(int wholesalerId, int beerId) : NotFoundError, IError
+    {
+        public new string Message => $"Beer with specified id is not sold by the specified brewery. [beerId: {beerId}, wholesalerId: {wholesalerId}]";
+
+        public new string Code => "WholesalerBeer.BadRequest";
+    }
+
+    public sealed record BeerQuantityUpdateInternalError() : InternalError, IError
+    {
+        public new string Message => "Due to an internal error, it was impossible to update the beer quantity";
+
+        public new string Code => "InventoryBeer.InternalError";
+    }
 }
+

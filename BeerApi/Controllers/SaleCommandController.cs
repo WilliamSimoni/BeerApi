@@ -3,6 +3,7 @@ using Domain.Logger;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstract;
 using OneOf;
+using Domain.Common.Errors;
 
 namespace BeerApi.Controllers
 {
@@ -34,7 +35,18 @@ namespace BeerApi.Controllers
 
             return serviceResult.Match(
                 newSale => Created(nameof(SaleQueryController.GetSaleById), newSale),
-                error => Problem(statusCode: error.Number, detail: error.Message)
+                error => {
+
+                    //change number from 404 to 400 if either beer or wholesaler is not found
+                    int statusCode = error switch
+                    {
+                        BeerNotFound => 400,
+                        WholesalerNotFound => 400,
+                        _ => error.Number
+                    };
+
+                    return Problem(statusCode: statusCode, detail: error.Message);
+                }
                 );
 
         }

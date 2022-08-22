@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UseCaseServices\IQuoteService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="OneOf" Version="3.0.223" />
   </ItemGroup>
 
