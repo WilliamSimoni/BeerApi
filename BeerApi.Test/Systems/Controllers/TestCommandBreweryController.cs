@@ -99,29 +99,6 @@ namespace BeerApi.Test.Systems.Services
         }
 
         [Fact]
-        public async Task AddBeerToBrewery_OnInvalidModelState_ReturnsBadRequest()
-        {
-            //Arrange
-            var serviceMock = new Mock<IServicesWrapper>();
-            var changeBreweryMock = new Mock<IBreweryBeersCommandServices>();
-
-            serviceMock.Setup(s => s.ChangeBreweryBeers).Returns(changeBreweryMock.Object);
-
-            changeBreweryMock.Setup(s => s.AddBeerToBrewery(It.IsAny<int>(), It.IsAny<ForCreationBeerDto>()))
-                .ReturnsAsync(new BeerDto());
-
-            var controller = new BreweryCommandController(loggerMock, serviceMock.Object);
-
-            controller.ModelState.AddModelError("Name", "Required");
-
-            //Action
-            var result = await controller.AddBeerToBrewery(It.IsAny<int>(), new ForCreationBeerDto());
-
-            //Assert
-            result.Should().BeOfType<BadRequestObjectResult>();
-        }
-
-        [Fact]
         public async Task RemoveBeerFromBrewery_OnSuccess_ReturnsNoContent()
         {
             //Arrange

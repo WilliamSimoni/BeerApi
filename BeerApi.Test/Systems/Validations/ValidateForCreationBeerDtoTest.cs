@@ -2,6 +2,7 @@
 using FluentAssertions;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using BeerApi.Test.Helpers;
 
 namespace BeerApi.Test.Systems.Services
 {
@@ -11,6 +12,7 @@ namespace BeerApi.Test.Systems.Services
         [Fact]
         public void ModelState_OnCorrectDto_ReturnTrue()
         {
+            //Arrange
             var sut = new ForCreationBeerDto()
             {
                 Name = "Test",
@@ -18,20 +20,18 @@ namespace BeerApi.Test.Systems.Services
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = 1
             };
-            // Set some properties here
-            var context = new ValidationContext(sut, null, null);
-            var results = new List<ValidationResult>();
-            TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(typeof(ForCreationBeerDto), typeof(ForCreationBeerDto)), typeof(ForCreationBeerDto));
+            
+            //Action
+            var isModelStateValid = ValidationTestHelper.Validate(sut);
 
-            var isModelStateValid = Validator.TryValidateObject(sut, context, results, true);
-
-            // Assert here
+            //Assert
             isModelStateValid.Should().BeTrue();
         }
 
         [Fact]
         public void ModelState_OnTooLongName_ReturnsFalse()
         {
+            // Arrange
             var sut = new ForCreationBeerDto()
             {
                 Name = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -39,20 +39,19 @@ namespace BeerApi.Test.Systems.Services
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = 1
             };
-            // Set some properties here
-            var context = new ValidationContext(sut, null, null);
-            var results = new List<ValidationResult>();
-            TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(typeof(ForCreationBeerDto), typeof(ForCreationBeerDto)), typeof(ForCreationBeerDto));
 
-            var isModelStateValid = Validator.TryValidateObject(sut, context, results, true);
+            // Action
+            var isModelStateValid = ValidationTestHelper.Validate(sut);
 
-            // Assert here
+
+            // Assert
             isModelStateValid.Should().BeFalse();
         }
 
         [Fact]
         public void ModelState_OnNegativeSellingPriceToClients_ReturnsFalse()
         {
+            // Arrange
             var sut = new ForCreationBeerDto()
             {
                 Name = "Test",
@@ -60,20 +59,18 @@ namespace BeerApi.Test.Systems.Services
                 SellingPriceToClients = -1,
                 SellingPriceToWholesalers = 1
             };
-            // Set some properties here
-            var context = new ValidationContext(sut, null, null);
-            var results = new List<ValidationResult>();
-            TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(typeof(ForCreationBeerDto), typeof(ForCreationBeerDto)), typeof(ForCreationBeerDto));
 
-            var isModelStateValid = Validator.TryValidateObject(sut, context, results, true);
+            // Action
+            var isModelStateValid = ValidationTestHelper.Validate(sut);
 
-            // Assert here
+            // Assert
             isModelStateValid.Should().BeFalse();
         }
 
         [Fact]
         public void ModelState_SellingPriceToClientsIs0_ReturnsFalse()
         {
+            // Arrange
             var sut = new ForCreationBeerDto()
             {
                 Name = "Test",
@@ -81,20 +78,18 @@ namespace BeerApi.Test.Systems.Services
                 SellingPriceToClients = 0,
                 SellingPriceToWholesalers = 1
             };
-            // Set some properties here
-            var context = new ValidationContext(sut, null, null);
-            var results = new List<ValidationResult>();
-            TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(typeof(ForCreationBeerDto), typeof(ForCreationBeerDto)), typeof(ForCreationBeerDto));
 
-            var isModelStateValid = Validator.TryValidateObject(sut, context, results, true);
+            // Action
+            var isModelStateValid = ValidationTestHelper.Validate(sut);
 
-            // Assert here
+            // Assert 
             isModelStateValid.Should().BeFalse();
         }
 
         [Fact]
         public void ModelState_OnNegativeSellingPriceToWholesalers_ReturnsFalse()
         {
+            // Arrange
             var sut = new ForCreationBeerDto()
             {
                 Name = "Test",
@@ -102,20 +97,18 @@ namespace BeerApi.Test.Systems.Services
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = -1
             };
-            // Set some properties here
-            var context = new ValidationContext(sut, null, null);
-            var results = new List<ValidationResult>();
-            TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(typeof(ForCreationBeerDto), typeof(ForCreationBeerDto)), typeof(ForCreationBeerDto));
 
-            var isModelStateValid = Validator.TryValidateObject(sut, context, results, true);
+            // Action
+            var isModelStateValid = ValidationTestHelper.Validate(sut);
 
-            // Assert here
+            // Assert
             isModelStateValid.Should().BeFalse();
         }
 
         [Fact]
         public void ModelState_SellingPriceToWholesalersIs0_ReturnsFalse()
         {
+            //Arrange 
             var sut = new ForCreationBeerDto()
             {
                 Name = "Test",
@@ -123,20 +116,18 @@ namespace BeerApi.Test.Systems.Services
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = 0
             };
-            // Set some properties here
-            var context = new ValidationContext(sut, null, null);
-            var results = new List<ValidationResult>();
-            TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(typeof(ForCreationBeerDto), typeof(ForCreationBeerDto)), typeof(ForCreationBeerDto));
 
-            var isModelStateValid = Validator.TryValidateObject(sut, context, results, true);
+            // Action
+            var isModelStateValid = ValidationTestHelper.Validate(sut);
 
-            // Assert here
+            // Assert
             isModelStateValid.Should().BeFalse();
         }
 
         [Fact]
         public void ModelState_AlcoholContentIsNegative_ReturnsFalse()
         {
+            // Arrange
             var sut = new ForCreationBeerDto()
             {
                 Name = "Test",
@@ -144,20 +135,20 @@ namespace BeerApi.Test.Systems.Services
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = 1
             };
-            // Set some properties here
-            var context = new ValidationContext(sut, null, null);
-            var results = new List<ValidationResult>();
-            TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(typeof(ForCreationBeerDto), typeof(ForCreationBeerDto)), typeof(ForCreationBeerDto));
+            
+            // Action
+            var isModelStateValid = ValidationTestHelper.Validate(sut);
 
-            var isModelStateValid = Validator.TryValidateObject(sut, context, results, true);
-
-            // Assert here
+            // Assert
             isModelStateValid.Should().BeFalse();
         }
+
+        
 
         [Fact]
         public void ModelState_AlcoholContentIsLargerThan100_ReturnsFalse()
         {
+            //Arrange
             var sut = new ForCreationBeerDto()
             {
                 Name = "Test",
@@ -165,14 +156,11 @@ namespace BeerApi.Test.Systems.Services
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = 1
             };
-            // Set some properties here
-            var context = new ValidationContext(sut, null, null);
-            var results = new List<ValidationResult>();
-            TypeDescriptor.AddProviderTransparent(new AssociatedMetadataTypeTypeDescriptionProvider(typeof(ForCreationBeerDto), typeof(ForCreationBeerDto)), typeof(ForCreationBeerDto));
 
-            var isModelStateValid = Validator.TryValidateObject(sut, context, results, true);
+            //Action
+            var isModelStateValid = ValidationTestHelper.Validate(sut);
 
-            // Assert here
+            //Assert
             isModelStateValid.Should().BeFalse();
         }
     }

@@ -14,8 +14,8 @@ namespace Contracts.Dtos
     public record QuoteRequestItemDto
     {
         public int BeerId { get; set; }
-        [Range(0, int.MaxValue, ErrorMessage = "{0} can not be smaller than {1}")]
 
+        [Range(0, int.MaxValue, ErrorMessage = "{0} can not be smaller than {1}")]
         public int Quantity { get; set; }
     }
 
