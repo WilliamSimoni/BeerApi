@@ -9,6 +9,7 @@ namespace BeerApi.Controllers
 {
     [ApiController]
     [Route("api/breweries")]
+    [ApiVersion("1.0")]
     public class BreweryQueryController : ControllerBase
     {
         private readonly ILoggerManager _logger;

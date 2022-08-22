@@ -8,6 +8,7 @@ namespace BeerApi.Controllers
 {
     [Route("api/quotes")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class QuoteController : ControllerBase
     {
 

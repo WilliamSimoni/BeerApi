@@ -12,6 +12,7 @@ using Serilog;
 using LoggerService;
 using Domain.Logger;
 using Services.Mappings;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,25 @@ DependencyInjectionMapping.addMappings(builder.Services);
 
 //add loggermanager as a service
 builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
+
+//versioning
+builder.Services.AddApiVersioning(o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    o.ReportApiVersions = true;
+    o.ApiVersionReader = ApiVersionReader.Combine(
+        new QueryStringApiVersionReader("api-version"),
+        new HeaderApiVersionReader("X-Version"),
+        new MediaTypeApiVersionReader("ver"));
+});
+
+builder.Services.AddVersionedApiExplorer(
+    options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
 
 builder.Services.AddControllers();
 

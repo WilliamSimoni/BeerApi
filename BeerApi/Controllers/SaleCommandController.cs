@@ -9,6 +9,7 @@ namespace BeerApi.Controllers
 {
     [Route("api/sales")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class SaleCommandController : ControllerBase
     {
 

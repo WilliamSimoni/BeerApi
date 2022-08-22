@@ -8,6 +8,7 @@ namespace BeerApi.Controllers
 {
     [Route("api/sales")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class SaleQueryController : ControllerBase
     {
         private readonly ILoggerManager _logger;

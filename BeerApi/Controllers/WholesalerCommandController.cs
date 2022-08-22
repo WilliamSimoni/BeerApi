@@ -8,6 +8,7 @@ namespace BeerApi.Controllers
 {
     [Route("api/wholesalers")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class WholesalerCommandController : ControllerBase
     {
 
