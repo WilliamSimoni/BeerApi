@@ -1,6 +1,7 @@
 ﻿using BeerApi.Test.Fixtures;
 using BeerApi.Test.Helpers;
 using BeerApi.Test.Helpers.Mocks;
+using Domain.Common.Errors;
 using Domain.Entities;
 using Domain.Logger;
 using Domain.Repositories;
@@ -15,11 +16,11 @@ namespace BeerApi.Test.Systems.Services
 {
 
 
-    public class TestQueryBreweryServices
+    public class TestBreweryQueryServices
     {
         private BreweryQueryServices service;
 
-        public TestQueryBreweryServices()
+        public TestBreweryQueryServices()
         {
             //Arrange for all tests
             var loggerMock = new Mock<ILoggerManager>();
@@ -71,7 +72,7 @@ namespace BeerApi.Test.Systems.Services
 
             //Assert
             brewery.IsT0.Should().BeFalse();
-            brewery.AsT1.Number.Should().Be(404);
+            brewery.AsT1.Should().BeOfType<BreweryNotFound>();
         }
     }
 }

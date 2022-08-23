@@ -7,7 +7,7 @@ using BeerApi.Test.Helpers;
 namespace BeerApi.Test.Systems.Services
 {
 
-    public class ValidateForCreationSaleDtoTest
+    public class TestValidateForCreationSaleDto
     {
 
 

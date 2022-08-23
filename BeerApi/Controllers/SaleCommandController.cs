@@ -25,7 +25,7 @@ namespace BeerApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> insertSale([FromBody] ForCreationSaleDto saleDto)
+        public async Task<ActionResult> PostSale([FromBody] ForCreationSaleDto saleDto)
         {
             var serviceResult = await _services.ChangeSale.addSale(saleDto);
 

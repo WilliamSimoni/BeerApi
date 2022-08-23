@@ -12,11 +12,11 @@ using Mapster;
 
 namespace BeerApi.Test.Systems.Controllers
 {
-    public class TestQueryBreweryController
+    public class TestBreweryQueryController
     {
 
         private readonly ILoggerManager _logger;
-        public TestQueryBreweryController()
+        public TestBreweryQueryController()
         {
 
             //create real logger for tests

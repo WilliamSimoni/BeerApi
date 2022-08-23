@@ -103,6 +103,7 @@ namespace BeerApi.Test.Fixtures
                 new GetBeerFromSaleDto()
                 {
                     BeerId = 1,
+                    BreweryId = 1,
                     Name = "beer1",
                     AlcoholContent = 5,
                     SellingPriceToClients = 10,
@@ -111,6 +112,7 @@ namespace BeerApi.Test.Fixtures
                 new GetBeerFromSaleDto()
                 {
                     BeerId = 2,
+                    BreweryId = 1,
                     Name = "beer2",
                     AlcoholContent = 1,
                     SellingPriceToClients = 3,
@@ -119,6 +121,7 @@ namespace BeerApi.Test.Fixtures
                 new GetBeerFromSaleDto()
                 {
                     BeerId = 3,
+                    BreweryId = 1,
                     Name = "beer3",
                     AlcoholContent = 5,
                     SellingPriceToClients = 10,
@@ -127,6 +130,7 @@ namespace BeerApi.Test.Fixtures
                 new GetBeerFromSaleDto()
                 {
                     BeerId = 4,
+                    BreweryId = 2,
                     Name = "beer4",
                     AlcoholContent = 5.43,
                     SellingPriceToClients = 9.21m,

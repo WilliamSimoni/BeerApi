@@ -1,6 +1,7 @@
 ﻿using BeerApi.Test.Fixtures;
 using BeerApi.Test.Helpers;
 using BeerApi.Test.Helpers.Mocks;
+using Domain.Common.Errors;
 using Domain.Entities;
 using Domain.Logger;
 using Domain.Repositories;
@@ -14,13 +15,11 @@ using Xunit;
 
 namespace BeerApi.Test.Systems.Services
 {
-
-
-    public class TestQueryBreweryBeersServices
+    public class TestBreweryBeersQueryServices
     {
         private BreweryBeersQueryServices service;
 
-        public TestQueryBreweryBeersServices()
+        public TestBreweryBeersQueryServices()
         {
             //Arrange for all tests
             var loggerMock = new Mock<ILoggerManager>();
@@ -33,14 +32,14 @@ namespace BeerApi.Test.Systems.Services
         }
 
         [Fact]
-        public async Task GetAllBeers_OnBreweryDoesNotExist_ReturnsIErrorWith404Number()
+        public async Task GetAllBeers_OnBreweryDoesNotExist_ReturnsBreweryNotFound()
         {
             //Action
             var result = await service.GetAllBeers(5);
 
             //Assert
             result.IsT0.Should().BeFalse();
-            result.AsT1.Number.Should().Be(404);
+            result.AsT1.Should().BeOfType<BreweryNotFound>();
         }
 
 
@@ -70,5 +69,7 @@ namespace BeerApi.Test.Systems.Services
             //Beer with id 4 is the only beer associated to the brewery with id 2
             result.AsT0.Should().Equal(BeerFixtures.GetBeersDto().Where(b => b.BeerId == 4));
         }
+
+        //TODO: do GetById()
     }
 }

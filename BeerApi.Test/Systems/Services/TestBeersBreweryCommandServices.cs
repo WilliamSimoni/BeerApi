@@ -2,6 +2,7 @@
 using BeerApi.Test.Helpers;
 using BeerApi.Test.Helpers.Mocks;
 using Contracts.Dtos;
+using Domain.Common.Errors;
 using Domain.Logger;
 using FluentAssertions;
 using Mapster;
@@ -13,11 +14,11 @@ namespace BeerApi.Test.Systems.Services
 {
 
 
-    public class TestCommandBreweryBeersServices
+    public class TestBreweryBeersCommandServices
     {
         private BreweryBeersCommandServices service;
 
-        public TestCommandBreweryBeersServices()
+        public TestBreweryBeersCommandServices()
         {
             //Arrange for all tests
             var loggerMock = new Mock<ILoggerManager>();
@@ -50,18 +51,18 @@ namespace BeerApi.Test.Systems.Services
         }
 
         [Fact]
-        public async Task AddBeerToBrewery_OnBreweryDoesNotExist_ReturnsIErrorWith404Number()
+        public async Task AddBeerToBrewery_OnBreweryDoesNotExist_ReturnsBreweryNotFound()
         {
             //Action
             var result = await service.AddBeerToBrewery(5, new ForCreationBeerDto());
 
             //Assert
             result.IsT0.Should().BeFalse();
-            result.AsT1.Number.Should().Be(404);
+            result.AsT1.Should().BeOfType<BreweryNotFound>();
         }
 
         [Fact]
-        public async Task AddBeerToBrewery_OnNameConflict_ReturnsIErrorWith409Number()
+        public async Task AddBeerToBrewery_OnNameConflict_ReturnsBreweryBeerConflictError()
         {
             var newBeer = new ForCreationBeerDto()
             {
@@ -76,7 +77,7 @@ namespace BeerApi.Test.Systems.Services
 
             //Assert
             result.IsT0.Should().BeFalse();
-            result.AsT1.Number.Should().Be(409);
+            result.AsT1.Should().BeOfType<BreweryBeerConflict>();
         }
 
         [Fact]
@@ -90,23 +91,23 @@ namespace BeerApi.Test.Systems.Services
         }
 
         [Fact]
-        public async Task RemoveBeerFromBrewery_OnBreweryDoesNotExist_ReturnsIErrorWithCode404()
+        public async Task RemoveBeerFromBrewery_OnBreweryDoesNotExist_ReturnsBreweryNotFoundError()
         {
             //Action (remove beer with id 1 from brewery with id 5)
             var result = await service.RemoveBeerFromBrewery(5, 1);
 
             //Assert
-            result.Number.Should().Be(404);
+            result.Should().BeOfType<BreweryNotFound>();
         }
 
         [Fact]
-        public async Task RemoveBeerFromBrewery_OnBeerDoesNotExist_ReturnsIErrorWithCode404()
+        public async Task RemoveBeerFromBrewery_OnBeerDoesNotExist_ReturnsBeerNotFoundError()
         {
             //Action (remove beer with id 100 from brewery with id 1)
             var result = await service.RemoveBeerFromBrewery(1, 100);
 
             //Assert
-            result.Number.Should().Be(404);
+            result.Should().BeOfType<BreweryBeerNotFound>();
         }
     }
 }

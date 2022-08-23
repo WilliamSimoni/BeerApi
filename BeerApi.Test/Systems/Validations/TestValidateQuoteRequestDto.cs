@@ -6,7 +6,7 @@ using Domain.Entities;
 namespace BeerApi.Test.Systems.Services
 {
 
-    public class ValidateQuoteRequestDtoTest
+    public class TestValidateQuoteRequestDto
     {
 
         [Fact]

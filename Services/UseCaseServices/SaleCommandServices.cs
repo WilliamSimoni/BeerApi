@@ -57,13 +57,7 @@ namespace Services.UseCaseServices
 
             //add the sale
             _unitOfWork.ChangeSale.Add(newSale);
-            int result = await _unitOfWork.SaveAsync();
-
-            if (result == 1)
-            {
-                _logger.LogError("SaleCommandService was not able to add a new sale to the repository", newSale.SaleId);
-                return new SaleInsertionInternalError();
-            }
+            await _unitOfWork.SaveAsync();
 
             _logger.LogDebug("SaleCommandService added a new sale with id {1} to the repository");
 

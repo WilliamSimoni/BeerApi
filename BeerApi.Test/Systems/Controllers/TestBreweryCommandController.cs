@@ -21,11 +21,11 @@ namespace BeerApi.Test.Systems.Services
 {
 
 
-    public class TestCommandBreweryController
+    public class TestBreweryCommandController
     {
         private ILoggerManager loggerMock;
 
-        public TestCommandBreweryController()
+        public TestBreweryCommandController()
         {
             //Arrange for all tests
             loggerMock = new Mock<ILoggerManager>().Object;

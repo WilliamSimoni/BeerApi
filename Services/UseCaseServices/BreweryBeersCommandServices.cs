@@ -63,13 +63,7 @@ namespace Services.UseCaseServices
             newBeer.BreweryId = breweryId;
 
             _unitOfWork.ChangeBeer.Add(newBeer);
-            int result = await _unitOfWork.SaveAsync();
-
-            if (result == 1)
-            {
-                _logger.LogError("BreweryBeersCommandService was not able to add a new beer to the repository");
-                return new BeerInsertionInternalError();
-            }
+            await _unitOfWork.SaveAsync();
 
             _logger.LogDebug("BreweryCommandService added a new beer with id {1} to the repository", newBeer.BeerId);
 

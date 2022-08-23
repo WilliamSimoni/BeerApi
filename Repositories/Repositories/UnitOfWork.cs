@@ -120,18 +120,9 @@ namespace Repositories.Repositories
             }
         }
 
-        public async Task<int> SaveAsync()
+        public async Task SaveAsync()
         {
-            try
-            {
-                await _context.SaveChangesAsync();
-            } catch (DbUpdateException e)
-            {
-                _logger.LogError(e.Message);
-                _logger.LogError("{1}", e.InnerException);
-                return 1;
-            }
-            return 0;
+            await _context.SaveChangesAsync();
         }
     }
 }

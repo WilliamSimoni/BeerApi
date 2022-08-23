@@ -5,7 +5,7 @@ using BeerApi.Test.Helpers;
 namespace BeerApi.Test.Systems.Services
 {
 
-    public class ValidateForCreationBeerDtoTest
+    public class TestValidateForCreationBeerDto
     {
         [Fact]
         public void ModelState_OnCorrectDto_ReturnTrue()

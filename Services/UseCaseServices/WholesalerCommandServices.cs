@@ -9,7 +9,7 @@ using Services.Abstract.UseCaseServices;
 
 namespace Services.UseCaseServices
 {
-    internal class WholesalerCommandServices : IWholesalerCommandServices
+    public class WholesalerCommandServices : IWholesalerCommandServices
     {
         private readonly ILoggerManager _logger;
 
@@ -51,12 +51,7 @@ namespace Services.UseCaseServices
             updatedInventoryBeer.Quantity = inventoryBeerDto.Quantity;
             _unitOfWork.ChangeInventoryBeer.Update(updatedInventoryBeer);
 
-            int saveResult = await _unitOfWork.SaveAsync();
-            if (saveResult == 1)
-            {
-                _logger.LogError("WholesalerCommandService was not able to update the beer quantity");
-                return new BeerQuantityUpdateInternalError();
-            }
+            await _unitOfWork.SaveAsync();
 
             _logger.LogDebug("WholesalerCommandService successfully updated the quantity of beer {1} sold by the wholesaler with id {2}", beerId, wholesalerId);
 
