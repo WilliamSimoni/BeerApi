@@ -1,4 +1,4 @@
-# Archiitecture
+# Architecture
 
 The API is implemented using a layered architecture consisting of four levels:
 - The domain layer defines core aspects of the domain, such as entities and errors. 
