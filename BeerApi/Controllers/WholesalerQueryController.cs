@@ -26,6 +26,8 @@ namespace BeerApi.Controllers
         {
             var serviceResult = await _services.QueryWholesaler.GetAllWholesalerBeers(wholesalerId);
 
+            _logger.LogDebug("WholesalerQueryController received result from QueryWholesaler.GetAllWholesalerBeers");
+
             return serviceResult.Match<ActionResult>(
                 beers => Ok(beers),
                 error => Problem(statusCode: error.Number, detail: error.Message)
@@ -38,6 +40,8 @@ namespace BeerApi.Controllers
         public async Task<ActionResult<GetInventoryBeerDto>> GetBeerById(int wholesalerId, int beerId)
         {
             var serviceResult = await _services.QueryWholesaler.GetWholesalerBeerById(wholesalerId, beerId);
+
+            _logger.LogDebug("WholesalerQueryController received result from QueryWholesaler.GetWholesalerBeerById");
 
             return serviceResult.Match<ActionResult>(
                 beer => Ok(beer),

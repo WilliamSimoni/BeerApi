@@ -29,6 +29,8 @@ namespace BeerApi.Controllers
         {
             var result = await _services.ChangeBreweryBeers.AddBeerToBrewery(breweryId, creationBeerDto);
 
+            _logger.LogDebug("BreweryCommandController received result from ChangeBreweryBeers.AddBeerToBrewery");
+
             return result.Match(
                 beerDto => Created($"/api/breweries/{breweryId}/beers/{beerDto.BeerId}", beerDto),
                 error => Problem(statusCode: error.Number, detail: error.Message)
@@ -41,6 +43,8 @@ namespace BeerApi.Controllers
         public async Task<ActionResult> removeBeerFromBrewery(int breweryId, int beerId)
         {
             var error = await _services.ChangeBreweryBeers.RemoveBeerFromBrewery(breweryId, beerId);
+
+            _logger.LogDebug("BreweryCommandController received result from ChangeBreweryBeers.RemoveBeerFromBrewery");
 
             if (error is null)
             {

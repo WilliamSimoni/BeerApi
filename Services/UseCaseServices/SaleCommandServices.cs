@@ -41,7 +41,7 @@ namespace Services.UseCaseServices
                 return new WholesalerNotFound(newSale.WholesalerId);
             }
 
-            _logger.LogDebug("SaleCommandService found wholesaler with id {1}", newSale.WholesalerId);
+            _logger.LogDebug("SaleCommandService found wholesaler with id {1}. So, it can proceed with the addition of a sale", newSale.WholesalerId);
 
             //check if the beer exists
             var beer = await _unitOfWork.QueryBeer
@@ -53,7 +53,7 @@ namespace Services.UseCaseServices
                 return new BeerNotFound(newSale.BeerId);
             }
 
-            _logger.LogDebug("SaleCommandService found beer with id {1}", newSale.BeerId);
+            _logger.LogDebug("SaleCommandService found beer with id {1}. So, it can proceed with the addition of a sale", newSale.BeerId);
 
             //add the sale
             _unitOfWork.ChangeSale.Add(newSale);

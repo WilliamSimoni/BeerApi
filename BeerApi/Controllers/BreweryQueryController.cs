@@ -27,6 +27,8 @@ namespace BeerApi.Controllers
         {
             var breweries = await _services.QueryBrewery.GetAll();
 
+            _logger.LogDebug("BreweryQueryController received result from QueryBrewery.GetAll");
+
             return Ok(breweries);
         }
 
@@ -36,6 +38,8 @@ namespace BeerApi.Controllers
         public async Task<ActionResult<BreweryDto>> GetBreweryById(int breweryId)
         {
             var serviceResult = await _services.QueryBrewery.GetById(breweryId);
+
+            _logger.LogDebug("BreweryQueryController received result from QueryBrewery.GetById");
 
             return serviceResult.Match<ActionResult>(
                 brewery => Ok(brewery),
@@ -50,6 +54,8 @@ namespace BeerApi.Controllers
         {
             var serviceResult = await _services.QueryBreweryBeers.GetAllBeers(breweryId);
 
+            _logger.LogDebug("BreweryQueryController received result from QueryBreweryBeers.GetAllBeers");
+
             return serviceResult.Match<ActionResult>(
                 beers => Ok(beers),
                 error => Problem(statusCode: error.Number, detail: error.Message)
@@ -62,6 +68,8 @@ namespace BeerApi.Controllers
         public async Task<ActionResult<BeerDto>> GetBeerByIdFromBrewery(int breweryId, int beerId)
         {
             var serviceResult = await _services.QueryBreweryBeers.GetBeerById(breweryId, beerId);
+
+            _logger.LogDebug("BreweryQueryController received result from QueryBreweryBeers.GetBeerById");
 
             return serviceResult.Match<ActionResult>(
                     beer => Ok(beer),

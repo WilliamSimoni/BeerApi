@@ -29,6 +29,8 @@ namespace BeerApi.Controllers
         {
             var serviceResult = await _services.ChangeSale.addSale(saleDto);
 
+            _logger.LogDebug("SaleCommandController received result from ChangeSale.addSale");
+
             return serviceResult.Match(
                 newSale => Created(nameof(SaleQueryController.GetSaleById), newSale),
                 error => {

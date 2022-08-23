@@ -28,6 +28,8 @@ namespace BeerApi.Controllers
         {
             var serviceResult = await _services.AskQuote.GetQuote(quoteRequestDto);
 
+            _logger.LogDebug("QuoteController received result from AskQuote.GetQuote");
+
             return serviceResult.Match(
                 quoteSummary => Ok(quoteSummary),
                 error =>

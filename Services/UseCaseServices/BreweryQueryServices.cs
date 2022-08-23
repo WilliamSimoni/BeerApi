@@ -29,6 +29,8 @@ namespace Services.UseCaseServices
         {
             var breweries = await _unitOfWork.QueryBrewery.GetAll();
 
+            _logger.LogDebug("BreweryQueryServices retrieved all the breweries");
+
             return _mapper.Map<BreweryDto[]>(breweries);
         }
 
@@ -37,7 +39,11 @@ namespace Services.UseCaseServices
             var brewery = await _unitOfWork.QueryBrewery.GetByCondition(b => b.BreweryId == breweryId);
 
             if (!brewery.Any())
+            {
+                _logger.LogInfo("BreweryQueryServices tried to retrieve a brewery, but the id {1} did not correspond to any existing brewery", breweryId);
                 return new BreweryNotFound(breweryId);
+            }
+            _logger.LogDebug("BreweryQueryServices retrieved brewery with id {1}", breweryId);
 
             return _mapper.Map<BreweryDto>(brewery.First());
         }

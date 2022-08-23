@@ -78,9 +78,12 @@ namespace Services.UseCaseServices
 
             if (!brewery.Any())
             {
-                _logger.LogWarn("Brewery id is not valid");
+                _logger.LogInfo("BreweryBeersCommandService tried to remove a beer, but the id {1} did not correspond to any existing brewery", breweryId);
                 return new BreweryNotFound(breweryId);
             }
+
+            _logger.LogDebug("BreweryBeersCommandService found a brewery with id {1}. So, it can proceed with the deletion of the beer with id {2}", breweryId, beerId);
+
 
             //check if there exists a beer with id beerId produced by the brewery with id breweryId
             var beers = await _unitOfWork.QueryBeer
@@ -92,9 +95,11 @@ namespace Services.UseCaseServices
 
             if (!beers.Any())
             {
-                _logger.LogInfo("");
+                _logger.LogInfo("BreweryBeersCommandService tried to remove a beer, but the id {1} did not correspond to any beer produced by the brewery with id {2}", beerId, breweryId);
                 return new BreweryBeerNotFound(beerId, breweryId);
             }
+
+            _logger.LogDebug("BreweryBeersCommandService found a beer with id {1} that the brewery with id {2} produces. So, it can proceed with deleting the beer with id {1}", beerId, breweryId);
 
             //set deletion fields (to soft delete the beer)
             var beer = beers.First();
@@ -105,6 +110,8 @@ namespace Services.UseCaseServices
             _unitOfWork.ChangeBeer.Update(beer);
 
             await _unitOfWork.SaveAsync();
+
+            _logger.LogDebug("BreweryBeersCommandService (soft) deleted the beer with id {1} from the brewery with id {2} ", beerId, breweryId);
 
             return null;
         }

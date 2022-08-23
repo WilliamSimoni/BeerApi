@@ -42,11 +42,11 @@ namespace Services.UseCaseServices
 
             if (!sale.Any())
             {
-                _logger.LogInfo("QuerySaleService, trying to retrieve the beer involved in a sale, did not find the sale with id {1}", saleId);
+                _logger.LogInfo("QuerySaleService tried to retrieve the beer involved in a sale, but id {1} is not associated with any sale.", saleId);
                 return new SaleNotFound(saleId);
             }
 
-            _logger.LogDebug("QuerySaleService retrieved sale with id {1}", saleId);
+            _logger.LogDebug("QuerySaleService retrieved sale with id {1}. So, it can get the information about the beer involved in the sale", saleId);
 
             var beer = await _unitOfWork.QueryBeer.GetByCondition(b => b.BeerId == sale.First().BeerId);
 
@@ -62,7 +62,7 @@ namespace Services.UseCaseServices
 
             if (!sale.Any())
             {
-                _logger.LogInfo("QuerySaleService did not find the sale with id {1}", saleId);
+                _logger.LogInfo("QuerySaleService tried to retrieve a sale, but id {1} is not associated with any sale", saleId);
                 return new SaleNotFound(saleId);
             }
 

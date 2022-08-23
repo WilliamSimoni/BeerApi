@@ -26,6 +26,8 @@ namespace BeerApi.Controllers
         {
             var sales = await _services.QuerySale.GetAll();
 
+            _logger.LogDebug("SaleQueryController received result from QuerySale.GetAll");
+
             return Ok(sales);
         }
 
@@ -35,6 +37,8 @@ namespace BeerApi.Controllers
         public async Task<ActionResult<GetSaleDto>> GetSaleById(int saleId)
         {
             var serviceResult = await _services.QuerySale.GetById(saleId);
+
+            _logger.LogDebug("SaleQueryController received result from QuerySale.GetById");
 
             return serviceResult.Match(
                 sale => Ok(sale),
@@ -48,6 +52,8 @@ namespace BeerApi.Controllers
         public async Task<ActionResult<GetBeerFromSaleDto>> GetBeerInvolvedInSale(int saleId)
         {
             var serviceResult = await _services.QuerySale.GetBeerInvolvedInSale(saleId);
+
+            _logger.LogDebug("SaleQueryController received result from QuerySale.GetBeerInvolvedInSale");
 
             return serviceResult.Match(
                 beer => Ok(beer),

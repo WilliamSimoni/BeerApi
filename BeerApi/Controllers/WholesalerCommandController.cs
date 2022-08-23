@@ -30,6 +30,8 @@ namespace BeerApi.Controllers
 
             var serviceResult = await _services.ChangeWholesaler.UpdateQuantity(wholesalerId, beerId, updateBeerDto);
 
+            _logger.LogDebug("WholesalerCommandController received result from ChangeWholesaler.UpdateQuantity");
+
             return serviceResult.Match<ActionResult>(
                 updatedInventoryDto => NoContent(),
                 error => Problem(statusCode: error.Number, detail: error.Message)
