@@ -43,6 +43,15 @@ namespace Services.UseCaseServices
             return _mapper.Map<GetInventoryBeerDto[]>(beers);
         }
 
+        public async Task<IEnumerable<GetWholesalerDto>> GetAllWholesalers()
+        {
+            var wholesalers =  await _unitOfWork.QueryWholesaler.GetAll();
+            
+            _logger.LogDebug("WholesalerQueryService retrieved all the wholesalers information");
+            
+            return _mapper.Map<GetWholesalerDto[]>(wholesalers);
+        }
+
         public async Task<OneOf<GetInventoryBeerDto, IError>> GetWholesalerBeerById(int wholesalerId, int beerId)
         {
             var wholesaler = await _unitOfWork.QueryWholesaler.GetByCondition(w => w.WholesalerId == wholesalerId);
@@ -66,6 +75,20 @@ namespace Services.UseCaseServices
             _logger.LogDebug("WholesalerQueryService successfully retrieved beer with id {1} sold by the wholesaler with id {2}", beerId, wholesalerId);
 
             return _mapper.Map<GetInventoryBeerDto>(beer.First());
+        }
+
+        public async Task<OneOf<GetWholesalerDto, IError>> GetWholesalerById(int wholesalerId)
+        {
+            var wholesaler = await _unitOfWork.QueryWholesaler.GetByCondition(w => w.WholesalerId == wholesalerId);
+
+            if (!wholesaler.Any())
+            {
+                _logger.LogInfo("WholesalerQueryService was trying to retrieve information from the wholesaler with id {1}. But such id does not correspond to any existing wholesaler", wholesalerId);
+                return new WholesalerNotFound(wholesalerId);
+            }
+
+            return _mapper.Map<GetWholesalerDto>(wholesaler.First());
+
         }
     }
 }

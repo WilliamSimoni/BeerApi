@@ -19,6 +19,29 @@ namespace BeerApi.Controllers
             _services = services;
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<GetWholesalerDto>>> GetAllWholesalers()
+        {
+            var serviceResult =  await _services.QueryWholesaler.GetAllWholesalers();
+
+            return Ok(serviceResult);
+        }
+
+        [HttpGet("{wholesalerId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<GetWholesalerDto>> GetWholesalerById(int wholesalerId)
+        {
+            var serviceResult = await _services.QueryWholesaler.GetWholesalerById(wholesalerId);
+
+            return serviceResult.Match<ActionResult>(
+                wholesalers => Ok(wholesalers),
+                error => Problem(statusCode: error.Number, detail: error.Message)
+                );
+        }
+
+
         [HttpGet("{wholesalerId}/beers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
