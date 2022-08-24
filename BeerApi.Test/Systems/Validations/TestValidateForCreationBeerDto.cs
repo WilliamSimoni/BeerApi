@@ -1,6 +1,6 @@
-﻿using Contracts.Dtos;
+﻿using BeerApi.Test.Helpers;
+using Contracts.Dtos;
 using FluentAssertions;
-using BeerApi.Test.Helpers;
 
 namespace BeerApi.Test.Systems.Services
 {
@@ -18,7 +18,7 @@ namespace BeerApi.Test.Systems.Services
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = 1
             };
-            
+
             //Action
             var isModelStateValid = ValidationTestHelper.Validate(sut);
 
@@ -133,7 +133,7 @@ namespace BeerApi.Test.Systems.Services
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = 1
             };
-            
+
             // Action
             var isModelStateValid = ValidationTestHelper.Validate(sut);
 
@@ -141,7 +141,7 @@ namespace BeerApi.Test.Systems.Services
             isModelStateValid.Should().BeFalse();
         }
 
-        
+
 
         [Fact]
         public void ModelState_AlcoholContentIsLargerThan100_ReturnsFalse()

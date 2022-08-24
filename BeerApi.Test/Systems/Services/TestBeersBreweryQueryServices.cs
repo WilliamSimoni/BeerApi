@@ -2,16 +2,10 @@
 using BeerApi.Test.Helpers;
 using BeerApi.Test.Helpers.Mocks;
 using Domain.Common.Errors;
-using Domain.Entities;
 using Domain.Logger;
-using Domain.Repositories;
-using Domain.Repositories.Specialization;
 using FluentAssertions;
-using MapsterMapper;
 using Moq;
 using Services.UseCaseServices;
-using System.Linq.Expressions;
-using Xunit;
 
 namespace BeerApi.Test.Systems.Services
 {

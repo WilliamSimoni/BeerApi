@@ -12,7 +12,7 @@ using Repositories.DataContext;
 namespace BeerApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220821085421_InitMigration")]
+    [Migration("20220824074812_InitMigration")]
     partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,6 +147,9 @@ namespace BeerApi.Migrations
 
                     b.HasKey("BreweryId");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("Name")
                         .IsUnique();
 
@@ -216,6 +219,27 @@ namespace BeerApi.Migrations
                             BeerId = 1,
                             Quantity = 70,
                             WholesalerId = 2
+                        },
+                        new
+                        {
+                            InventoryBeerId = 4,
+                            BeerId = 5,
+                            Quantity = 12,
+                            WholesalerId = 3
+                        },
+                        new
+                        {
+                            InventoryBeerId = 5,
+                            BeerId = 4,
+                            Quantity = 500,
+                            WholesalerId = 3
+                        },
+                        new
+                        {
+                            InventoryBeerId = 6,
+                            BeerId = 3,
+                            Quantity = 437,
+                            WholesalerId = 3
                         });
                 });
 
@@ -393,6 +417,9 @@ namespace BeerApi.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("WholesalerId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.HasIndex("Name")
                         .IsUnique();

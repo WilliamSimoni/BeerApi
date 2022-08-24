@@ -18,7 +18,6 @@ namespace BeerApi.Test.Fixtures
                     SellingPriceToWholesalers = 4,
                     InProduction = true,
                     BreweryId = 1,
-                    Brewery = null
                 },
                 new Beer()
                 {
@@ -29,7 +28,6 @@ namespace BeerApi.Test.Fixtures
                     SellingPriceToWholesalers = 0.56m,
                     InProduction = true,
                     BreweryId = 1,
-                    Brewery = null
                 },
                 new Beer()
                 {
@@ -40,7 +38,6 @@ namespace BeerApi.Test.Fixtures
                     SellingPriceToWholesalers = 4,
                     InProduction = false,
                     BreweryId = 1,
-                    Brewery = null,
                     OutOfProductionDate = new DateTime(2022, 05, 09, 9, 15, 0)
                 },
                 new Beer()
@@ -52,7 +49,6 @@ namespace BeerApi.Test.Fixtures
                     SellingPriceToWholesalers = 2,
                     InProduction = true,
                     BreweryId = 2,
-                    Brewery = null
                 }
             };
         }

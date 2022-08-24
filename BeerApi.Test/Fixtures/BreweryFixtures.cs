@@ -1,6 +1,5 @@
 ﻿using Contracts.Dtos;
 using Domain.Entities;
-using System.Collections.Generic;
 
 namespace BeerApi.Test.Fixtures
 {

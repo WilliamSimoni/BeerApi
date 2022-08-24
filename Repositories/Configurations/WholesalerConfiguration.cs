@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Repositories.Configurations
 {
@@ -28,7 +28,7 @@ namespace Repositories.Configurations
                 },
                 new Wholesaler()
                 {
-                    WholesalerId=3,
+                    WholesalerId = 3,
                     Name = "the beer corporation",
                     Address = "sesame street 77",
                     Email = "thebeercorporationinfo@beercorp.com"

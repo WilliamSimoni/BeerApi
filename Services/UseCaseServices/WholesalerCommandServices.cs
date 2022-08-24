@@ -31,7 +31,8 @@ namespace Services.UseCaseServices
             if (!wholesaler.Any())
             {
                 _logger.LogInfo("WholesalerCommandService was trying to update a beer quantity but did not find the specified wholesaler with id {1}", wholesalerId);
-                return new WholesalerNotFound(wholesalerId);            }
+                return new WholesalerNotFound(wholesalerId);
+            }
 
             _logger.LogDebug("WholesalerCommandService found wholesaler with id {1}. So, it can proceed with the quantity update", wholesalerId);
 

@@ -1,7 +1,7 @@
-﻿using Contracts.Dtos;
-using FluentAssertions;
-using BeerApi.Test.Helpers;
+﻿using BeerApi.Test.Helpers;
+using Contracts.Dtos;
 using Domain.Entities;
+using FluentAssertions;
 using MapsterMapper;
 
 namespace BeerApi.Test.Systems.Mappings

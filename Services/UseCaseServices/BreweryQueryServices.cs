@@ -4,7 +4,6 @@ using Domain.Common.Errors.Base;
 using Domain.Logger;
 using Domain.Repositories;
 using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
 using OneOf;
 using Services.Abstract.UseCaseServices;
 
@@ -21,7 +20,7 @@ namespace Services.UseCaseServices
         public BreweryQueryServices(ILoggerManager logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork; 
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -43,7 +42,7 @@ namespace Services.UseCaseServices
                 _logger.LogInfo("BreweryQueryServices tried to retrieve a brewery, but the id {1} did not correspond to any existing brewery", breweryId);
                 return new BreweryNotFound(breweryId);
             }
-            _logger.LogDebug("BreweryQueryServices retrieved brewery with id {1}", breweryId);
+            _logger.LogDebug("BreweryQueryServices retrieved the brewery with id {1}", breweryId);
 
             return _mapper.Map<BreweryDto>(brewery.First());
         }

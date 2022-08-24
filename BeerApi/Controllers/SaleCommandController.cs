@@ -1,9 +1,8 @@
 ﻿using Contracts.Dtos;
+using Domain.Common.Errors;
 using Domain.Logger;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstract;
-using OneOf;
-using Domain.Common.Errors;
 
 namespace BeerApi.Controllers
 {
@@ -33,7 +32,8 @@ namespace BeerApi.Controllers
 
             return serviceResult.Match(
                 newSale => Created(nameof(SaleQueryController.GetSaleById), newSale),
-                error => {
+                error =>
+                {
 
                     if (error is BeerNotFound || error is WholesalerNotFound)
                     {

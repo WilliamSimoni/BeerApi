@@ -1,7 +1,6 @@
 ﻿using Contracts.Dtos;
 using Domain.Common.Errors;
 using Domain.Common.Errors.Base;
-using Domain.Entities;
 using Domain.Logger;
 using Domain.Repositories;
 using MapsterMapper;
@@ -37,7 +36,7 @@ namespace Services.UseCaseServices
         public async Task<OneOf<GetBeerFromSaleDto, IError>> GetBeerInvolvedInSale(int saleId)
         {
             var sale = await _unitOfWork.QuerySale.GetByCondition(
-                s => s.SaleId == saleId 
+                s => s.SaleId == saleId
                 );
 
             if (!sale.Any())

@@ -2,7 +2,6 @@
 using Contracts.Dtos;
 using Domain.Logger;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using Services.Abstract;
 
 namespace BeerApi.Controllers
@@ -43,7 +42,7 @@ namespace BeerApi.Controllers
 
             return serviceResult.Match<ActionResult>(
                 brewery => Ok(brewery),
-                error => Problem(statusCode: error.Number, detail:error.Message)
+                error => Problem(statusCode: error.Number, detail: error.Message)
                 );
         }
 

@@ -2,15 +2,10 @@
 using BeerApi.Test.Helpers;
 using BeerApi.Test.Helpers.Mocks;
 using Domain.Common.Errors;
-using Domain.Entities;
 using Domain.Logger;
-using Domain.Repositories;
-using Domain.Repositories.Specialization;
 using FluentAssertions;
-using MapsterMapper;
 using Moq;
 using Services.UseCaseServices;
-using System.Linq.Expressions;
 
 namespace BeerApi.Test.Systems.Services
 {
@@ -61,7 +56,7 @@ namespace BeerApi.Test.Systems.Services
 
             //Assert
             brewery.IsT0.Should().BeTrue();
-            brewery.AsT0.Should().Be(BreweryFixtures.GetBreweryDtos().ElementAt(breweryId-1));
+            brewery.AsT0.Should().Be(BreweryFixtures.GetBreweryDtos().ElementAt(breweryId - 1));
         }
 
         [Fact]

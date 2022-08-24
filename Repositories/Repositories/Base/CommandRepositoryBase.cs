@@ -15,7 +15,7 @@ namespace Repositories.Repositories.Base
         }
 
         public void Add(T entity) => _entities.Add(entity);
-        
+
         public void Remove(T entity) => _entities.Remove(entity);
 
         public void Update(T entity) => _entities.Update(entity);

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Domain.Entities
 {
     [Index(nameof(Name), IsUnique = true)]
+    [Index(nameof(Email), IsUnique = true)]
     public class Wholesaler
     {
         public int WholesalerId { get; set; }

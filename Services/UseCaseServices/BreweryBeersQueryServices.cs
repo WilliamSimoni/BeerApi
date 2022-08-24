@@ -4,7 +4,6 @@ using Domain.Common.Errors.Base;
 using Domain.Logger;
 using Domain.Repositories;
 using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
 using OneOf;
 using Services.Abstract.UseCaseServices;
 
@@ -67,7 +66,7 @@ namespace Services.UseCaseServices
 
             if (!beer.Any())
             {
-                _logger.LogInfo("BreweryBeersCommandService tried to retrieve the beer with id {1} produced by the brewery with is {2}, but the id {1} did not correspond to any existing beer", beerId, breweryId);
+                _logger.LogInfo("BreweryBeersCommandService tried to retrieve the beer with id {1} produced by the brewery with id {2}, but it did not find anything", beerId, breweryId);
                 return new BreweryBeerNotFound(beerId, breweryId);
             }
 

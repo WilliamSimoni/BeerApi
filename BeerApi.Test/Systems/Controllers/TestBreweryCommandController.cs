@@ -1,21 +1,12 @@
 ﻿using BeerApi.Controllers;
-using BeerApi.Test.Fixtures;
-using BeerApi.Test.Helpers.Mocks;
 using Contracts.Dtos;
 using Domain.Common.Errors;
-using Domain.Entities;
 using Domain.Logger;
-using Domain.Repositories;
-using Domain.Repositories.Specialization;
 using FluentAssertions;
-using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Services.Abstract;
 using Services.Abstract.UseCaseServices;
-using Services.UseCaseServices;
-using System.Linq.Expressions;
-using Xunit;
 
 namespace BeerApi.Test.Systems.Services
 {
@@ -44,7 +35,7 @@ namespace BeerApi.Test.Systems.Services
                 .ReturnsAsync(new BeerDto());
 
             var controller = new BreweryCommandController(loggerMock, serviceMock.Object);
-            
+
             //Action
             var result = await controller.AddBeerToBrewery(It.IsAny<int>(), new ForCreationBeerDto());
 

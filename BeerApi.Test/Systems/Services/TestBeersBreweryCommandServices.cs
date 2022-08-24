@@ -1,12 +1,10 @@
-﻿using BeerApi.Test.Fixtures;
-using BeerApi.Test.Helpers;
+﻿using BeerApi.Test.Helpers;
 using BeerApi.Test.Helpers.Mocks;
 using Contracts.Dtos;
 using Domain.Common.Errors;
 using Domain.Logger;
 using FluentAssertions;
 using Mapster;
-using MapsterMapper;
 using Moq;
 using Services.UseCaseServices;
 
@@ -84,7 +82,7 @@ namespace BeerApi.Test.Systems.Services
         public async Task RemoveBeerFromBrewery_OnSuccess_ReturnsNull()
         {
             //Action (remove beer with id 1 from brewery with id 1)
-            var result = await service.RemoveBeerFromBrewery(1,1);
+            var result = await service.RemoveBeerFromBrewery(1, 1);
 
             //Assert
             result.Should().BeNull();

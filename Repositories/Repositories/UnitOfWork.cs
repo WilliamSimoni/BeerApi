@@ -1,7 +1,6 @@
 ﻿using Domain.Logger;
 using Domain.Repositories;
 using Domain.Repositories.Specialization;
-using Microsoft.EntityFrameworkCore;
 using Repositories.DataContext;
 using Repositories.Repositories.Specialization;
 

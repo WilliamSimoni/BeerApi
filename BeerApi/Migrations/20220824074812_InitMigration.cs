@@ -160,7 +160,10 @@ namespace BeerApi.Migrations
                 {
                     { 1, 1, 250, 1 },
                     { 2, 2, 30, 2 },
-                    { 3, 1, 70, 2 }
+                    { 3, 1, 70, 2 },
+                    { 4, 5, 12, 3 },
+                    { 5, 4, 500, 3 },
+                    { 6, 3, 437, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -192,6 +195,12 @@ namespace BeerApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Brewery_Email",
+                table: "Brewery",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Brewery_Name",
                 table: "Brewery",
                 column: "Name",
@@ -217,6 +226,12 @@ namespace BeerApi.Migrations
                 name: "IX_Sale_WholesalerId",
                 table: "Sale",
                 column: "WholesalerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Wholesaler_Email",
+                table: "Wholesaler",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Wholesaler_Name",

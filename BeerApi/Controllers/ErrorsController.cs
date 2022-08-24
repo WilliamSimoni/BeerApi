@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace BeerApi.Controllers
 {
@@ -10,7 +9,7 @@ namespace BeerApi.Controllers
         public IActionResult Error()
         {
             //return Ok();
-            return Problem(statusCode:StatusCodes.Status500InternalServerError, title: "An internal error has occurred");
+            return Problem(statusCode: StatusCodes.Status500InternalServerError, title: "An internal error has occurred");
         }
     }
 }

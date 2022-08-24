@@ -1,7 +1,6 @@
-﻿using Contracts.Dtos;
+﻿using BeerApi.Test.Helpers;
+using Contracts.Dtos;
 using FluentAssertions;
-using BeerApi.Test.Helpers;
-using Domain.Entities;
 
 namespace BeerApi.Test.Systems.Services
 {

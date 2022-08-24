@@ -1,19 +1,12 @@
-﻿using BeerApi.Test.Helpers.Mocks;
+﻿using BeerApi.Test.Fixtures;
 using BeerApi.Test.Helpers;
+using BeerApi.Test.Helpers.Mocks;
+using Contracts.Dtos;
+using Domain.Common.Errors;
 using Domain.Logger;
+using FluentAssertions;
 using Moq;
 using Services.UseCaseServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BeerApi.Test.Fixtures;
-using FluentAssertions;
-using Contracts.Dtos;
-using Domain.Entities;
-using System.Xml.Linq;
-using Domain.Common.Errors;
 
 namespace BeerApi.Test.Systems.Services
 {

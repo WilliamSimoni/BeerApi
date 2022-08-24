@@ -1,11 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.Configurations
 {
@@ -36,6 +31,27 @@ namespace Repositories.Configurations
                     Quantity = 70,
                     BeerId = 1,
                     WholesalerId = 2
+                },
+                new InventoryBeer()
+                {
+                    InventoryBeerId = 4,
+                    Quantity = 12,
+                    BeerId = 5,
+                    WholesalerId = 3
+                },
+                new InventoryBeer()
+                {
+                    InventoryBeerId = 5,
+                    Quantity = 500,
+                    BeerId = 4,
+                    WholesalerId = 3
+                },
+                new InventoryBeer()
+                {
+                    InventoryBeerId = 6,
+                    Quantity = 437,
+                    BeerId = 3,
+                    WholesalerId = 3
                 }
                 );
         }

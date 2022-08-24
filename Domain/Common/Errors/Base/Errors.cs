@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Common.Errors.Base
+﻿namespace Domain.Common.Errors.Base
 {
     public abstract record BadRequestError : IError
     {
@@ -15,7 +9,7 @@ namespace Domain.Common.Errors.Base
         public int Number => 400;
     }
 
-    public abstract record NotFoundError: IError
+    public abstract record NotFoundError : IError
     {
         public string Message => "Generic Not Found";
 

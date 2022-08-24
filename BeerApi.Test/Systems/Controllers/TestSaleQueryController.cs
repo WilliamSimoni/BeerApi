@@ -1,13 +1,13 @@
-﻿using BeerApi.Test.Fixtures;
+﻿using BeerApi.Controllers;
+using BeerApi.Test.Fixtures;
 using Contracts.Dtos;
-using Moq;
-using Services.Abstract;
+using Domain.Common.Errors;
+using Domain.Logger;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Common.Errors;
+using Moq;
+using Services.Abstract;
 using Services.Abstract.UseCaseServices;
-using BeerApi.Controllers;
-using Domain.Logger;
 
 namespace BeerApi.Test.Systems.Controllers
 {

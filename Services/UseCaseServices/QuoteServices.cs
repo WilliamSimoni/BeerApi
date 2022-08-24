@@ -1,17 +1,11 @@
 ﻿using Contracts.Dtos;
 using Domain.Common.Errors;
 using Domain.Common.Errors.Base;
-using Domain.Entities;
 using Domain.Logger;
 using Domain.Repositories;
 using MapsterMapper;
 using OneOf;
 using Services.Abstract.UseCaseServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.UseCaseServices
 {
@@ -48,7 +42,7 @@ namespace Services.UseCaseServices
             decimal totalPrice = 0;
 
             //for each beer, check if: - it is sold by the wholesaler, - there is enough beer in the wholesaler's stock
-            foreach(var requestedBeer in quoteRequest.Beers)
+            foreach (var requestedBeer in quoteRequest.Beers)
             {
                 var inventoryBeerQuery = await _unitOfWork.QueryInventoryBeer.GetBeerInfoByCondition(b => b.BeerId == requestedBeer.BeerId && b.WholesalerId == quoteRequest.WholesalerId);
 
@@ -62,7 +56,7 @@ namespace Services.UseCaseServices
 
                 if (requestedBeer.Quantity > inventoryBeer.Quantity)
                 {
-                    _logger.LogInfo("QuoteService was trying to update a beer quantity, but the number of requested beers with id {1} exceeds the number of available beers in the wholesaler's stock ({2} > {3})", 
+                    _logger.LogInfo("QuoteService was trying to update a beer quantity, but the number of requested beers with id {1} exceeds the number of available beers in the wholesaler's stock ({2} > {3})",
                         requestedBeer.BeerId, inventoryBeer.Quantity, requestedBeer.Quantity);
                     return new QuantityOverUnitsInStock(requestedBeer.BeerId, inventoryBeer.Quantity, requestedBeer.Quantity);
                 }

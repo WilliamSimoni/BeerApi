@@ -1,6 +1,6 @@
-﻿using Repositories.Configurations;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Configurations;
 
 namespace Repositories.DataContext
 {

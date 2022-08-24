@@ -1,18 +1,14 @@
-using Microsoft.AspNetCore.Mvc;
+using Domain.Logger;
+using Domain.Repositories;
+using LoggerService;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Repositories.DataContext;
+using Repositories.Repositories;
+using Serilog;
 using Services;
 using Services.Abstract;
-using Domain.Repositories;
-using Repositories.Repositories;
-using MapsterMapper;
-using Mapster;
-using System.Reflection;
-using Serilog;
-using LoggerService;
-using Domain.Logger;
 using Services.Mappings;
-using Microsoft.AspNetCore.Mvc.Versioning;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,10 +31,13 @@ builder.Services.AddDbContext<AppDbContext>(opts =>
 opts.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"),
     opts => opts.MigrationsAssembly("BeerApi")));
 
-//inject ServiceWrapper implementation and IUnitOfWork
-builder.Services.AddScoped<IServicesWrapper, ServicesWrapper>();
+
+
+//inject unit of work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+//inject ServiceWrapper implementation and IUnitOfWork
+builder.Services.AddScoped<IServicesWrapper, ServicesWrapper>();
 //inject mappings
 DependencyInjectionMapping.addMappings(builder.Services);
 
@@ -73,10 +72,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-} else
+}
+else
 {
     //for production
 }
+
+//fot automatic EF core migrations to SQL database
+app.MigrateDatabase();
 
 //add controller to handle errors globally
 app.UseExceptionHandler("/error");

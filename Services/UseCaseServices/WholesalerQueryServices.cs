@@ -1,11 +1,11 @@
 ﻿using Contracts.Dtos;
+using Domain.Common.Errors;
+using Domain.Common.Errors.Base;
 using Domain.Logger;
 using Domain.Repositories;
 using MapsterMapper;
 using OneOf;
 using Services.Abstract.UseCaseServices;
-using Domain.Common.Errors;
-using Domain.Common.Errors.Base;
 
 namespace Services.UseCaseServices
 {
@@ -31,7 +31,8 @@ namespace Services.UseCaseServices
             if (!wholesaler.Any())
             {
                 _logger.LogInfo("WholesalerQueryService was trying to retrieve all wholesaler beers but did not find the specified wholesaler with id {1}", wholesalerId);
-                return new WholesalerNotFound(wholesalerId);            }
+                return new WholesalerNotFound(wholesalerId);
+            }
 
             _logger.LogDebug("WholesalerQueryService found wholesaler with id {1}. So, it can proceed with the query", wholesalerId);
 

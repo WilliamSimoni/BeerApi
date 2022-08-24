@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Repositories.Configurations
 {
@@ -28,7 +28,7 @@ namespace Repositories.Configurations
                     SellingPriceToWholesalers = 4.99m,
                     SellingPriceToClients = 12.99m,
                     BreweryId = 1
-                },               
+                },
                 new Beer
                 {
                     BeerId = 3,

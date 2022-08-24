@@ -1,6 +1,5 @@
 ﻿using Contracts.Dtos;
 using Domain.Logger;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstract;
 

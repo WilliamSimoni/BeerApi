@@ -1,6 +1,5 @@
 ﻿using Domain.Logger;
 using Microsoft.Extensions.Logging;
-using Serilog;
 
 namespace LoggerService
 {

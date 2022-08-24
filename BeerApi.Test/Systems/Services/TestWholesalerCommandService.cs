@@ -1,14 +1,11 @@
-﻿using BeerApi.Test.Helpers.Mocks;
-using BeerApi.Test.Helpers;
+﻿using BeerApi.Test.Helpers;
+using BeerApi.Test.Helpers.Mocks;
+using Contracts.Dtos;
+using Domain.Common.Errors;
 using Domain.Logger;
+using FluentAssertions;
 using Moq;
 using Services.UseCaseServices;
-using Services.Abstract.UseCaseServices;
-using Contracts.Dtos;
-using FluentAssertions;
-using Domain.Entities;
-using Domain.Common.Errors;
-using BeerApi.Test.Fixtures;
 
 namespace BeerApi.Test.Systems.Services
 {
@@ -29,7 +26,8 @@ namespace BeerApi.Test.Systems.Services
 
             service = new WholesalerCommandServices(loggerMock.Object, unitOfWorkMock.Object, mapper);
 
-            correctUpdateBeerDto = new ForUpdateInventoryBeerDto() { 
+            correctUpdateBeerDto = new ForUpdateInventoryBeerDto()
+            {
                 Quantity = 20
             };
         }

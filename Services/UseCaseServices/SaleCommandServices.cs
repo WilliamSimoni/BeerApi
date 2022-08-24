@@ -37,7 +37,7 @@ namespace Services.UseCaseServices
 
             if (!wholesaler.Any())
             {
-                _logger.LogInfo("SaleCommandService tried to add a sale, but the wholesaler with {1} does not exist", newSale.WholesalerId);
+                _logger.LogInfo("SaleCommandService tried to add a sale, but the wholesaler with id {1} does not exist", newSale.WholesalerId);
                 return new WholesalerNotFound(newSale.WholesalerId);
             }
 
@@ -49,7 +49,7 @@ namespace Services.UseCaseServices
 
             if (!beer.Any())
             {
-                _logger.LogInfo("SaleCommandService tried to add a sale, but the beer with {1} does not exist", newSale.BeerId);
+                _logger.LogInfo("SaleCommandService tried to add a sale, but the beer with id {1} does not exist", newSale.BeerId);
                 return new BeerNotFound(newSale.BeerId);
             }
 
