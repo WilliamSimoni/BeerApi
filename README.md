@@ -9,8 +9,9 @@ The API is implemented using a layered architecture consisting of four levels:
 Each layer communicates with the layer below using interfaces, guaranteeing the dependency inversion principle. 
 
 ## Domain Layer
-The image below shows the database scheme used by the application. (Image to insert)
+The image below shows the database diagram used by the application.
 
+<img src="https://github.com/WilliamSimoni/BeerApi/blob/master/Images/Database.png" alt="Database logical diagram" title="Database logical diagram">
 
 The beer table has an additional index with a unique constraint composed of the Name, the BreweryId, and the OutOfProductionDate.
 
@@ -51,10 +52,10 @@ The global error handler is implemented as a controller. When there is an except
 
 # Unit Tests
 
-I wrote several unit tests (almost 130) to verify the correctness of the controller and the service layer. 
+I wrote several unit tests (138) to verify the correctness of the controller and the service layer. 
 For each test, I used:
-The Moq library to generate and customize Mocks. In detail, for the controller layer tests, I mocked the service layer, while for the service layer tests, I mocked the infrastructure layer. 
-The FluentAssertion library to specify the expected test outcome naturally. 
+- The Moq library to generate and customize Mocks. In detail, for the controller layer tests, I mocked the service layer, while for the service layer tests, I mocked the infrastructure layer. 
+- The FluentAssertion library to specify the expected test outcome naturally. 
 
 # Other information
 - The entities' data was stored in a SQL server database. To run the project, change the connection string in appsetting.json. 
@@ -236,7 +237,7 @@ curl -X 'POST' \
 
 - **Success Response**
 
-  - **Code**: 204
+  - **Code**: 200
   - **Content**: `UpdatedInventoryBeerDto`
 
 - **Error Response**
@@ -311,6 +312,7 @@ All the endpoints in this section use the GET method and do not require any requ
   -  **Returns**: BeerDto
 
 
+
 - **/api/sales**: 
   -  **Description**: returns the list of all the sales
   -  **Returns**: IEnumerable of GetSaleDto
@@ -320,6 +322,8 @@ All the endpoints in this section use the GET method and do not require any requ
 - **/api/sales/{saleId}/beer**: 
   -  **Description**: returns the beer associated with the sale with id saleId
   -  **Returns**: GetBeerFromSaleDto
+
+
 
 - **/api/wholesalers**: 
   -  **Description**: returns the list of all the wholesalers
