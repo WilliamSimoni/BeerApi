@@ -10,6 +10,7 @@ using Services.UseCaseServices;
 
 namespace BeerApi.Test.Systems.Services
 {
+
     public class TestSaleQueryServices
     {
 
@@ -72,7 +73,7 @@ namespace BeerApi.Test.Systems.Services
             // Assert
             serviceResult.IsT1.Should().BeFalse();
             serviceResult.AsT0.Should()
-                .Be(SaleFixtures.GetGetSaleDtos().Where(s => s.SaleId == 1).First());
+                .BeEquivalentTo(SaleFixtures.GetGetSaleDtos().Where(s => s.SaleId == 1).First());
         }
 
         [Fact]
@@ -104,7 +105,7 @@ namespace BeerApi.Test.Systems.Services
             serviceResult.IsT1.Should().BeFalse();
             //Sale 1 is associated with Beer with Id 1
             serviceResult.AsT0.Should()
-                .Be(SaleFixtures.GetGetBeerFromSaleDtos().Where(b => b.BeerId == 1).First());
+                .BeEquivalentTo(SaleFixtures.GetGetBeerFromSaleDtos().Where(b => b.BeerId == 1).First());
         }
 
         [Fact]

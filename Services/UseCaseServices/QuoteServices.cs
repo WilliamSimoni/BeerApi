@@ -49,7 +49,7 @@ namespace Services.UseCaseServices
                 if (!inventoryBeerQuery.Any())
                 {
                     _logger.LogInfo("QuoteService was trying to create a quote summary, but beer with id {1} is not sold by wholesaler with id {2}", requestedBeer.BeerId, quoteRequest.WholesalerId);
-                    return new BeerNotSoldByWholesaler(requestedBeer.BeerId, quoteRequest.WholesalerId);
+                    return new BeerNotSoldByWholesaler(quoteRequest.WholesalerId, requestedBeer.BeerId);
                 }
 
                 var inventoryBeer = inventoryBeerQuery.First();

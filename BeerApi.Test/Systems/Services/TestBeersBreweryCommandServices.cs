@@ -3,6 +3,7 @@ using BeerApi.Test.Helpers.Mocks;
 using Contracts.Dtos;
 using Domain.Common.Errors;
 using Domain.Logger;
+using Domain.Repositories;
 using FluentAssertions;
 using Mapster;
 using Moq;
@@ -16,6 +17,7 @@ namespace BeerApi.Test.Systems.Services
     {
         private BreweryBeersCommandServices service;
 
+        private Mock<IUnitOfWork> unitOfWorkMock;
         public TestBreweryBeersCommandServices()
         {
             //Arrange for all tests
@@ -23,21 +25,27 @@ namespace BeerApi.Test.Systems.Services
 
             var mapper = MapperInstance.Get();
 
-            var unitOfWorkMock = UnitOfWorkMock.Get();
+            unitOfWorkMock = UnitOfWorkMock.Get();
 
             service = new BreweryBeersCommandServices(loggerMock.Object, unitOfWorkMock.Object, mapper);
         }
 
-        [Fact]
-        public async Task AddBeerToBrewery_OnSuccess_ReturnsCreatedBeer()
+        private ForCreationBeerDto GetForCreationBeerDto()
         {
-            var newBeerDto = new ForCreationBeerDto()
+            return new ForCreationBeerDto()
             {
                 Name = "test",
                 AlcoholContent = 1,
                 SellingPriceToClients = 1,
                 SellingPriceToWholesalers = 1
             };
+        }
+
+        [Fact]
+        public async Task AddBeerToBrewery_OnSuccess_ReturnsCreatedBeerDto()
+        {
+            //Arrange
+            var newBeerDto = GetForCreationBeerDto();
 
             //Action
             var result = await service.AddBeerToBrewery(1, newBeerDto);
@@ -45,7 +53,21 @@ namespace BeerApi.Test.Systems.Services
             //Assert
             result.IsT0.Should().BeTrue();
 
-            result.AsT0.Should().Be(newBeerDto.Adapt<BeerDto>());
+            result.AsT0.Should().Be(newBeerDto.Adapt<CreatedBeerDto>());
+        }
+
+        [Fact]
+        public async Task AddBeerToBrewery_OnSuccess_CallsSaveAsync()
+        {
+            //Arrange
+            var newBeerDto = GetForCreationBeerDto();
+
+            //Action
+            var result = await service.AddBeerToBrewery(1, newBeerDto);
+
+            //Assert
+            //Assert
+            unitOfWorkMock.Verify(mock => mock.SaveAsync(), Times.Once());
         }
 
         [Fact]
@@ -62,16 +84,12 @@ namespace BeerApi.Test.Systems.Services
         [Fact]
         public async Task AddBeerToBrewery_OnNameConflict_ReturnsBreweryBeerConflictError()
         {
-            var newBeer = new ForCreationBeerDto()
-            {
-                Name = "beer1",
-                AlcoholContent = 1,
-                SellingPriceToClients = 1,
-                SellingPriceToWholesalers = 1
-            };
+            //Arrange
+            var newBeerDto = GetForCreationBeerDto();
+            newBeerDto.Name = "beer1";
 
             //Action
-            var result = await service.AddBeerToBrewery(1, newBeer);
+            var result = await service.AddBeerToBrewery(1, newBeerDto);
 
             //Assert
             result.IsT0.Should().BeFalse();

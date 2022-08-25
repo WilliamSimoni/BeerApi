@@ -20,7 +20,7 @@ namespace BeerApi.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GetWholesalerDto>))]
         public async Task<ActionResult<IEnumerable<GetWholesalerDto>>> GetAllWholesalers()
         {
             var serviceResult =  await _services.QueryWholesaler.GetAllWholesalers();
@@ -29,9 +29,9 @@ namespace BeerApi.Controllers
         }
 
         [HttpGet("{wholesalerId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetWholesalerDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<GetWholesalerDto>> GetWholesalerById(int wholesalerId)
+        public async Task<IActionResult> GetWholesalerById(int wholesalerId)
         {
             var serviceResult = await _services.QueryWholesaler.GetWholesalerById(wholesalerId);
 
@@ -43,9 +43,9 @@ namespace BeerApi.Controllers
 
 
         [HttpGet("{wholesalerId}/beers")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GetInventoryBeerDto>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<GetInventoryBeerDto>>> GetAllBeers(int wholesalerId)
+        public async Task<IActionResult> GetAllBeers(int wholesalerId)
         {
             var serviceResult = await _services.QueryWholesaler.GetAllWholesalerBeers(wholesalerId);
 
@@ -58,7 +58,7 @@ namespace BeerApi.Controllers
         }
 
         [HttpGet("{wholesalerId}/beers/{beerId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetInventoryBeerDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GetInventoryBeerDto>> GetBeerById(int wholesalerId, int beerId)
         {

@@ -9,6 +9,7 @@ using Moq;
 using Services.UseCaseServices;
 
 namespace BeerApi.Test.Systems.Services
+
 {
     public class TestWholesalerQueryServices
     {
@@ -93,7 +94,7 @@ namespace BeerApi.Test.Systems.Services
             // Assert
             serviceResult.IsT1.Should().BeFalse();
             //Wholesaler beer with id 1 is the first one in the IEnumerable returned by InventoruBeersFixtures
-            serviceResult.AsT0.Should().Be(InventoryBeerFixtures.GetGetInventoryBeerDtos().ElementAt(0));
+            serviceResult.AsT0.Should().BeEquivalentTo(InventoryBeerFixtures.GetGetInventoryBeerDtos().ElementAt(0));
         }
 
         public async Task GetWholesalerBeerById_OnBeerIsNotInProductionButIsInTheTable_ReturnsGetInventoryBeerDto()
@@ -128,6 +129,68 @@ namespace BeerApi.Test.Systems.Services
             serviceResult.AsT1.Should().BeOfType<BeerNotSoldByWholesaler>();
         }
 
+        [Fact]
+        public async Task GetAllWholesalers_OnSuccess_ReturnsListOfGetWholesalerDto()
+        {
+            // Action
+            var serviceResult = await service.GetAllWholesalers();
+
+            // Assert
+            serviceResult.Should().BeOfType<GetWholesalerDto[]>();
+        }
+
+        [Fact]
+        public async Task GetAllWholesalers_OnSuccess_ReturnsAllWholesalers()
+        {
+            // Action
+            var serviceResult = await service.GetAllWholesalers();
+
+            // Assert
+            serviceResult.Should().HaveCount(WholesalerFixtures.GetWholesalers().Count());
+        }
+
+        [Fact]
+        public async Task GetAllWholesalers_OnSuccess_ReturnsCorrectWholesalers()
+        {
+            // Action
+            var serviceResult = await service.GetAllWholesalers();
+
+            // Assert
+            serviceResult.Should().Equal(WholesalerFixtures.GetGetWholesalerDtos());
+        }
+
+        [Fact]
+        public async Task GetWholesalerById_OnSuccess_ReturnsGetWholesalerDto()
+        {
+            // Action
+            var serviceResult = await service.GetWholesalerById(1);
+
+            // Assert
+            serviceResult.IsT1.Should().BeFalse();
+            serviceResult.AsT0.Should().BeOfType<GetWholesalerDto>();
+        }
+
+        [Fact]
+        public async Task GetWholesalerById_OnSuccess_ReturnsCorrectGetWholesalerDto()
+        {
+            // Action
+            var serviceResult = await service.GetWholesalerById(1);
+
+            // Assert
+            serviceResult.IsT1.Should().BeFalse();
+            serviceResult.AsT0.Should().BeEquivalentTo(WholesalerFixtures.GetGetWholesalerDtos().First());
+        }
+
+        [Fact]
+        public async Task GetWholesalerById_OnWholesalerNotFound_ReturnsWholesalerNotFoundError()
+        {
+            // Action
+            var serviceResult = await service.GetWholesalerById(1000);
+
+            // Assert
+            serviceResult.IsT0.Should().BeFalse();
+            serviceResult.AsT1.Should().BeOfType<WholesalerNotFound>();
+        }
 
     }
 }

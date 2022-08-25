@@ -4,16 +4,19 @@ using BeerApi.Test.Helpers.Mocks;
 using Contracts.Dtos;
 using Domain.Common.Errors;
 using Domain.Logger;
+using Domain.Repositories;
 using FluentAssertions;
 using Moq;
 using Services.UseCaseServices;
 
 namespace BeerApi.Test.Systems.Services
 {
+
     public class TestSaleCommandServices
     {
         private SaleCommandServices service;
 
+        private Mock<IUnitOfWork> unitOfWorkMock;
         public TestSaleCommandServices()
         {
             //Arrange for all tests
@@ -21,7 +24,7 @@ namespace BeerApi.Test.Systems.Services
 
             var mapper = MapperInstance.Get();
 
-            var unitOfWorkMock = UnitOfWorkMock.Get();
+            unitOfWorkMock = UnitOfWorkMock.Get();
 
             service = new SaleCommandServices(loggerMock.Object, unitOfWorkMock.Object, mapper);
         }
@@ -57,7 +60,7 @@ namespace BeerApi.Test.Systems.Services
             //Also, the saleId is set automatically by the lower layer. So, we put it to the expected id. 
             //The current UnitOfWorkMock sets the entity SaleId always to 1
             //(the same id associated with the first element of the fixture)
-            serviceResult.AsT0.Should().Be(expected);
+            serviceResult.AsT0.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -107,17 +110,8 @@ namespace BeerApi.Test.Systems.Services
         }
 
         [Fact]
-        public async Task AddSale_OnSuccess_CalledSaveAsync()
+        public async Task AddSale_OnSuccess_CallsSaveAsync()
         {
-            //Arrange
-            var loggerMock = new Mock<ILoggerManager>();
-
-            var mapper = MapperInstance.Get();
-
-            var unitOfWorkMock = UnitOfWorkMock.Get();
-
-            var service = new SaleCommandServices(loggerMock.Object, unitOfWorkMock.Object, mapper);
-
             //Action
             var serviceResult = await service.addSale(SaleFixtures.GetForCreationSaleDto().ElementAt(0));
 

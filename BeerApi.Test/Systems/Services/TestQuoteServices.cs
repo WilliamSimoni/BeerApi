@@ -9,13 +9,25 @@ using Services.UseCaseServices;
 
 namespace BeerApi.Test.Systems.Services
 {
+
     public class TestQuoteServices
     {
         private QuoteServices service;
 
-        public static QuoteRequestDto GetCorrectQuoteRequest()
+        private QuoteRequestDto correctQuoteRequestDto;
+
+        public TestQuoteServices()
         {
-            return new QuoteRequestDto()
+            //Arrange for all tests
+            var loggerMock = new Mock<ILoggerManager>();
+
+            var mapper = MapperInstance.Get();
+
+            var unitOfWorkMock = UnitOfWorkMock.Get();
+
+            service = new QuoteServices(loggerMock.Object, unitOfWorkMock.Object, mapper);
+
+            correctQuoteRequestDto = new QuoteRequestDto()
             {
                 WholesalerId = 1,
                 Beers = new List<QuoteRequestItemDto>
@@ -29,23 +41,11 @@ namespace BeerApi.Test.Systems.Services
             };
         }
 
-        public TestQuoteServices()
-        {
-            //Arrange for all tests
-            var loggerMock = new Mock<ILoggerManager>();
-
-            var mapper = MapperInstance.Get();
-
-            var unitOfWorkMock = UnitOfWorkMock.Get();
-
-            service = new QuoteServices(loggerMock.Object, unitOfWorkMock.Object, mapper);
-        }
-
         [Fact]
         public async Task GetQuote_OnSuccess_ReturnsQuoteSummaryDto()
         {
             //Action
-            var serviceResult = await service.GetQuote(GetCorrectQuoteRequest());
+            var serviceResult = await service.GetQuote(correctQuoteRequestDto);
 
             //Assert
             serviceResult.IsT1.Should().BeFalse();
@@ -59,7 +59,7 @@ namespace BeerApi.Test.Systems.Services
         public async Task GetQuote_OnSuccess_ReturnsQuoteSummaryDtoWithExpectedDiscount(int quantity, decimal expectedDiscount)
         {
             //Arrange
-            var quoteRequest = GetCorrectQuoteRequest();
+            var quoteRequest = correctQuoteRequestDto;
             //set the quantity of the first item in the list of required beers
             quoteRequest.Beers.ElementAt(0).Quantity = quantity;
 
@@ -75,7 +75,7 @@ namespace BeerApi.Test.Systems.Services
         public async Task GetQuote_OnSuccess_ReturnsQuoteSummaryDtoWithExpectedTotal()
         {
             //Arrange
-            var quoteRequest = GetCorrectQuoteRequest();
+            var quoteRequest = correctQuoteRequestDto;
             //Add a beer to the quoteRequest
             quoteRequest.Beers.Add(new QuoteRequestItemDto()
             {
@@ -98,7 +98,7 @@ namespace BeerApi.Test.Systems.Services
         public async Task GetQuote_OnSuccess_ReturnsQuoteSummaryItems()
         {
             //Action
-            var serviceResult = await service.GetQuote(GetCorrectQuoteRequest());
+            var serviceResult = await service.GetQuote(correctQuoteRequestDto);
 
             //Assert
             serviceResult.IsT1.Should().BeFalse();
@@ -118,7 +118,7 @@ namespace BeerApi.Test.Systems.Services
         public async Task GetQuote_OnWholesalerNotFound_ReturnsWholesalerNotFoundError()
         {
             //Arrange
-            var quoteRequest = GetCorrectQuoteRequest();
+            var quoteRequest = correctQuoteRequestDto;
             quoteRequest.WholesalerId = 1000;
 
             //Action
@@ -133,7 +133,7 @@ namespace BeerApi.Test.Systems.Services
         public async Task GetQuote_OnBeerNotFound_ReturnsBeerNotSoldByWholesalerError()
         {
             //Arrange
-            var quoteRequest = GetCorrectQuoteRequest();
+            var quoteRequest = correctQuoteRequestDto;
             quoteRequest.Beers.ElementAt(0).BeerId = 1000;
 
             //Action
@@ -148,7 +148,7 @@ namespace BeerApi.Test.Systems.Services
         public async Task GetQuote_OnNotEnoughBeerInStock_ReturnsQuantityOverUnitsInStockError()
         {
             //Arrange
-            var quoteRequest = GetCorrectQuoteRequest();
+            var quoteRequest = correctQuoteRequestDto;
             quoteRequest.Beers.ElementAt(0).Quantity = 1000;
 
             //Action

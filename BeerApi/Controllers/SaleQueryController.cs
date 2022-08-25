@@ -33,7 +33,7 @@ namespace BeerApi.Controllers
         [HttpGet("{saleId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetSaleDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<GetSaleDto>> GetSaleById(int saleId)
+        public async Task<IActionResult> GetSaleById(int saleId)
         {
             var serviceResult = await _services.QuerySale.GetById(saleId);
 
@@ -48,7 +48,7 @@ namespace BeerApi.Controllers
         [HttpGet("{saleId}/beer")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetBeerFromSaleDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<GetBeerFromSaleDto>> GetBeerInvolvedInSale(int saleId)
+        public async Task<IActionResult> GetBeerInvolvedInSale(int saleId)
         {
             var serviceResult = await _services.QuerySale.GetBeerInvolvedInSale(saleId);
 

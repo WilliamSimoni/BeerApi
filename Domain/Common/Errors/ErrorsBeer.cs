@@ -20,7 +20,7 @@ namespace Domain.Common.Errors
 
     public sealed record BeerNotSoldByWholesaler(int wholesalerId, int beerId) : NotFoundError, IError
     {
-        public new string Message => $"Beer with specified id is not sold by the specified brewery. [beerId: {beerId}, wholesalerId: {wholesalerId}]";
+        public new string Message => $"Beer with specified id is not sold by the specified wholesaler. [beerId: {beerId}, wholesalerId: {wholesalerId}]";
 
         public new string Code => "WholesalerBeer.NotFound";
     }

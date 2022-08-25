@@ -2,7 +2,7 @@
 
 namespace Contracts.Dtos
 {
-    public record BeerDto
+    public record CreatedBeerDto
     {
         public int BeerId { get; set; }
 

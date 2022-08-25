@@ -13,21 +13,24 @@ namespace BeerApi.Test.Systems.Controllers
     public class TestWholesalerQueryController
     {
         private ILoggerManager loggerMock;
+        private Mock<IServicesWrapper> servicesMock;
+        private Mock<IWholesalerQueryServices> wholesalerQueryServicesMock;
 
         public TestWholesalerQueryController()
         {
             //Arrange for all tests
             loggerMock = new Mock<ILoggerManager>().Object;
+
+            servicesMock = new Mock<IServicesWrapper>();
+            wholesalerQueryServicesMock = new Mock<IWholesalerQueryServices>();
+
+            servicesMock.Setup(s => s.QueryWholesaler).Returns(wholesalerQueryServicesMock.Object);
         }
 
         [Fact]
         public async Task GetAllBeers_OnSuccess_ReturnsStatusCode200()
         {
             //Arrange
-            var servicesMock = new Mock<IServicesWrapper>();
-            var wholesalerQueryServicesMock = new Mock<IWholesalerQueryServices>();
-
-            servicesMock.Setup(s => s.QueryWholesaler).Returns(wholesalerQueryServicesMock.Object);
 
             wholesalerQueryServicesMock.Setup(s => s.GetAllWholesalerBeers(It.IsAny<int>()))
                 .ReturnsAsync(new List<GetInventoryBeerDto>());
@@ -37,17 +40,13 @@ namespace BeerApi.Test.Systems.Controllers
             //Action
             var result = await controller.GetAllBeers(It.IsAny<int>());
             //Assert
-            result.Result.Should().BeOfType<OkObjectResult>();
+            result.Should().BeOfType<OkObjectResult>();
         }
 
         [Fact]
         public async Task GetAllBeers_OnSuccess_ReturnsGetInventoryBeerDto()
         {
             //Arrange
-            var servicesMock = new Mock<IServicesWrapper>();
-            var wholesalerQueryServicesMock = new Mock<IWholesalerQueryServices>();
-
-            servicesMock.Setup(s => s.QueryWholesaler).Returns(wholesalerQueryServicesMock.Object);
 
             wholesalerQueryServicesMock.Setup(s => s.GetAllWholesalerBeers(It.IsAny<int>()))
                 .ReturnsAsync(new List<GetInventoryBeerDto>());
@@ -58,8 +57,8 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await controller.GetAllBeers(It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<OkObjectResult>();
-            var okObjectResult = result.Result as OkObjectResult;
+            result.Should().BeOfType<OkObjectResult>();
+            var okObjectResult = result as OkObjectResult;
             okObjectResult.Value.Should().BeOfType<List<GetInventoryBeerDto>>();
         }
 
@@ -67,10 +66,6 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task GetAllBeers_OnWholesalerNotFound_ReturnsStatusCode404()
         {
             //Arrange
-            var servicesMock = new Mock<IServicesWrapper>();
-            var wholesalerQueryServicesMock = new Mock<IWholesalerQueryServices>();
-
-            servicesMock.Setup(s => s.QueryWholesaler).Returns(wholesalerQueryServicesMock.Object);
 
             wholesalerQueryServicesMock.Setup(s => s.GetAllWholesalerBeers(It.IsAny<int>()))
                 .ReturnsAsync(new WholesalerNotFound(It.IsAny<int>()));
@@ -81,8 +76,8 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await controller.GetAllBeers(It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<ObjectResult>();
-            var objectResult = result.Result as ObjectResult;
+            result.Should().BeOfType<ObjectResult>();
+            var objectResult = result as ObjectResult;
             objectResult.StatusCode.Should().Be(404);
         }
 
@@ -90,10 +85,6 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task GetBeerById_OnSuccess_ReturnsStatusCode200()
         {
             //Arrange
-            var servicesMock = new Mock<IServicesWrapper>();
-            var wholesalerQueryServicesMock = new Mock<IWholesalerQueryServices>();
-
-            servicesMock.Setup(s => s.QueryWholesaler).Returns(wholesalerQueryServicesMock.Object);
 
             wholesalerQueryServicesMock.Setup(s => s.GetWholesalerBeerById(It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new GetInventoryBeerDto());
@@ -111,10 +102,6 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task GetBeerByID_OnSuccess_ReturnsGetInventoryBeerDto()
         {
             //Arrange
-            var servicesMock = new Mock<IServicesWrapper>();
-            var wholesalerQueryServicesMock = new Mock<IWholesalerQueryServices>();
-
-            servicesMock.Setup(s => s.QueryWholesaler).Returns(wholesalerQueryServicesMock.Object);
 
             wholesalerQueryServicesMock.Setup(s => s.GetWholesalerBeerById(It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new GetInventoryBeerDto());
@@ -134,10 +121,6 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task GetBeerByID_OnWholesalerNotFound_ReturnsStatusCode404()
         {
             //Arrange
-            var servicesMock = new Mock<IServicesWrapper>();
-            var wholesalerQueryServicesMock = new Mock<IWholesalerQueryServices>();
-
-            servicesMock.Setup(s => s.QueryWholesaler).Returns(wholesalerQueryServicesMock.Object);
 
             wholesalerQueryServicesMock.Setup(s => s.GetWholesalerBeerById(It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new WholesalerNotFound(It.IsAny<int>()));
@@ -157,10 +140,6 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task GetBeerByID_OnBeerNotFound_ReturnsStatusCode404()
         {
             //Arrange
-            var servicesMock = new Mock<IServicesWrapper>();
-            var wholesalerQueryServicesMock = new Mock<IWholesalerQueryServices>();
-
-            servicesMock.Setup(s => s.QueryWholesaler).Returns(wholesalerQueryServicesMock.Object);
 
             wholesalerQueryServicesMock.Setup(s => s.GetWholesalerBeerById(It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new BeerNotFound(It.IsAny<int>()));

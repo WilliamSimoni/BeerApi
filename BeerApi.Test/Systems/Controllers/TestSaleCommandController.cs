@@ -13,25 +13,30 @@ namespace BeerApi.Test.Systems.Controllers
 {
     public class TestSaleCommandController
     {
-        private readonly ILoggerManager _logger;
+        private readonly ILoggerManager loggerMock;
+
+        private Mock<IServicesWrapper> servicesMock;
+
+        private Mock<ISaleCommandServices> saleCommandServicesMock;
         public TestSaleCommandController()
         {
-            //create real logger for tests
-            _logger = new Mock<ILoggerManager>().Object;
+            //Arrange for all tests
+            loggerMock = new Mock<ILoggerManager>().Object;
+
+            servicesMock = new Mock<IServicesWrapper>();
+            saleCommandServicesMock = new Mock<ISaleCommandServices>();
+
+            servicesMock.Setup(s => s.ChangeSale).Returns(saleCommandServicesMock.Object);
         }
 
         [Fact]
         public async Task InsertSale_OnSuccess_ReturnsStatusCode201()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockSaleCommandService = new Mock<ISaleCommandServices>();
-
-            mockServices.Setup(s => s.ChangeSale).Returns(mockSaleCommandService.Object);
-            mockSaleCommandService.Setup(s => s.addSale(It.IsAny<ForCreationSaleDto>()))
+            saleCommandServicesMock.Setup(s => s.addSale(It.IsAny<ForCreationSaleDto>()))
                 .ReturnsAsync(new CreatedSaleDto());
 
-            var saleControler = new SaleCommandController(_logger, mockServices.Object);
+            var saleControler = new SaleCommandController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.PostSale(new ForCreationSaleDto());
@@ -44,14 +49,10 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task InsertSale_OnSuccess_ReturnsCreatedSaleDto()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockSaleCommandService = new Mock<ISaleCommandServices>();
-
-            mockServices.Setup(s => s.ChangeSale).Returns(mockSaleCommandService.Object);
-            mockSaleCommandService.Setup(s => s.addSale(It.IsAny<ForCreationSaleDto>()))
+            saleCommandServicesMock.Setup(s => s.addSale(It.IsAny<ForCreationSaleDto>()))
                 .ReturnsAsync(new CreatedSaleDto());
 
-            var saleControler = new SaleCommandController(_logger, mockServices.Object);
+            var saleControler = new SaleCommandController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.PostSale(new ForCreationSaleDto());
@@ -68,35 +69,27 @@ namespace BeerApi.Test.Systems.Controllers
             //Arrange
             var createdSaleDto = new CreatedSaleDto();
 
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockSaleCommandService = new Mock<ISaleCommandServices>();
-
-            mockServices.Setup(s => s.ChangeSale).Returns(mockSaleCommandService.Object);
-            mockSaleCommandService.Setup(s => s.addSale(It.IsAny<ForCreationSaleDto>()))
+            saleCommandServicesMock.Setup(s => s.addSale(It.IsAny<ForCreationSaleDto>()))
                 .ReturnsAsync(createdSaleDto);
 
-            var saleControler = new SaleCommandController(_logger, mockServices.Object);
+            var saleControler = new SaleCommandController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.PostSale(new ForCreationSaleDto());
 
             //Assert
             var createdResult = result as CreatedResult;
-            createdResult.Value.Should().Be(createdSaleDto);
+            createdResult.Value.Should().BeEquivalentTo(createdSaleDto);
         }
 
         [Fact]
-        public async Task InsertSale_WholesalerOnNotFound_ReturnsObjectResult()
+        public async Task InsertSale_WholesalerOnNotFound_NotReturnsSuccessCode()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockSaleCommandService = new Mock<ISaleCommandServices>();
-
-            mockServices.Setup(s => s.ChangeSale).Returns(mockSaleCommandService.Object);
-            mockSaleCommandService.Setup(s => s.addSale(It.IsAny<ForCreationSaleDto>()))
+            saleCommandServicesMock.Setup(s => s.addSale(It.IsAny<ForCreationSaleDto>()))
                 .ReturnsAsync(new WholesalerNotFound(It.IsAny<int>()));
 
-            var saleControler = new SaleCommandController(_logger, mockServices.Object);
+            var saleControler = new SaleCommandController(loggerMock, servicesMock.Object);
 
             saleControler.ProblemDetailsFactory = new Mock<ProblemDetailsFactory>().Object;
 
@@ -104,27 +97,23 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await saleControler.PostSale(new ForCreationSaleDto());
 
             //Assert
-            result.Should().BeOfType<ObjectResult>();
+            result.Should().NotBeOfType<CreatedResult>();
         }
 
         [Fact]
-        public async Task InsertSale_BeerNotFound_ReturnsObjectResult()
+        public async Task InsertSale_BeerNotFound_NotReturnsSuccessCode()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockSaleCommandService = new Mock<ISaleCommandServices>();
-
-            mockServices.Setup(s => s.ChangeSale).Returns(mockSaleCommandService.Object);
-            mockSaleCommandService.Setup(s => s.addSale(It.IsAny<ForCreationSaleDto>()))
+            saleCommandServicesMock.Setup(s => s.addSale(It.IsAny<ForCreationSaleDto>()))
                 .ReturnsAsync(new BeerNotFound(It.IsAny<int>()));
 
-            var saleControler = new SaleCommandController(_logger, mockServices.Object);
+            var saleControler = new SaleCommandController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.PostSale(new ForCreationSaleDto());
 
             //Assert
-            result.Should().BeOfType<ObjectResult>();
+            result.Should().NotBeOfType<CreatedResult>();
         }
     }
 }

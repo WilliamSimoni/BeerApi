@@ -10,7 +10,7 @@ namespace BeerApi.Test.Helpers
         {
             TypeAdapterConfig.GlobalSettings.Default.MapToConstructor(true);
 
-            var config = TypeAdapterConfig.GlobalSettings;
+            var config = new TypeAdapterConfig();
 
             //config custom mappings
 
@@ -22,7 +22,7 @@ namespace BeerApi.Test.Helpers
 
             new QuoteMappings().Register(config);
 
-            var mapper = new Mapper();
+            var mapper = new Mapper(config);
 
             return mapper;
         }

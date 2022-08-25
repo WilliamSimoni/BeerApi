@@ -26,7 +26,7 @@ namespace Services.UseCaseServices
             _mapper = mapper;
         }
 
-        public async Task<OneOf<BeerDto, IError>> AddBeerToBrewery(int breweryId, ForCreationBeerDto creationBeerDto)
+        public async Task<OneOf<CreatedBeerDto, IError>> AddBeerToBrewery(int breweryId, ForCreationBeerDto creationBeerDto)
         {
             //check brewery existence
             var brewery = await _unitOfWork.QueryBrewery.GetByCondition(b => b.BreweryId == breweryId);
@@ -68,7 +68,7 @@ namespace Services.UseCaseServices
             _logger.LogDebug("BreweryCommandService added a new beer with id {1} to the repository", newBeer.BeerId);
 
 
-            return _mapper.Map<BeerDto>(newBeer);
+            return _mapper.Map<CreatedBeerDto>(newBeer);
         }
 
         public async Task<IError> RemoveBeerFromBrewery(int breweryId, int beerId)

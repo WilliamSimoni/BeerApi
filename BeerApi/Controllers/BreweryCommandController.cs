@@ -21,10 +21,10 @@ namespace BeerApi.Controllers
         }
 
         [HttpPost("{breweryId}/beers")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(BeerDto))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreatedBeerDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> AddBeerToBrewery(int breweryId, [FromBody] ForCreationBeerDto creationBeerDto)
+        public async Task<IActionResult> AddBeerToBrewery(int breweryId, [FromBody] ForCreationBeerDto creationBeerDto)
         {
             var result = await _services.ChangeBreweryBeers.AddBeerToBrewery(breweryId, creationBeerDto);
 
@@ -39,7 +39,7 @@ namespace BeerApi.Controllers
         [HttpDelete("{breweryId}/beers/{beerId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> removeBeerFromBrewery(int breweryId, int beerId)
+        public async Task<IActionResult> removeBeerFromBrewery(int breweryId, int beerId)
         {
             var error = await _services.ChangeBreweryBeers.RemoveBeerFromBrewery(breweryId, beerId);
 

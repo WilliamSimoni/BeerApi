@@ -21,9 +21,9 @@ namespace BeerApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(QuoteSummaryDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<QuoteSummaryDto>> CreateQuote(QuoteRequestDto quoteRequestDto)
+        public async Task<IActionResult> CreateQuote(QuoteRequestDto quoteRequestDto)
         {
             var serviceResult = await _services.AskQuote.GetQuote(quoteRequestDto);
 

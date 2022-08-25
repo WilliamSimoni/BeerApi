@@ -22,7 +22,7 @@ namespace BeerApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BreweryDto>))]
-        public async Task<ActionResult<IEnumerable<BreweryDto>>> GetAllBreweries()
+        public async Task<IActionResult> GetAllBreweries()
         {
             var breweries = await _services.QueryBrewery.GetAll();
 
@@ -34,7 +34,7 @@ namespace BeerApi.Controllers
         [HttpGet("{breweryId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BreweryDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<BreweryDto>> GetBreweryById(int breweryId)
+        public async Task<IActionResult> GetBreweryById(int breweryId)
         {
             var serviceResult = await _services.QueryBrewery.GetById(breweryId);
 
@@ -49,7 +49,7 @@ namespace BeerApi.Controllers
         [HttpGet("{breweryId}/beers")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BeerDto>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<BeerDto>>> GetAllBeersFromBrewery(int breweryId)
+        public async Task<IActionResult> GetAllBeersFromBrewery(int breweryId)
         {
             var serviceResult = await _services.QueryBreweryBeers.GetAllBeers(breweryId);
 
@@ -64,7 +64,7 @@ namespace BeerApi.Controllers
         [HttpGet("{breweryId}/beers/{beerId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BeerDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<BeerDto>> GetBeerByIdFromBrewery(int breweryId, int beerId)
+        public async Task<IActionResult> GetBeerByIdFromBrewery(int breweryId, int beerId)
         {
             var serviceResult = await _services.QueryBreweryBeers.GetBeerById(breweryId, beerId);
 

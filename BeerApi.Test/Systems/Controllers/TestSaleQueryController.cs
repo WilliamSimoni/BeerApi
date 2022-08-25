@@ -14,25 +14,32 @@ namespace BeerApi.Test.Systems.Controllers
     public class TestSaleQueryController
     {
 
-        private readonly ILoggerManager _logger;
+        private ILoggerManager loggerMock;
+
+        private Mock<IServicesWrapper> servicesMock;
+
+        private Mock<ISaleQueryServices> saleQueryServicesMock;
+
+
         public TestSaleQueryController()
         {
 
-            //create real logger for tests
-            _logger = new Mock<ILoggerManager>().Object;
+            //Arrange for all tests
+            loggerMock = new Mock<ILoggerManager>().Object;
+
+            servicesMock = new Mock<IServicesWrapper>();
+            saleQueryServicesMock = new Mock<ISaleQueryServices>();
+
+            servicesMock.Setup(s => s.QuerySale).Returns(saleQueryServicesMock.Object);
         }
 
         [Fact]
         public async void GetAllBreweries_OnSuccess_ReturnsStatusCode200()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetAll()).ReturnsAsync(new List<GetSaleDto>());
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetAll()).ReturnsAsync(new List<GetSaleDto>());
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetAllSales();
@@ -45,13 +52,9 @@ namespace BeerApi.Test.Systems.Controllers
         public async void GetAllBreweries_OnSuccess_ReturnsListOfGetSaleDto()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetAll()).ReturnsAsync(new List<GetSaleDto>());
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetAll()).ReturnsAsync(new List<GetSaleDto>());
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetAllSales();
@@ -66,13 +69,9 @@ namespace BeerApi.Test.Systems.Controllers
         public async void GetAllBreweries_OnSuccess_ReturnsAllSales()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetAll()).ReturnsAsync(SaleFixtures.GetGetSaleDtos());
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetAll()).ReturnsAsync(SaleFixtures.GetGetSaleDtos());
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetAllSales();
@@ -87,38 +86,30 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task GetSaleById_OnSuccess_ReturnsStatusCode200()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(new GetSaleDto());
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(new GetSaleDto());
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetSaleById(It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<OkObjectResult>();
+            result.Should().BeOfType<OkObjectResult>();
         }
 
         [Fact]
         public async Task GetSaleById_OnSuccess_ReturnsGetSaleDto()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(new GetSaleDto());
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(new GetSaleDto());
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetSaleById(It.IsAny<int>());
 
             //Assert
-            var objectResult = result.Result as OkObjectResult;
+            var objectResult = result as OkObjectResult;
             objectResult.Value.Should().BeOfType<GetSaleDto>();
         }
 
@@ -129,19 +120,15 @@ namespace BeerApi.Test.Systems.Controllers
             //Arrange
             var getSaleDto = new GetSaleDto();
 
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(getSaleDto);
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(getSaleDto);
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetSaleById(It.IsAny<int>());
 
             //Assert
-            var objectResult = result.Result as OkObjectResult;
+            var objectResult = result as OkObjectResult;
             objectResult.Value.Should().Be(getSaleDto);
         }
 
@@ -149,20 +136,16 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task GetSaleById_OnSaleDoesNotExist_ReturnsNotFound()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(new SaleNotFound(It.IsAny<int>()));
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetById(It.IsAny<int>())).ReturnsAsync(new SaleNotFound(It.IsAny<int>()));
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetSaleById(It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<ObjectResult>();
-            var objectResult = result.Result as ObjectResult;
+            result.Should().BeOfType<ObjectResult>();
+            var objectResult = result as ObjectResult;
             objectResult.StatusCode.Should().Be(404);
         }
 
@@ -170,39 +153,31 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task GetBeerInvolvedInSale_OnSuccess_ReturnsStatusCode200()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(new GetBeerFromSaleDto());
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(new GetBeerFromSaleDto());
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetBeerInvolvedInSale(It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<OkObjectResult>();
+            result.Should().BeOfType<OkObjectResult>();
         }
 
         [Fact]
         public async Task GetBeerInvolvedInSale_OnSaleDoesNotExist_ReturnsNotFound()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(new SaleNotFound(It.IsAny<int>()));
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(new SaleNotFound(It.IsAny<int>()));
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetBeerInvolvedInSale(It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<ObjectResult>();
-            var objectResult = result.Result as ObjectResult;
+            result.Should().BeOfType<ObjectResult>();
+            var objectResult = result as ObjectResult;
             objectResult.StatusCode.Should().Be(404);
         }
 
@@ -210,20 +185,16 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task GetBeerInvolvedInSale_OnSuccess_ReturnsGetBeerFromSaleDto()
         {
             //Arrange
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(new GetBeerFromSaleDto());
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(new GetBeerFromSaleDto());
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetBeerInvolvedInSale(It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<OkObjectResult>();
-            var objectResult = result.Result as OkObjectResult;
+            result.Should().BeOfType<OkObjectResult>();
+            var objectResult = result as OkObjectResult;
             objectResult.Value.Should().BeOfType<GetBeerFromSaleDto>();
         }
 
@@ -234,20 +205,16 @@ namespace BeerApi.Test.Systems.Controllers
             //Arrange
             var beerFromSaleDto = new GetBeerFromSaleDto();
 
-            var mockServices = new Mock<IServicesWrapper>();
-            var mockQuerySaleService = new Mock<ISaleQueryServices>();
+            saleQueryServicesMock.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(beerFromSaleDto);
 
-            mockServices.Setup(s => s.QuerySale).Returns(mockQuerySaleService.Object);
-            mockQuerySaleService.Setup(s => s.GetBeerInvolvedInSale(It.IsAny<int>())).ReturnsAsync(beerFromSaleDto);
-
-            var saleControler = new SaleQueryController(_logger, mockServices.Object);
+            var saleControler = new SaleQueryController(loggerMock, servicesMock.Object);
 
             //Action
             var result = await saleControler.GetBeerInvolvedInSale(It.IsAny<int>());
 
             //Assert
-            result.Result.Should().BeOfType<OkObjectResult>();
-            var objectResult = result.Result as OkObjectResult;
+            result.Should().BeOfType<OkObjectResult>();
+            var objectResult = result as OkObjectResult;
             objectResult.Value.Should().BeOfType<GetBeerFromSaleDto>();
             objectResult.Value.Should().Be(beerFromSaleDto);
         }

@@ -9,6 +9,7 @@ using Services.UseCaseServices;
 
 namespace BeerApi.Test.Systems.Services
 {
+
     public class TestWholesalerCommandService
     {
         private WholesalerCommandServices service;
@@ -77,7 +78,7 @@ namespace BeerApi.Test.Systems.Services
         }
 
         [Fact]
-        public async Task UpdateQuantity_OnSuccess_CalledSaveAsync()
+        public async Task UpdateQuantity_OnSuccess_CallsSaveAsync()
         {
             //Arrange
             var loggerMock = new Mock<ILoggerManager>();

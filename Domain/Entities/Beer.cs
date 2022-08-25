@@ -13,15 +13,15 @@ namespace Domain.Entities
         [MaxLength(50, ErrorMessage = "Attribute {0} can have a maximum of {1} characters")]
         public string Name { get; set; } = String.Empty;
 
-        [Range(0.01, 100, ErrorMessage = "Alcohol content must be between {1} and {2}")]
+        [Range(0, 100, ErrorMessage = "Alcohol content must be between {1} and {2}")]
         public double AlcoholContent { get; set; }
 
         [Column(TypeName = "Decimal(10,2)")]
-        [Range(0.01, (double)decimal.MaxValue, ErrorMessage = "The price can not be smaller than {1}")]
+        [Range(0.01, (double)decimal.MaxValue, ErrorMessage = "The price cannot be smaller than {1}")]
         public decimal SellingPriceToWholesalers { get; set; }
 
         [Column(TypeName = "Decimal(10,2)")]
-        [Range(0.01, (double)decimal.MaxValue, ErrorMessage = "The price can not be smaller than {1}")]
+        [Range(0.01, (double)decimal.MaxValue, ErrorMessage = "The price cannot be smaller than {1}")]
         public decimal SellingPriceToClients { get; set; }
 
         public bool InProduction { get; set; } = true;

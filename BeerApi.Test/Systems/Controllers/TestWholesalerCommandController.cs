@@ -14,21 +14,24 @@ namespace BeerApi.Test.Systems.Controllers
     public class TestWholesalerCommandController
     {
         private ILoggerManager loggerMock;
+        private Mock<IServicesWrapper> servicesMock;
+        private Mock<IWholesalerCommandServices> wholesalerCommandServicesMock;
 
         public TestWholesalerCommandController()
         {
             //Arrange for all tests
             loggerMock = new Mock<ILoggerManager>().Object;
+
+            servicesMock = new Mock<IServicesWrapper>();
+            wholesalerCommandServicesMock = new Mock<IWholesalerCommandServices>();
+
+            servicesMock.Setup(s => s.ChangeWholesaler).Returns(wholesalerCommandServicesMock.Object);
         }
 
         [Fact]
-        public async Task UpdateBeerQuantity_OnSuccess_ReturnsStatusCode204()
+        public async Task UpdateBeerQuantity_OnSuccess_ReturnsStatusCode200()
         {
             //Arrange
-            var servicesMock = new Mock<IServicesWrapper>();
-            var wholesalerCommandServicesMock = new Mock<IWholesalerCommandServices>();
-
-            servicesMock.Setup(s => s.ChangeWholesaler).Returns(wholesalerCommandServicesMock.Object);
 
             wholesalerCommandServicesMock.Setup(s => s.UpdateQuantity(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ForUpdateInventoryBeerDto>()))
                 .ReturnsAsync(new UpdatedInventoryBeerDto());
@@ -39,16 +42,31 @@ namespace BeerApi.Test.Systems.Controllers
             var result = await controller.UpdateBeerQuantity(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ForUpdateInventoryBeerDto>());
 
             //Assert
-            result.Should().BeOfType<NoContentResult>();
+            result.Should().BeOfType<OkObjectResult>();
+        }
+
+        [Fact]
+        public async Task UpdateBeerQuantity_OnSuccess_ReturnsUpdatedInventoryBeerDto()
+        {
+            //Arrange
+
+            wholesalerCommandServicesMock.Setup(s => s.UpdateQuantity(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ForUpdateInventoryBeerDto>()))
+                .ReturnsAsync(new UpdatedInventoryBeerDto());
+
+            var controller = new WholesalerCommandController(loggerMock, servicesMock.Object);
+
+            //Action
+            var result = await controller.UpdateBeerQuantity(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ForUpdateInventoryBeerDto>());
+
+            //Assert
+            result.Should().BeOfType<OkObjectResult>();
+            var objectResult = result as OkObjectResult;
+            objectResult.Value.Should().BeOfType<UpdatedInventoryBeerDto>();
         }
 
         public async Task UpdateBeerQuantity_OnWholesalerNotFound_ReturnsStatusCode404()
         {
             //Arrange
-            var servicesMock = new Mock<IServicesWrapper>();
-            var wholesalerCommandServicesMock = new Mock<IWholesalerCommandServices>();
-
-            servicesMock.Setup(s => s.ChangeWholesaler).Returns(wholesalerCommandServicesMock.Object);
 
             wholesalerCommandServicesMock.Setup(s => s.UpdateQuantity(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ForUpdateInventoryBeerDto>()))
                 .ReturnsAsync(new WholesalerNotFound(It.IsAny<int>()));
@@ -68,10 +86,6 @@ namespace BeerApi.Test.Systems.Controllers
         public async Task UpdateBeerQuantity_OnBeerNotFound_ReturnsStatusCode404()
         {
             //Arrange
-            var servicesMock = new Mock<IServicesWrapper>();
-            var wholesalerCommandServicesMock = new Mock<IWholesalerCommandServices>();
-
-            servicesMock.Setup(s => s.ChangeWholesaler).Returns(wholesalerCommandServicesMock.Object);
 
             wholesalerCommandServicesMock.Setup(s => s.UpdateQuantity(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<ForUpdateInventoryBeerDto>()))
                 .ReturnsAsync(new BeerNotFound(It.IsAny<int>()));

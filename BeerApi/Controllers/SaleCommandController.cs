@@ -1,5 +1,6 @@
 ﻿using Contracts.Dtos;
 using Domain.Common.Errors;
+using Domain.Entities;
 using Domain.Logger;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstract;
@@ -22,16 +23,16 @@ namespace BeerApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreatedSaleDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> PostSale([FromBody] ForCreationSaleDto saleDto)
+        public async Task<IActionResult> PostSale([FromBody] ForCreationSaleDto saleDto)
         {
             var serviceResult = await _services.ChangeSale.addSale(saleDto);
 
             _logger.LogDebug("SaleCommandController received result from ChangeSale.addSale");
 
             return serviceResult.Match(
-                newSale => Created(nameof(SaleQueryController.GetSaleById), newSale),
+                newSale => Created($"/api/sales/{newSale.SaleId}", newSale),
                 error =>
                 {
 

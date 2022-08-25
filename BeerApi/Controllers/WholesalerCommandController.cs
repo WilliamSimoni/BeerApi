@@ -21,10 +21,10 @@ namespace BeerApi.Controllers
         }
 
         [HttpPatch("{wholesalerId}/beers/{beerId}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdatedInventoryBeerDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> UpdateBeerQuantity(int wholesalerId, int beerId, [FromBody] ForUpdateInventoryBeerDto updateBeerDto)
+        public async Task<IActionResult> UpdateBeerQuantity(int wholesalerId, int beerId, [FromBody] ForUpdateInventoryBeerDto updateBeerDto)
         {
 
             var serviceResult = await _services.ChangeWholesaler.UpdateQuantity(wholesalerId, beerId, updateBeerDto);
@@ -32,7 +32,7 @@ namespace BeerApi.Controllers
             _logger.LogDebug("WholesalerCommandController received result from ChangeWholesaler.UpdateQuantity");
 
             return serviceResult.Match<ActionResult>(
-                updatedInventoryDto => NoContent(),
+                updatedInventoryDto => Ok(updatedInventoryDto),
                 error => Problem(statusCode: error.Number, detail: error.Message)
                 );
         }
