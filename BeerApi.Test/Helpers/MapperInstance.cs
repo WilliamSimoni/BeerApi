@@ -8,8 +8,6 @@ namespace BeerApi.Test.Helpers
     {
         public static IMapper Get()
         {
-            TypeAdapterConfig.GlobalSettings.Default.MapToConstructor(true);
-
             var config = new TypeAdapterConfig();
 
             //config custom mappings
