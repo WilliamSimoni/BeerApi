@@ -1,3 +1,5 @@
+**NOTE:** this is the .Net6 version. .Net5 version is in this repository: https://github.com/WilliamSimoni/BeerApi.Net5-version-
+
 # Architecture
 
 The API is implemented using a layered architecture consisting of four levels:
